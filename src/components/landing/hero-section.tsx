@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import InstallCommand from "@/components/landing/install-command";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Pause, Maximize, Minimize } from "lucide-react";
 import Image from "next/image";
@@ -447,6 +447,43 @@ function GuardedAgents() {
   );
 }
 
+function HeroEmailForm() {
+  const [email, setEmail] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      router.push(`/demo?email=${encodeURIComponent(email.trim())}`);
+    } else {
+      router.push("/demo");
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="group/form relative flex w-full max-w-[460px] items-center rounded-full border border-[#ddd7eb] bg-white/90 p-1.5 shadow-[0_10px_30px_rgba(109,73,253,0.08)] backdrop-blur-md transition-all duration-300 focus-within:border-[#6d49fd] focus-within:shadow-[0_12px_36px_rgba(109,73,253,0.18)] hover:border-[#b9a9ed]"
+    >
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter your work email"
+        className="w-full flex-1 bg-transparent px-5 py-2.5 text-sm text-[#111322] placeholder:text-[#918a9e] outline-none"
+      />
+      <button
+        type="submit"
+        className="group relative inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#6d49fd] px-6 py-3 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(109,73,253,0.25)] transition-all duration-200 hover:bg-[#5e32ff] hover:shadow-[0_8px_25px_rgba(109,73,253,0.35)] active:scale-[0.98]"
+      >
+        <span>Book a demo</span>
+        <ArrowRight className="h-4 w-4 rotate-45 transition-transform duration-300 ease-out group-hover:rotate-0" />
+      </button>
+    </form>
+  );
+}
+
 function ZigzagUnderline() {
   return (
     <svg aria-hidden="true" className="absolute -bottom-2.5 left-0 h-2.5 w-full" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none">
@@ -477,11 +514,8 @@ export default function HeroSection() {
           Gödel&apos;s Gate protects coding, browser, desktop, and custom agents. It inspects every prompt, tool call, and action — and stops unsafe ones before they execute.
         </motion.p>
 
-        <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.28 }} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <InstallCommand />
-          <Link href="/demo" className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#6d49fd] px-6 text-sm font-semibold text-white shadow-[0_10px_25px_rgba(109,73,253,.2)] transition duration-150 hover:-translate-y-0.5 hover:bg-[#5e32ff] active:scale-[0.97]">
-            Request a demo <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+        <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.28 }} className="mt-9 flex justify-center">
+          <HeroEmailForm />
         </motion.div>
 
         <ProductPreview />

@@ -40,7 +40,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1180px]">
         <div className="grid gap-14 border-b border-white/10 pb-14 lg:grid-cols-[1.25fr_1fr] lg:pb-20">
           <div>
-            <Image src="/logo-4a/godel-logo-white.png" alt="Gödel Labs" width={112} height={34} className="h-8 w-auto" />
+            <Image src="/godel-labs-logo/logo/godel-logo-dark.png" alt="Gödel Labs" width={112} height={34} className="h-8 w-auto" />
             <h2 className="mt-8 max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-white sm:text-4xl">
               Runtime security for the agents already inside your business.
             </h2>

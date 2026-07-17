@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ export default function Navbar() {
       >
         <div className="relative flex h-[64px] items-center justify-between px-4 sm:px-5 lg:px-6">
           <Link href="/" className="relative z-10 flex shrink-0 items-center" onClick={() => setOpen(false)} aria-label="Gödel Labs home">
-            <Image src="/logo-4a/godel-logo-primary.png" alt="Gödel Labs" width={112} height={34} priority className="h-[38px] w-auto" />
+            <Image src="/godel-labs-logo/logo/godel-logo-light.png" alt="Gödel Labs" width={112} height={34} priority className="h-[38px] w-auto" />
           </Link>
 
           <div className="hidden lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center pointer-events-none">
@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 z-10">
             <div className="hidden lg:flex">
               <Link href="https://github.com/godel-labs/godels-gate/releases" target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 rounded-full bg-[#6d49fd] px-5 py-2.5 text-[15px] font-semibold text-white shadow-sm transition hover:bg-[#5e32ff] active:scale-[0.97] duration-150">
-                Install Gate <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                Install Gate <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
               </Link>
             </div>
 
@@ -83,7 +83,7 @@ export default function Navbar() {
                   ))}
                 </div>
                 <Link href="https://github.com/godel-labs/godels-gate/releases" target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="mt-5 flex h-12 items-center justify-center gap-2 rounded-full bg-[#6d49fd] text-sm font-semibold text-white active:scale-[0.97] transition-transform duration-150">
-                  Install Gate <ArrowRight className="h-4 w-4" />
+                  Install Gate <Download className="h-4 w-4" />
                 </Link>
               </div>
             </motion.div>

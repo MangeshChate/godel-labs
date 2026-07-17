@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState, Suspense } from "react";
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/footer/footer";
 
@@ -24,14 +24,23 @@ declare global {
   }
 }
 
-export default function DemoPage() {
+function DemoForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const isRendered = useRef(false);
+
+  useEffect(() => {
+    const emailParam = searchParams?.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     // Prevent double rendering in React Strict Mode
@@ -179,7 +188,7 @@ export default function DemoPage() {
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="email" className={labelClassName}>Work email <span className="text-[#6d49fd]">*</span></label>
-                    <input type="email" id="email" name="email" required autoComplete="email" className={fieldClassName} placeholder="jane@company.com" />
+                    <input type="email" id="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" className={fieldClassName} placeholder="jane@company.com" />
                   </div>
                 </div>
 
@@ -238,5 +247,13 @@ export default function DemoPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function DemoPage() {
+  return (
+    <Suspense fallback={null}>
+      <DemoForm />
+    </Suspense>
   );
 }
