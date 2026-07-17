@@ -61,11 +61,11 @@ export const metadata: Metadata = {
   description: "Runtime security for coding, browser, desktop, and custom AI agents. Inspect every prompt, tool call, and action before it executes.",
   icons: {
     icon: [
-      { url: "/godel-labs-logo/favicon/dark/favicon-dark.svg", type: "image/svg+xml" },
-      { url: "/godel-labs-logo/favicon/dark/favicon-dark-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/godel-labs-logo/favicon/favicon-rounded-white.svg", type: "image/svg+xml" },
+      { url: "/godel-labs-logo/favicon/favicon-rounded-white-512.png", sizes: "512x512", type: "image/png" },
     ],
-    shortcut: "/godel-labs-logo/favicon/dark/favicon-dark-512.png",
-    apple: "/godel-labs-logo/favicon/dark/favicon-dark-512.png",
+    shortcut: "/godel-labs-logo/favicon/favicon-rounded-white-512.png",
+    apple: "/godel-labs-logo/favicon/favicon-rounded-white-512.png",
   },
   openGraph: {
     title: "Every agent. Every action. Guarded at runtime.",
