@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215 45" width="215" height="45" fill="none">
+  <style>
+    .brand-text-dark {
+      font-family: var(--font-geist-sans), "Geist Sans", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      fill: #111322;
+      letter-spacing: -0.03em;
+    }
+    .brand-text-purple {
+      font-family: var(--font-geist-sans), "Geist Sans", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      fill: #6d49fd;
+      letter-spacing: -0.03em;
+    }
+  </style>
+  
+  <g transform="translate(5, 34)">
+    <!-- letter 'g' -->
+    <text x="0" y="0" class="brand-text-dark">g</text>
+    
+    <!-- Cute Robot Face 'ö' -->
+    <g transform="translate(16, -21)">
+      <!-- Robot ears/antennae -->
+      <circle cx="5" cy="3" r="1.5" fill="#6d49fd" />
+      <line x1="5" y1="3" x2="7" y2="7" stroke="#6d49fd" stroke-width="1.8" stroke-linecap="round" />
+      
+      <circle cx="15" cy="3" r="1.5" fill="#6d49fd" />
+      <line x1="15" y1="3" x2="13" y2="7" stroke="#6d49fd" stroke-width="1.8" stroke-linecap="round" />
+      
+      <!-- Head shape -->
+      <rect x="1" y="6" width="18" height="13" rx="6.5" fill="#6d49fd" />
+      
+      <!-- Eyes -->
+      <circle cx="6.5" cy="12" r="1.5" fill="white" />
+      <circle cx="13.5" cy="12" r="1.5" fill="white" />
+      
+      <!-- Mouth -->
+      <path d="M8 15 Q10 16.5 12 15" stroke="white" stroke-width="1" stroke-linecap="round" fill="none" />
+    </g>
+    
+    <!-- letters 'del's' -->
+    <text x="38" y="0" class="brand-text-dark">del&apos;s</text>
+    
+    <!-- letter 'gate' in purple -->
+    <text x="105" y="0" class="brand-text-purple">gate</text>
+  </g>
+</svg>
