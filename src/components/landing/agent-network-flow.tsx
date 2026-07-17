@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Bot, Database, FolderCheck, Laptop, ShieldCheck, UserRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+const SETTLED = 0.004;
+
 const WIDTH = 1160;
 const HEIGHT = 650;
 
@@ -156,6 +158,28 @@ function getActivePathIndices(hovered: Point | null, pathsList: FlowPath[]): Set
   return activeIndices;
 }
 
+// Bake the glowing bubble into an offscreen canvas once per color/radius pair.
+// Canvas shadows cost a full blur pass per draw call, so paying it 30x a frame
+// is what makes this loop expensive enough to stall scrolling.
+function bubbleSprite(color: string, radius: number, dpr: number) {
+  const size = (radius + 16) * 2;
+  const sprite = document.createElement("canvas");
+  sprite.width = sprite.height = Math.ceil(size * dpr);
+  const context = sprite.getContext("2d");
+  if (!context) return null;
+  context.scale(dpr, dpr);
+  context.shadowBlur = 12;
+  context.shadowColor = color;
+  context.beginPath();
+  context.arc(size / 2, size / 2, radius, 0, Math.PI * 2);
+  context.fillStyle = "#ffffff";
+  context.fill();
+  context.lineWidth = 2;
+  context.strokeStyle = color;
+  context.stroke();
+  return { canvas: sprite, size };
+}
+
 interface NetworkCanvasProps {
   hoveredNode: Point | null;
 }
@@ -163,6 +187,14 @@ interface NetworkCanvasProps {
 function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const opacityRef = useRef<number[]>(paths.map(() => 1.0));
+  const activeRef = useRef<Set<number> | null>(null);
+  const wakeRef = useRef<() => void>(() => {});
+
+  // Recompute the active set without tearing down and restarting the loop.
+  useEffect(() => {
+    activeRef.current = hoveredNode ? getActivePathIndices(hoveredNode, paths) : null;
+    wakeRef.current();
+  }, [hoveredNode]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -177,17 +209,30 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let frame = 0;
     let lastDraw = 0;
+    let visible = false;
     const start = performance.now();
 
-    // Cache the active path indices for this hover node
-    const activePathIndices = hoveredNode ? getActivePathIndices(hoveredNode, paths) : null;
+    // Geometry and colors never change, so build these once instead of per frame.
+    const gradients = paths.map((path) => {
+      const gradient = context.createLinearGradient(path.from.x, path.from.y, path.to.x, path.to.y);
+      gradient.addColorStop(0, path.fromColor);
+      gradient.addColorStop(1, path.toColor);
+      return gradient;
+    });
+    const bubbles = paths.map((path) => bubbleSprite(path.toColor, Math.max(2.5, path.width * .62), dpr));
 
     const draw = (now: number) => {
+      if (!visible) {
+        frame = 0;
+        return;
+      }
       if (!reduceMotion && coarsePointer && now - lastDraw < 32) {
         frame = requestAnimationFrame(draw);
         return;
       }
       lastDraw = now;
+      const activePathIndices = activeRef.current;
+      let settled = true;
       context.clearRect(0, 0, WIDTH, HEIGHT);
       context.save();
       context.setLineDash([3, 7]);
@@ -206,18 +251,18 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
 
         // Smoothly slide current opacity toward target state (lerp)
         const targetOpacity = isActive ? 1.0 : 0.05;
-        opacityRef.current[index] += (targetOpacity - opacityRef.current[index]) * 0.12;
+        if (Math.abs(targetOpacity - opacityRef.current[index]) < SETTLED) opacityRef.current[index] = targetOpacity;
+        else {
+          opacityRef.current[index] += (targetOpacity - opacityRef.current[index]) * 0.12;
+          settled = false;
+        }
         const currentOpacity = opacityRef.current[index];
 
         const distance = path.to.x - path.from.x;
         const bend = path.bend ?? .48;
 
-        // Apply path gradient according to source and target columns
-        const gradient = context.createLinearGradient(path.from.x, path.from.y, path.to.x, path.to.y);
-        const opacityHex = Math.round(currentOpacity * 255).toString(16).padStart(2, '0');
-        gradient.addColorStop(0, `${path.fromColor}${opacityHex}`);
-        gradient.addColorStop(1, `${path.toColor}${opacityHex}`);
-
+        context.save();
+        context.globalAlpha = currentOpacity;
         context.beginPath();
         context.moveTo(path.from.x, path.from.y);
         context.bezierCurveTo(
@@ -225,35 +270,51 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
           path.to.x - distance * bend, path.to.y,
           path.to.x, path.to.y
         );
-        context.strokeStyle = gradient;
+        context.strokeStyle = gradients[index];
         context.lineWidth = path.width;
         context.lineCap = "round";
         context.stroke();
+        context.restore();
 
         // Draw animated glowing bubble only if path is active enough
-        if (currentOpacity > 0.15) {
+        const bubble = bubbles[index];
+        if (currentOpacity > 0.15 && bubble) {
           const progress = reduceMotion ? .58 : (((now - start) / 2900 + path.delay + index * .011) % 1);
           const point = bezierPoint(path, progress);
-          context.save();
-          context.shadowBlur = 12;
-          context.shadowColor = path.toColor;
-          context.beginPath();
-          context.arc(point.x, point.y, Math.max(2.5, path.width * .62), 0, Math.PI * 2);
-          context.fillStyle = "#ffffff";
-          context.fill();
-          context.lineWidth = 2;
-          context.strokeStyle = path.toColor;
-          context.stroke();
-          context.restore();
+          context.drawImage(bubble.canvas, point.x - bubble.size / 2, point.y - bubble.size / 2, bubble.size, bubble.size);
         }
       });
 
-      if (!reduceMotion) frame = requestAnimationFrame(draw);
+      // Bubbles animate forever, but a reduced-motion render only needs to
+      // repaint while a hover transition is still in flight.
+      frame = reduceMotion && settled ? 0 : requestAnimationFrame(draw);
     };
 
-    draw(start);
-    return () => cancelAnimationFrame(frame);
-  }, [hoveredNode]);
+    wakeRef.current = () => {
+      if (visible && !frame) frame = requestAnimationFrame(draw);
+    };
+
+    // Keep the loop off the main thread entirely until the diagram is near the
+    // viewport, so scrolling the sections above it stays smooth.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) wakeRef.current();
+        else if (frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(canvas);
+
+    return () => {
+      observer.disconnect();
+      wakeRef.current = () => {};
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} className="absolute inset-0 h-full w-full" aria-hidden="true" />;
 }

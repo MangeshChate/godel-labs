@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Github, Linkedin, MessageCircle } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { GithubIcon, LinkedinIcon, type BrandIcon } from "@/components/icons/brand";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,15 +10,15 @@ const columns = [
     title: "Product",
     links: [
       ["Use cases", "/#use-cases"],
+      ["Product", "/#product"],
       ["Data Authority", "/#data-authority"],
       ["Gödel's Sieve", "https://sieve.godel-labs.ai"],
-      ["Changelog", "/#product"],
     ],
   },
   {
     title: "Resources",
     links: [
-      ["Documentation", "https://sieve-docs.godel-labs.ai"],
+      ["Documentation", "https://godels-gate.godel-labs.ai/docs"],
       ["Blog", "/blog"],
       ["GitHub", "https://github.com/godellabs-ai"],
       ["Community", "https://discord.gg/HGXeCxJ532"],
@@ -40,18 +41,18 @@ export default function Footer() {
       <div className="mx-auto max-w-[1180px]">
         <div className="grid gap-14 border-b border-white/10 pb-14 lg:grid-cols-[1.25fr_1fr] lg:pb-20">
           <div>
-            <Image src="/godel-labs-logo/logo/godel-logo-dark.png" alt="Gödel Labs" width={112} height={34} className="h-8 w-auto" />
+            <Image src="/godel-logo-dark.svg" alt="Gödel Labs" width={2066} height={854} unoptimized className="h-8 w-auto" />
             <h2 className="mt-8 max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-white sm:text-4xl">
               Runtime security for the agents already inside your business.
             </h2>
             <p className="mt-5 max-w-md text-sm leading-6 text-white/45">Prompt injection protection, MCP security, and AI DLP for coding, browser, desktop, and custom agents.</p>
             <div className="mt-8 flex gap-2">
               {[
-                [Github, "https://github.com/godellabs-ai", "GitHub"],
-                [Linkedin, "https://www.linkedin.com/company/godel-labs/", "LinkedIn"],
+                [GithubIcon, "https://github.com/godellabs-ai", "GitHub"],
+                [LinkedinIcon, "https://www.linkedin.com/company/godel-labs/", "LinkedIn"],
                 [MessageCircle, "https://discord.gg/HGXeCxJ532", "Discord"],
               ].map(([Icon, href, label]) => {
-                const I = Icon as typeof Github;
+                const I = Icon as BrandIcon;
                 return <Link key={String(label)} href={String(href)} target="_blank" rel="noreferrer" aria-label={String(label)} className="grid h-10 w-10 place-items-center rounded-full border border-white/12 bg-white/5 text-white/55 transition hover:-translate-y-0.5 hover:border-[#8e75f8] hover:bg-[#6d49fd] hover:text-white"><I className="h-4 w-4" /></Link>;
               })}
             </div>

@@ -1,4 +1,3 @@
-import InstallCommand from "@/components/landing/install-command";
 import Reveal from "@/components/landing/reveal";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +13,6 @@ export default function FinalCtaSection() {
           <h2 className="mx-auto mt-5 max-w-3xl text-balance text-3xl font-semibold leading-[1.05] tracking-[-0.05em] sm:text-4xl lg:text-5xl">Put a provable boundary in front of every agent.</h2>
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-white/65">Your agents keep shipping. The unsafe actions don&apos;t.</p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <InstallCommand compact />
             <Link href="/demo" className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#211743] transition hover:-translate-y-0.5 hover:bg-[#111322] hover:text-white">
               Request a demo <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
