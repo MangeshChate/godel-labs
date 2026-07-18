@@ -9,9 +9,14 @@ export default function ProductSection() {
       <div className="absolute inset-0 opacity-[.12] [background-image:linear-gradient(rgba(255,255,255,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.18)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,#000,transparent_78%)]" />
       <div className="relative mx-auto max-w-[1180px]">
         <Reveal className="mx-auto max-w-[760px] text-center">
-          <div className="flex justify-center"><SectionLabel>Inside the product</SectionLabel></div>
-          <h2 className="text-balance text-3xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-4xl lg:text-5xl">See every agent.<br /><span className="text-[#a58fff]">Control every outcome.</span></h2>
-          <p className="mx-auto mt-6 max-w-[610px] text-[15px] leading-7 text-white/60">Follow each action from identity to agent, through the exact data or tool it touches, and into a deterministic runtime decision.</p>
+          <div className="flex justify-center"><SectionLabel>One view of the AI data path</SectionLabel></div>
+          <h2 className="text-balance text-3xl font-semibold leading-[1.05] tracking-normal text-white sm:text-4xl lg:text-5xl">
+            Know what every agent touched.<br />
+            <span className="text-[#a58fff]">See what happened next.</span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-[650px] text-[15px] leading-7 text-white/60">
+            Map every user, device, agent, content classification, source, and decision in one chain. Drill from fleet activity into the exact session, signal, tool call, and verdict.
+          </p>
         </Reveal>
         <Reveal className="mx-auto w-full max-w-[1160px]"><AgentNetworkFlow /></Reveal>
       </div>

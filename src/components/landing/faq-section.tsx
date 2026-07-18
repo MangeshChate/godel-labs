@@ -4,11 +4,11 @@ import SectionLabel from "@/components/landing/section-label";
 
 export default function FaqSection() {
   return (
-    <section id="faq" className="px-5 py-24 sm:px-6 sm:py-32">
+    <section id="faq" className="scroll-mt-24 px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[900px]">
         <Reveal className="text-center">
           <div className="flex justify-center"><SectionLabel>FAQ</SectionLabel></div>
-          <h2 className="text-3xl font-semibold tracking-[-0.045em] sm:text-4xl lg:text-5xl">Questions, answered straight.</h2>
+          <h2 className="text-3xl font-semibold tracking-normal sm:text-4xl lg:text-5xl">What buyers need to know.</h2>
         </Reveal>
         <Reveal className="mt-12 divide-y divide-[#dfd9ed] border-y border-[#dfd9ed]">
           {faqItems.map((faq, index) => (

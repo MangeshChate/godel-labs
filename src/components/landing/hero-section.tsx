@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Pause, Maximize, Minimize } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 const categories = [
   {
@@ -135,20 +134,12 @@ function ProductPreview() {
   };
 
   useEffect(() => {
-    if (isPlaying) {
-      resetControlsTimeout();
-    } else {
-      setShowControls(true);
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
-    }
     return () => {
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current);
       }
     };
-  }, [isPlaying]);
+  }, []);
 
   const handleMouseLeave = () => {
     if (isPlaying) {

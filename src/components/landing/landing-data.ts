@@ -1,16 +1,6 @@
-import { AppWindow, Code2, Laptop, Workflow, Shield, ShieldAlert, type LucideIcon } from "lucide-react";
-
 export interface AgentIntegration {
   name: string;
   icon: string;
-}
-
-export interface UseCase {
-  eyebrow: string;
-  title: string;
-  body: string;
-  icon: LucideIcon;
-  featured: boolean;
 }
 
 export interface FaqItem {
@@ -29,74 +19,29 @@ export const agentIntegrations: AgentIntegration[] = [
   { name: "MCP", icon: "modelcontextprotocol" },
 ];
 
-export const useCases: UseCase[] = [
-  {
-    eyebrow: "01 / CODE",
-    title: "Coding agents",
-    body: "Claude Code, Cursor, and Codex read repositories and run shells. Gate blocks secret exfiltration, reverse shells, and poisoned dependencies without slowing the loop.",
-    icon: Code2,
-    featured: true,
-  },
-  {
-    eyebrow: "02 / BROWSER",
-    title: "Browser agents",
-    body: "Protect logged-in sessions across assistants and agentic browsers. Sensitive data is classified on-device before it leaves in a prompt, paste, or upload.",
-    icon: AppWindow,
-    featured: false,
-  },
-  {
-    eyebrow: "03 / ENDPOINT",
-    title: "Desktop agents",
-    body: "One collector gives every action a verdict across macOS, Windows, and Linux — files, credentials, cloud CLIs, and everything in between.",
-    icon: Laptop,
-    featured: false,
-  },
-  {
-    eyebrow: "04 / CUSTOM",
-    title: "Custom agents",
-    body: "Wrap LangChain, LangGraph, CrewAI, or raw MCP once. Every tool call flows through the same gate with per-action authority built in.",
-    icon: Workflow,
-    featured: true,
-  },
-  {
-    eyebrow: "05 / DLP",
-    title: "DLP for coding agents",
-    body: "AI DLP built for how agents actually leak: on-device classification of secrets, PII, source code, and deal data — enforced on every MCP call, paste, and upload, with L0–L4 sensitivity levels per file.",
-    icon: Shield,
-    featured: false,
-  },
-  {
-    eyebrow: "06 / RISK",
-    title: "OWASP agentic risk protection",
-    body: "Every detection is mapped to the OWASP Top 10 for LLM Applications and OWASP Agentic risks — prompt injection, tool misuse, privilege compromise, memory poisoning — so findings land in language your security team already speaks.",
-    icon: ShieldAlert,
-    featured: true,
-  },
-];
-
 export const faqItems: FaqItem[] = [
   {
-    question: "What is AI agent security?",
-    answer: "Runtime protection for autonomous AI agents. Instead of scanning code or filtering prompts, it inspects what an agent actually does — every prompt, tool call, file read, and shell command — and enforces policy before the action executes.",
+    question: "What does Gödel protect?",
+    answer: "Gödel protects information while AI is actively using it. It inspects prompts, files, browser pages, MCP responses, tool outputs, model responses, and agent actions as they move through an AI workflow.",
   },
   {
-    question: "How is Gödel's Gate different from EDR or DLP?",
-    answer: "EDR hunts malware; agents often run normal commands. DLP watches familiar channels; agent data can leave through MCP tools. Gate tracks the provenance of everything an agent reads and decides whether that data has authority to drive a side effect.",
+    question: "What does Data Authority mean?",
+    answer: "Data Authority does not grant permissions to GitHub, Jira, SaaS applications, or data stores. It classifies content inside AI interactions and enforces how that content may be processed, retained, shared, or used to influence an agent action.",
   },
   {
-    question: "Does it stop prompt injection?",
-    answer: "Yes — by construction. A hidden instruction can make an agent want to exfiltrate a secret, but it cannot give that action authority. On the AgentDojo benchmark, 25/25 action-harming injections were blocked while legitimate tasks were preserved.",
+    question: "Does content need to be classified in advance?",
+    answer: "No. Gödel classifies content in real time as it enters, leaves, or moves through an agent session. It can evaluate a prompt, upload, MCP response, tool output, or model response within milliseconds and apply policy immediately.",
   },
   {
-    question: "What about MCP security?",
-    answer: "Gate sits between every agent and every MCP server. It inventories servers and tools, classifies the data flowing through them, and gives every tool call an explicit authority decision.",
+    question: "How does Gödel handle prompt injection?",
+    answer: "Gödel detects injected instructions across prompts, files, webpages, MCP responses, and tool output. It then evaluates the surrounding content, destination, attempted operation, and policy before allowing, warning, or blocking the interaction.",
   },
   {
-    question: "Is this another set of AI guardrails?",
-    answer: "No. Guardrails are probabilistic classifiers. Gate makes deterministic decisions with no LLM in the enforcement path and logs each decision tamper-evidently.",
+    question: "Where is policy enforced?",
+    answer: "Policy is delivered to native agent hooks, browser extensions, and framework callbacks. That places enforcement directly in the interaction path across coding agents, browser agents, MCP, and custom agent frameworks.",
   },
   {
-    question: "How do I install it?",
-    answer: "One command per endpoint. The console discovers local agents automatically, and telemetry can remain self-hosted inside your environment.",
+    question: "Can telemetry remain inside our environment?",
+    answer: "Yes. Gödel can run self-hosted or in a private cloud, and audit records can store hashes rather than sensitive payloads. Events can be forwarded to your existing SIEM or security data platform.",
   },
 ];

@@ -7,11 +7,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "Use cases", href: "/#use-cases" },
+  { label: "Why Gödel", href: "/#why-godel" },
   { label: "Product", href: "/#product" },
   { label: "Data Authority", href: "/#data-authority" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "Policies", href: "/#policies" },
+  { label: "About us", href: "/about-us" },
   { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export default function Navbar() {

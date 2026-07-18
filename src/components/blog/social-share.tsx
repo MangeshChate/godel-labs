@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Link2, Check } from "lucide-react";
 import { LinkedinIcon, XIcon } from "@/components/icons/brand";
 
@@ -8,13 +8,17 @@ interface SocialShareProps {
   title: string;
 }
 
+const subscribeToLocation = () => () => {};
+const getLocationSnapshot = () => window.location.href;
+const getServerLocationSnapshot = () => "";
+
 export default function SocialShare({ title }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
-  const [shareUrl, setShareUrl] = useState("");
-
-  useEffect(() => {
-    setShareUrl(window.location.href);
-  }, []);
+  const shareUrl = useSyncExternalStore(
+    subscribeToLocation,
+    getLocationSnapshot,
+    getServerLocationSnapshot,
+  );
 
   const handleCopy = async () => {
     try {

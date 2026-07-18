@@ -72,13 +72,13 @@ export const metadata: Metadata = {
     description: "Deterministic runtime security, MCP protection, and AI DLP for every agent.",
     type: "website",
     siteName: "Gödel Labs",
-    images: [{ url: "/og.png", width: 1730, height: 909, alt: "Every agent. Every action. Guarded at runtime." }],
+    images: [{ url: "/godel-og.png", width: 1024, height: 537, alt: "Every agent. Every action. Guarded at runtime." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Every agent. Every action. Guarded at runtime.",
     description: "Deterministic runtime security, MCP protection, and AI DLP for every agent.",
-    images: ["/og.png"],
+    images: ["/godel-og.png"],
   },
 };
 
