@@ -173,12 +173,11 @@ function DemoForm() {
 
         <div className="relative mx-auto max-w-[760px]">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="rounded-[26px] border border-[#dcd5ed] bg-white/80 px-5 py-7 shadow-[0_28px_85px_rgba(53,34,112,.11)] backdrop-blur-xl sm:rounded-[32px] sm:px-9 sm:py-9">
-            <div className="mb-6 flex items-center justify-between border-b border-[#e7e1ef] pb-5">
-              <Link href="/" className="group inline-flex min-h-9 items-center gap-2 rounded-full border border-[#ddd6eb] bg-white/70 px-3.5 text-[11px] font-semibold text-[#777082] transition hover:border-[#b9a9ed] hover:text-[#6d49fd]">
+            <div className="relative mb-6 flex items-center justify-center border-b border-[#e7e1ef] pb-5">
+              <Link href="/" className="group absolute left-0 inline-flex min-h-9 items-center gap-2 rounded-full border border-[#ddd6eb] bg-white/70 px-3.5 text-[11px] font-semibold text-[#777082] transition hover:border-[#b9a9ed] hover:text-[#6d49fd]">
                 <span className="transition group-hover:-translate-x-0.5">←</span> Back
               </Link>
               <h1 className="text-base font-semibold tracking-[-0.025em] text-[#211d2c] sm:text-lg">Request a demo</h1>
-              <span className="w-[68px]" aria-hidden="true" />
             </div>
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
