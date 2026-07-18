@@ -44,6 +44,7 @@ export default function DataAuthorityFlow() {
   return (
     <div ref={containerRef} className="relative mx-auto flex h-[304px] w-full max-w-[580px] items-center overflow-visible px-2 sm:px-5">
       <div className="relative z-10 flex w-full items-center justify-between">
+        {/* Left Column Nodes (Sources & Agents) */}
         <div className="flex flex-col gap-2">
           <IconNode ref={claudeRef}>
             <Image src="/logos/claude.svg" alt="Claude Code" width={20} height={20} />
@@ -65,6 +66,7 @@ export default function DataAuthorityFlow() {
           </IconNode>
         </div>
 
+        {/* Central Gödel Runtime Core */}
         <div
           ref={runtimeRef}
           className="relative z-20 grid size-24 place-items-center rounded-full bg-white sm:size-28"
@@ -83,6 +85,7 @@ export default function DataAuthorityFlow() {
           </div>
         </div>
 
+        {/* Right Column Nodes (Tools & Destinations) */}
         <div className="flex flex-col gap-2">
           <IconNode ref={gitRef}>
             <Image src="/logos/github.svg" alt="Git repositories" width={20} height={20} />
@@ -105,19 +108,21 @@ export default function DataAuthorityFlow() {
         </div>
       </div>
 
-      <AnimatedBeam containerRef={containerRef} fromRef={claudeRef} toRef={runtimeRef} duration={3.2} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={codexRef} toRef={runtimeRef} duration={3.4} delay={0.12} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={cursorRef} toRef={runtimeRef} duration={3.6} delay={0.24} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={cliRef} toRef={runtimeRef} duration={3.8} delay={0.36} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={browserRef} toRef={runtimeRef} duration={4} delay={0.48} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={desktopRef} toRef={runtimeRef} duration={4.2} delay={0.6} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
+      {/* Left to Center Beams (Alternating Primary Purple & Red) */}
+      <AnimatedBeam containerRef={containerRef} fromRef={claudeRef} toRef={runtimeRef} duration={3.2} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      <AnimatedBeam containerRef={containerRef} fromRef={codexRef} toRef={runtimeRef} duration={3.4} delay={0.12} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
+      <AnimatedBeam containerRef={containerRef} fromRef={cursorRef} toRef={runtimeRef} duration={3.6} delay={0.24} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      <AnimatedBeam containerRef={containerRef} fromRef={cliRef} toRef={runtimeRef} duration={3.8} delay={0.36} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
+      <AnimatedBeam containerRef={containerRef} fromRef={browserRef} toRef={runtimeRef} duration={4} delay={0.48} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      <AnimatedBeam containerRef={containerRef} fromRef={desktopRef} toRef={runtimeRef} duration={4.2} delay={0.6} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
 
-      <AnimatedBeam containerRef={containerRef} fromRef={gitRef} toRef={runtimeRef} duration={3.3} delay={0.1} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={shellRef} toRef={runtimeRef} duration={3.5} delay={0.22} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={mcpRef} toRef={runtimeRef} duration={3.7} delay={0.34} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={cloudRef} toRef={runtimeRef} duration={3.9} delay={0.46} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={slackRef} toRef={runtimeRef} duration={4.1} delay={0.58} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
-      <AnimatedBeam containerRef={containerRef} fromRef={packageRef} toRef={runtimeRef} duration={4.3} delay={0.7} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} />
+      {/* Right to Center Beams (Alternating Red & Primary Purple) */}
+      <AnimatedBeam containerRef={containerRef} fromRef={gitRef} toRef={runtimeRef} duration={3.3} delay={0.1} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" reverse />
+      <AnimatedBeam containerRef={containerRef} fromRef={shellRef} toRef={runtimeRef} duration={3.5} delay={0.22} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" reverse />
+      <AnimatedBeam containerRef={containerRef} fromRef={mcpRef} toRef={runtimeRef} duration={3.7} delay={0.34} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" reverse />
+      <AnimatedBeam containerRef={containerRef} fromRef={cloudRef} toRef={runtimeRef} duration={3.9} delay={0.46} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" reverse />
+      <AnimatedBeam containerRef={containerRef} fromRef={slackRef} toRef={runtimeRef} duration={4.1} delay={0.58} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" reverse />
+      <AnimatedBeam containerRef={containerRef} fromRef={packageRef} toRef={runtimeRef} duration={4.3} delay={0.7} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" reverse />
     </div>
   );
 }
