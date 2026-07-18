@@ -69,25 +69,6 @@ const manifesto = [
   },
 ] as const;
 
-const buildPrinciples = [
-  {
-    title: "Deep before broad",
-    description: "Understand the execution path before expanding the surface area.",
-  },
-  {
-    title: "Operators before theatre",
-    description: "Build for the decisions security and engineering teams make under pressure.",
-  },
-  {
-    title: "Open before opaque",
-    description: "Let serious practitioners inspect, challenge, and improve the foundation.",
-  },
-  {
-    title: "Milliseconds matter",
-    description: "Protection that cannot keep pace with the agent cannot protect the agent.",
-  },
-] as const;
-
 export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f7f5ff] text-[#111322]">
@@ -190,29 +171,6 @@ export default function AboutPage() {
                   <span className="text-[10px] font-semibold tracking-[0.16em] text-[#6d49fd]">{String(index + 1).padStart(2, "0")}</span>
                   <h3 className="text-lg font-semibold leading-7 text-[#211d2c] sm:text-xl">{item.title}</h3>
                   <p className="max-w-xl text-sm leading-7 text-[#746e7c] sm:text-[15px]">{item.description}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-[#dcd6e6] px-5 py-24 sm:px-6 sm:py-28">
-        <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
-          <Reveal>
-            <SectionLabel>How we build</SectionLabel>
-            <h2 className="max-w-md text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.04em] sm:text-4xl">
-              Serious infrastructure, built without ceremony.
-            </h2>
-          </Reveal>
-
-          <div className="grid border-t border-[#ddd7e7] sm:grid-cols-2">
-            {buildPrinciples.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.04}>
-                <article className="min-h-44 border-b border-[#ddd7e7] py-7 sm:px-7 sm:nth-[2n]:border-l">
-                  <span className="text-[10px] font-semibold tracking-[0.16em] text-[#aaa2b3]">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-7 text-lg font-semibold text-[#211d2c]">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#746e7c]">{item.description}</p>
                 </article>
               </Reveal>
             ))}
