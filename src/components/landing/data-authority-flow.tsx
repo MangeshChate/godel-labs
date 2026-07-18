@@ -108,7 +108,7 @@ export default function DataAuthorityFlow() {
         </div>
       </div>
 
-      {/* Left to Center Beams (Alternating Primary Purple & Red, moving Left to Right) */}
+      {/* Left to Center Beams (Inward towards Runtime, Alternating Primary Purple & Red) */}
       <AnimatedBeam containerRef={containerRef} fromRef={claudeRef} toRef={runtimeRef} duration={3.2} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
       <AnimatedBeam containerRef={containerRef} fromRef={codexRef} toRef={runtimeRef} duration={3.4} delay={0.12} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
       <AnimatedBeam containerRef={containerRef} fromRef={cursorRef} toRef={runtimeRef} duration={3.6} delay={0.24} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
@@ -116,13 +116,13 @@ export default function DataAuthorityFlow() {
       <AnimatedBeam containerRef={containerRef} fromRef={browserRef} toRef={runtimeRef} duration={4} delay={0.48} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
       <AnimatedBeam containerRef={containerRef} fromRef={desktopRef} toRef={runtimeRef} duration={4.2} delay={0.6} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
 
-      {/* Center to Right Beams (Alternating Red & Primary Purple, moving Left to Right) */}
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={gitRef} duration={3.3} delay={0.1} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={shellRef} duration={3.5} delay={0.22} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={mcpRef} duration={3.7} delay={0.34} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={cloudRef} duration={3.9} delay={0.46} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={slackRef} duration={4.1} delay={0.58} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
-      <AnimatedBeam containerRef={containerRef} fromRef={runtimeRef} toRef={packageRef} duration={4.3} delay={0.7} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      {/* Right to Center Beams (Inward towards Runtime, Alternating Red & Primary Purple) */}
+      <AnimatedBeam containerRef={containerRef} fromRef={gitRef} toRef={runtimeRef} duration={3.3} delay={0.1} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
+      <AnimatedBeam containerRef={containerRef} fromRef={shellRef} toRef={runtimeRef} duration={3.5} delay={0.22} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      <AnimatedBeam containerRef={containerRef} fromRef={mcpRef} toRef={runtimeRef} duration={3.7} delay={0.34} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
+      <AnimatedBeam containerRef={containerRef} fromRef={cloudRef} toRef={runtimeRef} duration={3.9} delay={0.46} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
+      <AnimatedBeam containerRef={containerRef} fromRef={slackRef} toRef={runtimeRef} duration={4.1} delay={0.58} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#ef4444" gradientStopColor="#f87171" />
+      <AnimatedBeam containerRef={containerRef} fromRef={packageRef} toRef={runtimeRef} duration={4.3} delay={0.7} pathWidth={1.5} pathColor="#ddd8e7" pathOpacity={0.8} gradientStartColor="#6d49fd" gradientStopColor="#a58fff" />
     </div>
   );
 }
