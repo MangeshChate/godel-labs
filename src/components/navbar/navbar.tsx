@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 const links = [
   { label: "Why Gödel", href: "/#why-godel" },
   { label: "Product", href: "/#product" },
+  { label: "Use cases", href: "/#use-cases" },
   { label: "Data Authority", href: "/#data-authority" },
-  { label: "Policies", href: "/#policies" },
   { label: "About us", href: "/about-us" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
@@ -36,11 +36,10 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <motion.nav
         layout
-        className={`mx-auto max-w-[1240px] overflow-hidden rounded-[18px] border transition-all duration-300 ${
-          scrolled || open
-            ? "border-[#ddd7eb] bg-[#fbfaff]/90 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
-            : "border-[#e3ddee]/80 bg-[#fbfaff]/72 backdrop-blur-md"
-        }`}
+        className={`mx-auto max-w-[1240px] overflow-hidden rounded-[18px] border transition-all duration-300 ${scrolled || open
+          ? "border-[#ddd7eb] bg-[#fbfaff]/90 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
+          : "border-[#e3ddee]/80 bg-[#fbfaff]/72 backdrop-blur-md"
+          }`}
         aria-label="Main navigation"
       >
         <div className="relative flex h-[64px] items-center justify-between px-4 sm:px-5 lg:px-6">
@@ -61,7 +60,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 z-10">
             <div className="hidden lg:flex">
               <Link href="https://godels-gate.godel-labs.ai/docs/desktop/installation" target="_blank" rel="noreferrer" className="group inline-flex items-center gap-2 rounded-full bg-[#6d49fd] px-5 py-2.5 text-[15px] font-semibold text-white shadow-sm transition hover:bg-[#5e32ff] active:scale-[0.97] duration-150">
-                Install Gate <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+                Install Gödel <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
               </Link>
             </div>
 
@@ -85,7 +84,7 @@ export default function Navbar() {
                   ))}
                 </div>
                 <Link href="https://godels-gate.godel-labs.ai/docs/desktop/installation" target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="mt-5 flex h-12 items-center justify-center gap-2 rounded-full bg-[#6d49fd] text-sm font-semibold text-white active:scale-[0.97] transition-transform duration-150">
-                  Install Gate <Download className="h-4 w-4" />
+                  Install Gödel <Download className="h-4 w-4" />
                 </Link>
               </div>
             </motion.div>
