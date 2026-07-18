@@ -358,7 +358,7 @@ function GuardedAgents() {
       <div className="flex flex-col items-center">
         {/* Title carousel container */}
         {/* Category Title Heading */}
-        <div className="h-7 overflow-hidden flex items-center justify-center">
+        <div className="h-6 overflow-hidden flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.p
               key={activeIndex}
@@ -366,7 +366,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="text-center text-xs font-bold uppercase tracking-[0.24em] text-white sm:text-sm"
+              className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-white sm:text-xs"
             >
               {currentCategory.title}
             </motion.p>
@@ -374,12 +374,12 @@ function GuardedAgents() {
         </div>
 
         {/* Bullet indicators */}
-        <div className="mt-2.5 flex items-center gap-2">
+        <div className="mt-2 flex items-center gap-1.5">
           {categories.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              className={`h-2 rounded-full transition-all duration-300 ${idx === activeIndex ? "bg-white w-7" : "bg-white/40 hover:bg-white/70 w-2.5"
+              className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeIndex ? "bg-white w-6" : "bg-white/40 hover:bg-white/70 w-2"
                 }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -387,7 +387,7 @@ function GuardedAgents() {
         </div>
 
         {/* Agents carousel container — fixed height to prevent layout shift */}
-        <div className="relative mt-6 h-[260px] w-full sm:h-[105px]">
+        <div className="relative mt-5 h-[235px] w-full sm:h-[92px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -395,7 +395,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-0 mx-auto flex w-full max-w-[1040px] flex-wrap content-start justify-center gap-y-4 sm:gap-y-6"
+              className="absolute inset-x-0 top-0 mx-auto flex w-full max-w-[980px] flex-wrap content-start justify-center gap-y-3.5 sm:gap-y-5"
             >
               {currentCategory.agents.map((agentName) => {
                 const logoSrc = agentLogoMap[agentName];
@@ -404,10 +404,10 @@ function GuardedAgents() {
                 return (
                   <span
                     key={agentName}
-                    className="group flex w-1/2 items-center justify-center gap-2.5 px-2 text-xs font-bold tracking-[0.05em] text-white transition sm:w-1/5 sm:text-sm"
+                    className="group flex w-1/2 items-center justify-center gap-2 px-1.5 text-[11px] font-bold tracking-[0.04em] text-white transition sm:w-1/5 sm:text-xs"
                   >
                     <span
-                      className={`relative flex h-8 items-center justify-center overflow-hidden rounded-[10px] transition-transform duration-200 group-hover:scale-110 sm:h-9 ${isWideLogo ? "w-18 sm:w-[78px]" : "w-8 sm:w-9"
+                      className={`relative flex h-7 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${isWideLogo ? "w-16 sm:w-[70px]" : "w-7 sm:w-8"
                         } ${needsFrame
                           ? "border border-white/60 bg-white/30 shadow-sm"
                           : ""
@@ -417,7 +417,7 @@ function GuardedAgents() {
                         src={logoSrc}
                         alt=""
                         fill
-                        sizes={isWideLogo ? "(min-width: 640px) 78px, 68px" : "(min-width: 640px) 36px, 32px"}
+                        sizes={isWideLogo ? "(min-width: 640px) 70px, 60px" : "(min-width: 640px) 32px, 28px"}
                         className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
                       />
                     </span>
