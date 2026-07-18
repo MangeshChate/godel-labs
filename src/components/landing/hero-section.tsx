@@ -221,15 +221,14 @@ function ProductPreview() {
         transition={reduceMotion || isPlaying ? undefined : { duration: 9, repeat: Infinity, ease: "easeInOut" }}
         className="relative rounded-[23px] border border-white/70 bg-white/30 p-2 shadow-[0_34px_100px_rgba(62,36,150,.24),inset_0_1px_0_rgba(255,255,255,.95)] backdrop-blur-xl sm:rounded-[31px] sm:p-3 group/video"
       >
-        <div 
+        <div
           ref={containerRef}
           onMouseMove={resetControlsTimeout}
           onMouseLeave={handleMouseLeave}
-          className={`relative overflow-hidden bg-white/70 border border-white/80 cursor-pointer transition-all duration-300 ${
-            isFullscreen 
-              ? "w-screen h-screen rounded-none border-none bg-black flex items-center justify-center p-0" 
-              : "aspect-[2924/1596] rounded-[17px] sm:rounded-[25px]"
-          }`}
+          className={`relative overflow-hidden bg-white/70 border border-white/80 cursor-pointer transition-all duration-300 ${isFullscreen
+            ? "w-screen h-screen rounded-none border-none bg-black flex items-center justify-center p-0"
+            : "aspect-[2924/1596] rounded-[17px] sm:rounded-[25px]"
+            }`}
         >
           <video
             ref={videoRef}
@@ -245,12 +244,11 @@ function ProductPreview() {
             onLoadedMetadata={handleLoadedMetadata}
             onClick={togglePlay}
           />
-          
-          <div 
+
+          <div
             onClick={togglePlay}
-            className={`absolute inset-0 z-10 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-all duration-300 ${
-              isPlaying && !showControls ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
-            }`}
+            className={`absolute inset-0 z-10 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-all duration-300 ${isPlaying && !showControls ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+              }`}
           >
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <AnimatePresence>
@@ -283,13 +281,12 @@ function ProductPreview() {
           </div>
 
           {hasStarted && (
-            <div 
+            <div
               onClick={(e) => e.stopPropagation()}
-              className={`absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-black/80 via-black/45 to-transparent flex items-center gap-3 transition-opacity duration-300 z-20 ${
-                showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-              }`}
+              className={`absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-black/80 via-black/45 to-transparent flex items-center gap-3 transition-opacity duration-300 z-20 ${showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
             >
-              <button 
+              <button
                 onClick={togglePlay}
                 className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none"
                 aria-label={isPlaying ? "Pause" : "Play"}
@@ -301,14 +298,14 @@ function ProductPreview() {
                 {/* Thin background track */}
                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden relative group-hover/slider:h-1.5 transition-all duration-150">
                   {/* Accent filled track */}
-                  <div 
+                  <div
                     className="h-full bg-[#6d49fd] rounded-full absolute left-0 top-0 transition-all duration-75"
                     style={{ width: `${percentage}%` }}
                   />
                 </div>
 
                 {/* Thumb dot */}
-                <div 
+                <div
                   className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.5)] border border-white/10 opacity-0 scale-75 group-hover/slider:opacity-100 group-hover/slider:scale-100 transition-all duration-150 -translate-x-1.5 pointer-events-none"
                   style={{ left: `${percentage}%` }}
                 />
@@ -329,7 +326,7 @@ function ProductPreview() {
                 {formatTime(currentTime)} / {formatTime(duration)}
               </div>
 
-              <button 
+              <button
                 onClick={toggleFullscreen}
                 className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none ml-2 cursor-pointer"
                 aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
@@ -360,7 +357,8 @@ function GuardedAgents() {
     <div className="relative z-20 mx-auto mt-12 max-w-[1120px] px-2 pb-2 pt-2 sm:mt-16 sm:pt-0">
       <div className="flex flex-col items-center">
         {/* Title carousel container */}
-        <div className="h-6 overflow-hidden flex items-center justify-center">
+        {/* Category Title Heading */}
+        <div className="h-7 overflow-hidden flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.p
               key={activeIndex}
@@ -368,7 +366,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70"
+              className="text-center text-xs font-bold uppercase tracking-[0.24em] text-white sm:text-sm"
             >
               {currentCategory.title}
             </motion.p>
@@ -376,21 +374,20 @@ function GuardedAgents() {
         </div>
 
         {/* Bullet indicators */}
-        <div className="mt-2.5 flex items-center gap-1.5">
+        <div className="mt-2.5 flex items-center gap-2">
           {categories.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              className={`h-1.5 w-4 rounded-full transition-all duration-300 ${
-                idx === activeIndex ? "bg-[#6d49fd] w-6" : "bg-white/20 hover:bg-white/30"
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${idx === activeIndex ? "bg-white w-7" : "bg-white/40 hover:bg-white/70 w-2.5"
+                }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
         </div>
 
         {/* Agents carousel container — fixed height to prevent layout shift */}
-        <div className="relative mt-6 h-[250px] w-full sm:h-[96px]">
+        <div className="relative mt-6 h-[260px] w-full sm:h-[105px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -398,7 +395,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-0 mx-auto flex w-full max-w-[1000px] flex-wrap content-start justify-center gap-y-4 sm:gap-y-5"
+              className="absolute inset-x-0 top-0 mx-auto flex w-full max-w-[1040px] flex-wrap content-start justify-center gap-y-4 sm:gap-y-6"
             >
               {currentCategory.agents.map((agentName) => {
                 const logoSrc = agentLogoMap[agentName];
@@ -407,26 +404,24 @@ function GuardedAgents() {
                 return (
                   <span
                     key={agentName}
-                    className="group flex w-1/2 items-center justify-center gap-2 px-1.5 text-[10px] font-bold tracking-[0.04em] text-white/70 transition hover:text-white sm:w-1/5 sm:gap-2.5 sm:px-2 sm:text-[11px] sm:tracking-[0.06em]"
+                    className="group flex w-1/2 items-center justify-center gap-2.5 px-2 text-xs font-bold tracking-[0.05em] text-white transition sm:w-1/5 sm:text-sm"
                   >
                     <span
-                      className={`relative flex h-7 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110 sm:h-8 ${
-                        isWideLogo ? "w-16 sm:w-[72px]" : "w-7 sm:w-8"
-                      } ${
-                        needsFrame
-                          ? "border border-white/45 bg-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,.3)]"
+                      className={`relative flex h-8 items-center justify-center overflow-hidden rounded-[10px] transition-transform duration-200 group-hover:scale-110 sm:h-9 ${isWideLogo ? "w-18 sm:w-[78px]" : "w-8 sm:w-9"
+                        } ${needsFrame
+                          ? "border border-white/60 bg-white/30 shadow-sm"
                           : ""
-                      }`}
+                        }`}
                     >
                       <Image
                         src={logoSrc}
                         alt=""
                         fill
-                        sizes={isWideLogo ? "(min-width: 640px) 72px, 64px" : "(min-width: 640px) 32px, 28px"}
-                        className={`rounded-[8px] object-contain grayscale opacity-80 transition-opacity group-hover:opacity-100 ${needsFrame ? "p-1" : ""}`}
+                        sizes={isWideLogo ? "(min-width: 640px) 78px, 68px" : "(min-width: 640px) 36px, 32px"}
+                        className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
                       />
                     </span>
-                    <span>{agentName}</span>
+                    <span className="font-bold text-white drop-shadow-sm">{agentName}</span>
                   </span>
                 );
               })}
@@ -498,11 +493,11 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.h1 initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }} className="mx-auto max-w-4xl text-balance text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em] text-[#111322]">
-          Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Guarded.<ZigzagUnderline /></span>
+          Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Secured.<ZigzagUnderline /></span>
         </motion.h1>
 
         <motion.p initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.18 }} className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
-          Gödel&apos;s Gate protects coding, browser, desktop, and custom agents. It inspects every prompt, tool call, and action — and stops unsafe ones before they execute.
+          Gödel protects coding, browser, desktop and custom agents. It inspects every prompt, tool call & action and stops unsafe ones before they execute.
         </motion.p>
 
         <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.28 }} className="mt-9 flex justify-center">
