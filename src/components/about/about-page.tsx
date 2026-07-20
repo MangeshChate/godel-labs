@@ -4,29 +4,6 @@ import Reveal from "@/components/landing/reveal";
 import SectionLabel from "@/components/landing/section-label";
 import Navbar from "@/components/navbar/navbar";
 
-const operatingMuscles = [
-  {
-    title: "Systems depth",
-    description:
-      "Kernel infrastructure, exploit detection, cloud-native runtime security, distributed systems, and AI. We have built where abstractions end and consequences begin.",
-  },
-  {
-    title: "Product judgment",
-    description:
-      "From first prototype to category-scale enterprise platforms, we know how to turn difficult technology into a product operators can trust and teams can adopt.",
-  },
-  {
-    title: "Enterprise reality",
-    description:
-      "We have built with and for Fortune 500 security, infrastructure, and engineering teams where integration, reliability, governance, and proof all matter.",
-  },
-  {
-    title: "Market building",
-    description:
-      "Open-source communities, developer-led adoption, bottom-up go-to-market, and enterprise expansion. We know new categories are earned from both directions.",
-  },
-] as const;
-
 const experience = [
   "Deepfence",
   "Palo Alto Networks",
@@ -89,41 +66,6 @@ export default function AboutPage() {
       </section>
 
       <section className="border-t border-[#dcd6e6] bg-white px-5 py-24 sm:px-6 sm:py-28">
-        <div className="mx-auto max-w-[1180px]">
-          <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
-            <Reveal>
-              <SectionLabel>One team</SectionLabel>
-              <h2 className="max-w-md text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.04em] sm:text-4xl">
-                Four operating muscles. No handoffs between them.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <div className="max-w-[700px] space-y-5 text-[15px] leading-7 text-[#6d6676] sm:text-base">
-                <p>
-                  Gödel Labs brings together deeply technical entrepreneurs, enterprise product builders, and market makers. Across decades, we have built low-level security systems, scaled products for demanding global enterprises, grown open-source communities, and created bottom-up go-to-market engines.
-                </p>
-                <p>
-                  New infrastructure companies fail when technology, product, enterprise adoption, and market creation are treated as separate disciplines. Our founding team has operated across all four.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="mt-14 grid border-t border-[#ddd7e7] md:grid-cols-2 lg:grid-cols-4">
-            {operatingMuscles.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.04}>
-                <article className="border-b border-[#ddd7e7] py-7 md:px-6 md:nth-[2n]:border-l lg:min-h-[260px] lg:border-l lg:px-7 lg:first:border-l-0 lg:first:pl-0">
-                  <span className="text-[10px] font-semibold tracking-[0.16em] text-[#a099aa]">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-8 text-lg font-semibold text-[#211d2c]">{item.title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-[#746e7c]">{item.description}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-[#dcd6e6] px-5 py-24 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-[1180px]">
           <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
             <Reveal>
