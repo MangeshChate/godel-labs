@@ -31,7 +31,7 @@ const policyExamples = [
 
 export default function SecurityGapSection() {
   return (
-    <section id="policies" className="relative scroll-mt-24 overflow-hidden bg-[#11101b] px-5 py-24 text-white sm:px-6 sm:py-32">
+    <section id="policies" className="relative scroll-mt-36 overflow-hidden bg-[#11101b] px-5 py-24 text-white sm:px-6 sm:py-32">
       {/* Radial Purple Glow & Grid Background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(109,73,253,.22),transparent_48%)] pointer-events-none" />
       <div className="absolute inset-0 opacity-[.12] [background-image:linear-gradient(rgba(255,255,255,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.18)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,#000,transparent_78%)] pointer-events-none" />

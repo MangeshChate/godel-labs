@@ -23,13 +23,13 @@ const requirements = [
 
 export default function DataAuthoritySection() {
   return (
-    <section id="data-authority" className="scroll-mt-24 bg-[#f7f5ff] px-5 py-24 sm:px-6 sm:py-32">
+    <section id="data-authority" className="scroll-mt-36 bg-[#f7f5ff] px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[1180px]">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12">
           <Reveal>
             <SectionLabel>Data Authority</SectionLabel>
             <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[#111322] sm:text-4xl lg:text-5xl">
-              Classify and protect information <span className="text-[#6d49fd]">at the moment AI uses it.</span>
+              Classify and Protect information <span className="text-[#6d49fd]">at the moment AI uses it.</span>
             </h2>
             <p className="mt-6 text-[15px] leading-7 text-[#655f70] sm:text-base">
               No pre-labeling required. Gödel inspects content in milliseconds as it enters, leaves, or moves through an AI workflow then derives the handling requirements that policy must enforce.

@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section id="testimonials" className="relative scroll-mt-24 bg-[#f4f3f8] pt-14 pb-6 sm:pt-18 sm:pb-8">
+    <section id="testimonials" className="relative scroll-mt-36 bg-[#f4f3f8] pt-14 pb-6 sm:pt-18 sm:pb-8">
       {/* Solid Zigzag Cut-out Top Teeth (Matching Section BG Color, No Border) */}
       <div className="absolute inset-x-0 top-0 h-3 w-full overflow-hidden z-20 pointer-events-none -translate-y-[99%]">
         <svg

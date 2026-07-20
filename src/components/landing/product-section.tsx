@@ -4,7 +4,7 @@ import SectionLabel from "@/components/landing/section-label";
 
 export default function ProductSection() {
   return (
-    <section id="product" className="relative scroll-mt-24 overflow-hidden bg-[#11101b] px-5 py-28 text-white sm:px-8 sm:py-36 lg:px-10 lg:py-40">
+    <section id="product" className="relative scroll-mt-36 overflow-hidden bg-[#11101b] px-5 py-28 text-white sm:px-8 sm:py-36 lg:px-10 lg:py-40">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(109,73,253,.2),transparent_42%)]" />
       <div className="absolute inset-0 opacity-[.12] [background-image:linear-gradient(rgba(255,255,255,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.18)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,#000,transparent_78%)]" />
       <div className="relative mx-auto max-w-[1180px]">

@@ -27,7 +27,7 @@ const stages = [
 
 export default function UseCasesSection() {
   return (
-    <section id="why-godel" className="scroll-mt-24 border-y border-[#e5dff0] bg-white px-5 py-24 sm:px-6 sm:py-32">
+    <section id="why-godel" className="scroll-mt-36 border-y border-[#e5dff0] bg-white px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[1180px]">
         <Reveal className="max-w-[850px]">
           <SectionLabel>The missing security context</SectionLabel>
