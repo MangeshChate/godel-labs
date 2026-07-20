@@ -79,7 +79,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={0.06}>
               <p className="max-w-[700px] text-[15px] leading-7 text-[#524a61] sm:text-base">
-                We have founded companies, shipped category-defining products, worked inside global security leaders, and partnered with Fortune 500 teams. That history gives us a long memory for what survives contact with the enterprise across Deepfence, Palo Alto Networks, and FireEye.
+                We have founded companies, shipped category-defining products, worked inside global security leaders, and partnered with Fortune 500 teams. That history gives us a long memory for what survives contact with the enterprise across Palo Alto Networks, FireEye, and Deepfence.
               </p>
             </Reveal>
           </div>
