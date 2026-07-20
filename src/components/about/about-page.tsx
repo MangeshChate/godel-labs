@@ -4,15 +4,6 @@ import Reveal from "@/components/landing/reveal";
 import SectionLabel from "@/components/landing/section-label";
 import Navbar from "@/components/navbar/navbar";
 
-const experience = [
-  "Deepfence",
-  "Palo Alto Networks",
-  "FireEye",
-  "Juniper Networks",
-  "Enterprise security",
-  "Open source",
-] as const;
-
 const manifesto = [
   {
     title: "Protect information while AI is using it.",
@@ -76,19 +67,10 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={0.06}>
               <p className="max-w-[700px] text-[15px] leading-7 text-[#6d6676] sm:text-base">
-                We have founded companies, shipped category-defining products, worked inside global security leaders, and partnered with Fortune 500 teams. That history gives us a long memory for what survives contact with the enterprise.
+                We have founded companies, shipped category-defining products, worked inside global security leaders, and partnered with Fortune 500 teams. That history gives us a long memory for what survives contact with the enterprise across Deepfence, Palo Alto Networks, and FireEye.
               </p>
             </Reveal>
           </div>
-
-          <Reveal className="mt-12 grid grid-cols-2 gap-px border border-[#ddd7e7] bg-[#ddd7e7] md:grid-cols-3 lg:grid-cols-6">
-            {experience.map((item, index) => (
-              <article key={item} className="flex min-h-28 items-center gap-4 bg-[#f7f5ff] px-5 py-6 transition-colors hover:bg-white sm:px-6">
-                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-5 text-[#282330] sm:text-[15px]">{item}</h3>
-                <span className="shrink-0 text-[9px] font-semibold tracking-[0.14em] text-[#a099aa]">{String(index + 1).padStart(2, "0")}</span>
-              </article>
-            ))}
-          </Reveal>
         </div>
       </section>
 
