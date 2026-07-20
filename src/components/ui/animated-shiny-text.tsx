@@ -1,31 +1,40 @@
-"use client";
+import {
+  type ComponentPropsWithoutRef,
+  type CSSProperties,
+  type FC,
+} from "react";
 
-import type { CSSProperties, FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export interface AnimatedShinyTextProps {
-  children: ReactNode;
-  className?: string;
+export interface AnimatedShinyTextProps extends ComponentPropsWithoutRef<"span"> {
   shimmerWidth?: number;
 }
 
 export const AnimatedShinyText: FC<AnimatedShinyTextProps> = ({
   children,
   className,
-  shimmerWidth = 140,
+  shimmerWidth = 100,
+  ...props
 }) => {
   return (
     <span
       style={
         {
-          "--shimmer-width": `${shimmerWidth}px`,
+          "--shiny-width": `${shimmerWidth}px`,
         } as CSSProperties
       }
       className={cn(
-        "animate-shiny-text inline-flex items-center justify-center bg-clip-text text-transparent bg-no-repeat [background-position:0_0] [background-size:var(--shimmer-width)_100%]",
-        "bg-[linear-gradient(110deg,#3b3544_0%,#3b3544_30%,#6d49fd_50%,#3b3544_70%,#3b3544_100%)]",
+        "mx-auto max-w-md text-neutral-600/70 dark:text-neutral-400/70",
+
+        // Shine effect
+        "animate-shiny-text bg-size-[var(--shiny-width)_100%] bg-clip-text bg-position-[0_0] bg-no-repeat [transition:background-position_1s_cubic-bezier(.6,.6,0,1)_infinite]",
+
+        // Shine gradient
+        "bg-linear-to-r from-transparent via-black/80 via-50% to-transparent dark:via-white/80",
+
         className
       )}
+      {...props}
     >
       {children}
     </span>
