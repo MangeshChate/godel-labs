@@ -58,7 +58,7 @@ const capabilities: CapabilityItem[] = [
 
 export default function RuntimeSecuritySection() {
   return (
-    <section id="use-cases" className="scroll-mt-36 px-5 pb-20 pt-10 sm:pb-28 sm:pt-14">
+    <section id="use-cases" className="scroll-mt-0 px-5 pb-20 pt-10 sm:pb-28 sm:pt-14">
       <div className="mx-auto max-w-[1180px]">
         {/* Animated Scroll Reveal Title matching main branch */}
         <ScrollRevealTitle text={"Runtime Security for Every AI Agent\nAcross Desktop, Browser, Terminal and Pipelines"} />

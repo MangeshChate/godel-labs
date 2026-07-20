@@ -4,7 +4,7 @@ import SectionLabel from "@/components/landing/section-label";
 
 export default function FaqSection() {
   return (
-    <section id="faq" className="scroll-mt-36 px-5 py-24 sm:px-6 sm:py-32">
+    <section id="faq" className="scroll-mt-0 px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[900px]">
         <Reveal className="text-center">
           <div className="flex justify-center"><SectionLabel>FAQ</SectionLabel></div>

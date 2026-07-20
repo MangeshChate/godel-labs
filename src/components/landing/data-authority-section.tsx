@@ -23,7 +23,7 @@ const requirements = [
 
 export default function DataAuthoritySection() {
   return (
-    <section id="data-authority" className="scroll-mt-36 bg-[#f7f5ff] px-5 py-24 sm:px-6 sm:py-32">
+    <section id="data-authority" className="scroll-mt-0 bg-[#f7f5ff] px-5 py-24 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-[1180px]">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12">
           <Reveal>

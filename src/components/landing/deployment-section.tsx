@@ -25,7 +25,7 @@ const surfaces = [
 
 export default function DeploymentSection() {
   return (
-    <section id="deployment" className="scroll-mt-24 bg-white px-5 pt-10 pb-20 sm:px-6 sm:pt-14 sm:pb-28">
+    <section id="deployment" className="scroll-mt-0 bg-white px-5 pt-10 pb-20 sm:px-6 sm:pt-14 sm:pb-28">
       <div className="mx-auto max-w-[1180px]">
         {/* Section Header */}
         <Reveal className="mx-auto max-w-[800px] text-center">
