@@ -491,7 +491,7 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto max-w-[1180px] text-center">
         <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-[#dcd5f7] bg-white/85 px-4.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm backdrop-blur sm:text-[11px]">
           <AnimatedShinyText className="font-bold tracking-[0.16em]">
-            ✨ AI agent security · enforced at runtime
+            AI agent security · enforced at runtime
           </AnimatedShinyText>
         </motion.div>
 
