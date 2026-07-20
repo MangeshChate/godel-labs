@@ -35,7 +35,7 @@ export default function UseCasesSection() {
             Data becomes context. <span className="text-[#6d49fd]">Policy should follow.</span>
           </h2>
           <p className="mt-6 max-w-[760px] text-[15px] leading-7 text-[#625d6e] sm:text-base">
-            Sensitive information does not remain a file. Inside an AI workflow it becomes a prompt, an MCP response, a model output, a tool argument, and eventually an action. Gödel classifies that information as it moves and enforces how it may be processed, retained, shared, or allowed to influence what happens next.
+            Sensitive information does not remain a file. Inside an AI workflow it becomes a prompt, an MCP response, a model output a tool argument and eventually an action. Gödel classifies that information as it moves and enforces how it may be processed, retained, shared or allowed to influence what happens next.
           </p>
         </Reveal>
 
@@ -66,7 +66,7 @@ export default function UseCasesSection() {
             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">Handling requirements that persist</p>
             <p className="mt-2 text-sm font-semibold text-[#24202d] sm:text-base">Restricted · Internal only · No external output · No memory persistence</p>
           </div>
-          <p className="mt-3 text-sm text-[#696273] sm:mt-0 sm:max-w-[310px] sm:text-right">The format changes. The protection does not.</p>
+
         </Reveal>
       </div>
     </section>

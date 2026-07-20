@@ -7,19 +7,19 @@ const surfaces = [
     icon: Code2,
     label: "Coding agents",
     title: "Native hooks inside the agent loop",
-    body: "Inspect prompts, files, tool calls, MCP exchanges, and actions across Claude Code, Codex, Cursor, Gemini CLI, and other coding agents.",
+    body: "Inspect prompts, files, tool calls, MCP exchanges and actions across Claude Code, Codex, Cursor, Gemini CLI, and other coding agents.",
   },
   {
     icon: AppWindow,
     label: "Browser agents",
     title: "One extension across web AI",
-    body: "Apply the same content and handling policies across ChatGPT, agentic browsers, uploads, pasted content, and browser-driven actions.",
+    body: "Apply the same content and handling policies across ChatGPT, agentic browsers, uploads, pasted content and browser-driven actions.",
   },
   {
     icon: Workflow,
     label: "Agent frameworks",
     title: "Callbacks at every execution boundary",
-    body: "Instrument LangChain, LangGraph, CrewAI, OpenAI agents, and custom frameworks across inputs, outputs, tools, and handoffs.",
+    body: "Instrument LangChain, LangGraph, CrewAI, OpenAI agents and custom frameworks across inputs, outputs, tools and handoffs.",
   },
 ] as const;
 

@@ -15,7 +15,7 @@ export default function ProductSection() {
             <span className="text-[#a58fff]">See what happened next.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-[650px] text-[15px] leading-7 text-white/60">
-            Map every user, device, agent, content classification, source, and decision in one chain. Drill from fleet activity into the exact session, signal, tool call, and verdict.
+            Map every user, device, agent, content classification, source and decision in one chain. Drill from fleet activity into the exact session, signal, tool call and verdict.
           </p>
         </Reveal>
         <Reveal className="mx-auto w-full max-w-[1160px]"><AgentNetworkFlow /></Reveal>

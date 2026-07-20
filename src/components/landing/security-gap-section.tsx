@@ -44,7 +44,7 @@ export default function SecurityGapSection() {
             The same information can be <span className="text-[#a58fff]">safe to summarize and unsafe to send.</span>
           </h2>
           <p className="mt-6 max-w-[720px] text-[15px] leading-7 text-white/60 sm:text-base">
-            Gödel evaluates what the content contains, which agent is using it, where it is headed, what operation is being attempted, and whether threat signals are present before the interaction proceeds.
+            Gödel evaluates what the content contains, which agent is using it, where it is headed, what operation is being attempted and whether threat signals are present before the interaction proceeds.
           </p>
         </Reveal>
 
