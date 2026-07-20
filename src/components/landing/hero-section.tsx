@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Play, Pause, Maximize, Minimize } from "lucide-react";
 import Image from "next/image";
+import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 
 const categories = [
   {
@@ -488,8 +489,10 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#ffffff_0%,#ffffff_25%,rgba(109,73,253,0.3)_65%,#6d49fd_100%)]" />
 
       <div className="relative z-10 mx-auto max-w-[1180px] text-center">
-        <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mx-auto mb-7 inline-flex items-center gap-2.5 rounded-full border border-[#dcd5f7] bg-white/75 px-4.5 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#554f65] shadow-sm backdrop-blur sm:text-[11px]">
-          AI agent security · enforced at runtime
+        <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-[#dcd5f7] bg-white/85 px-4.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm backdrop-blur sm:text-[11px]">
+          <AnimatedShinyText className="font-bold tracking-[0.16em]">
+            ✨ AI agent security · enforced at runtime
+          </AnimatedShinyText>
         </motion.div>
 
         <motion.h1 initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }} className="mx-auto max-w-4xl text-balance text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em] text-[#111322]">

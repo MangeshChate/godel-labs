@@ -244,3 +244,17 @@ summary::-webkit-details-marker {
     font-size: 110%;
   }
 }
+
+/* ── Magic UI Animated Shiny Text ─────────────────────────────────────── */
+@keyframes shiny-text {
+  0% {
+    background-position: calc(-1 * var(--shimmer-width, 140px)) 0;
+  }
+  100% {
+    background-position: calc(100% + var(--shimmer-width, 140px)) 0;
+  }
+}
+
+.animate-shiny-text {
+  animation: shiny-text 3s infinite linear;
+}
