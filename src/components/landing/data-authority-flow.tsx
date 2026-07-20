@@ -79,9 +79,7 @@ export default function DataAuthorityFlow() {
               height={34}
               className="h-auto w-[66px] sm:w-[76px]"
             />
-            <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.19em] text-[#6d49fd] sm:text-[10px]">
-              Runtime
-            </span>
+
           </div>
         </div>
 

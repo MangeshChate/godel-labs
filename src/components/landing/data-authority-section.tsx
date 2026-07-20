@@ -29,10 +29,10 @@ export default function DataAuthoritySection() {
           <Reveal>
             <SectionLabel>Data Authority</SectionLabel>
             <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[#111322] sm:text-4xl lg:text-5xl">
-              Classify information <span className="text-[#6d49fd]">at the moment AI uses it.</span>
+              Classify and protect information <span className="text-[#6d49fd]">at the moment AI uses it.</span>
             </h2>
             <p className="mt-6 text-[15px] leading-7 text-[#655f70] sm:text-base">
-              No pre-labeling required. Gödel inspects content in milliseconds as it enters, leaves, or moves through an AI workflow, then derives the handling requirements that policy must enforce.
+              No pre-labeling required. Gödel inspects content in milliseconds as it enters, leaves, or moves through an AI workflow then derives the handling requirements that policy must enforce.
             </p>
           </Reveal>
 
@@ -104,9 +104,7 @@ export default function DataAuthoritySection() {
               Classification is the signal. Handling policy is the decision.
             </p>
           </div>
-          <p className="mt-3 text-sm text-[#696273] sm:mt-0 sm:max-w-[450px] sm:text-right">
-            Content, agent, destination, action, device, user, and current threat signals are evaluated together.
-          </p>
+
         </Reveal>
       </div>
     </section>
