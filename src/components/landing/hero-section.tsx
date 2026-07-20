@@ -401,6 +401,7 @@ function GuardedAgents() {
                 const logoSrc = agentLogoMap[agentName];
                 const needsFrame = framedAgentLogos.has(agentName);
                 const isWideLogo = wideAgentLogos.has(agentName);
+                const isSwarm = agentName === "OpenAI Swarm";
                 return (
                   <div
                     key={agentName}
@@ -408,8 +409,8 @@ function GuardedAgents() {
                   >
                     <div className="flex items-center gap-2.5">
                       <span
-                        className={`relative flex h-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
-                          isWideLogo ? "w-16 sm:w-[70px]" : "w-7 sm:w-8"
+                        className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
+                          isWideLogo ? "sm:w-[70px]" : "sm:w-8"
                         } ${
                           needsFrame
                             ? "border border-white/60 bg-white/30 shadow-sm"
@@ -420,11 +421,20 @@ function GuardedAgents() {
                           src={logoSrc}
                           alt=""
                           fill
-                          sizes={isWideLogo ? "(min-width: 640px) 70px, 60px" : "(min-width: 640px) 32px, 28px"}
+                          sizes={isWideLogo ? "(min-width: 640px) 70px, 32px" : "(min-width: 640px) 32px, 28px"}
                           className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
                         />
                       </span>
-                      <span className="font-bold text-white drop-shadow-sm">{agentName}</span>
+                      <span className="font-bold text-white drop-shadow-sm">
+                        {isSwarm ? (
+                          <>
+                            <span className="inline sm:hidden">Swarm</span>
+                            <span className="hidden sm:inline">OpenAI Swarm</span>
+                          </>
+                        ) : (
+                          agentName
+                        )}
+                      </span>
                     </div>
                   </div>
                 );
