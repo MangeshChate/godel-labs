@@ -68,7 +68,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative bg-[#f4f3f8] px-5 py-24 sm:px-6 sm:py-28">
+      <section className="relative bg-[#eee9ff] px-5 py-24 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-[1180px]">
           <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
             <Reveal>
@@ -78,17 +78,17 @@ export default function AboutPage() {
               </h2>
             </Reveal>
             <Reveal delay={0.06}>
-              <p className="max-w-[700px] text-[15px] leading-7 text-[#6d6676] sm:text-base">
+              <p className="max-w-[700px] text-[15px] leading-7 text-[#524a61] sm:text-base">
                 We have founded companies, shipped category-defining products, worked inside global security leaders, and partnered with Fortune 500 teams. That history gives us a long memory for what survives contact with the enterprise across Deepfence, Palo Alto Networks, and FireEye.
               </p>
             </Reveal>
           </div>
         </div>
 
-        {/* Solid Zigzag Cut-out Bottom Teeth (Matching Section BG Color #f4f3f8, No Border) */}
+        {/* Solid Zigzag Cut-out Bottom Teeth (Matching Section BG Color #eee9ff, No Border) */}
         <div className="absolute inset-x-0 bottom-0 z-20 h-3 w-full overflow-hidden pointer-events-none translate-y-[99%]">
           <svg
-            className="block h-full w-full text-[#f4f3f8]"
+            className="block h-full w-full text-[#eee9ff]"
             viewBox="0 0 1200 12"
             preserveAspectRatio="none"
             fill="currentColor"
