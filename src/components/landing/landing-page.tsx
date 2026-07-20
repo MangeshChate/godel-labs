@@ -15,9 +15,11 @@ export default function LandingPage({ posts = [] }: { posts?: WordPressPost[] })
   return (
     <>
       <HeroSection />
-      <RuntimeSecuritySection />
-      <UseCasesSection />
       <ProductSection />
+      <RuntimeSecuritySection />
+
+      <UseCasesSection />
+
       <DataAuthoritySection />
       <SecurityGapSection />
       <DeploymentSection />
