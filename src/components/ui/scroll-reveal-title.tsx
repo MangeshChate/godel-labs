@@ -17,7 +17,9 @@ const highlightedKeywords = [
   "browser",
   "terminal",
   "pipeline",
-  "pipelines"
+  "pipelines",
+  "framework",
+  "frameworks",
 ];
 
 function isHighlighted(word: string) {
