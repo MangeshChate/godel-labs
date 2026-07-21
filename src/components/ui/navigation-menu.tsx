@@ -14,6 +14,7 @@ import {
   MessageCircle,
   FileText,
   Sparkles,
+  Scroll,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/brand";
 import { motion, AnimatePresence } from "framer-motion";
@@ -134,7 +135,7 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Sparkles className="h-4 w-4" />
+                <Scroll className="h-4 w-4" />
               </span>
               <div>
                 <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">

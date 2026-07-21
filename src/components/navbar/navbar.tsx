@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code } from "lucide-react";
+import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -313,7 +313,7 @@ export default function Navbar() {
                           onClick={() => setOpen(false)}
                           className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
                         >
-                          <BookOpen className="h-4 w-4 text-[#6d49fd]" /> Manifesto
+                          <Scroll className="h-4 w-4 text-[#6d49fd]" /> Manifesto
                         </Link>
                         <Link
                           href="/demo"
