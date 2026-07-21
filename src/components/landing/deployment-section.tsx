@@ -58,7 +58,7 @@ export default function DeploymentSection() {
         <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-semibold text-[#6c6574]">
           <span>No kernel module</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <span>macOS, Windows, and Linux</span>
+          <span>macOS</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
           <span>Self-hosted or private cloud</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
