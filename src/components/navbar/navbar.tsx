@@ -68,7 +68,6 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <motion.nav
-        layout
         className={`relative mx-auto max-w-[1240px] rounded-[20px] border transition-all duration-300 ${
           scrolled || open || activeDropdown !== null
             ? "border-[#ddd7eb] bg-[#fbfaff]/95 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
@@ -125,7 +124,7 @@ export default function Navbar() {
                   }
                   className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[15px] font-medium transition-all duration-200 ${
                     activeDropdown === "resources"
-                      ? "bg-[#6d49fd]/10 font-semibold text-[#6d49fd]"
+                      ? "bg-[#6d49fd]/10 text-[#6d49fd]"
                       : "text-black hover:text-[#6d49fd]"
                   }`}
                 >
@@ -151,7 +150,7 @@ export default function Navbar() {
                   }
                   className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[15px] font-medium transition-all duration-200 ${
                     activeDropdown === "company"
-                      ? "bg-[#6d49fd]/10 font-semibold text-[#6d49fd]"
+                      ? "bg-[#6d49fd]/10 text-[#6d49fd]"
                       : "text-black hover:text-[#6d49fd]"
                   }`}
                 >
