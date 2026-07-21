@@ -513,7 +513,7 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.18 }} className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
-          Gödel protects coding, browser, desktop and custom agents. It inspects every prompt, tool call & action and stops unsafe ones before they execute.
+          Gödel&apos;s Gate governs what AI agents actually do at runtime — every action taken, every piece of data touched — and stops unsafe ones before they execute.
         </motion.p>
 
         <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.28 }} className="mt-9 flex justify-center">
