@@ -83,6 +83,7 @@ function ProductPreview() {
   const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [hasEnded, setHasEnded] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
@@ -95,6 +96,7 @@ function ProductPreview() {
   const handlePlay = () => {
     setIsPlaying(true);
     setHasStarted(true);
+    setHasEnded(false);
     resetControlsTimeout();
     // Capture duration dynamically if not set yet
     if (videoRef.current && videoRef.current.duration) {
@@ -110,8 +112,22 @@ function ProductPreview() {
     }
   };
 
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setHasEnded(true);
+    setShowControls(true);
+  };
+
   const togglePlay = () => {
     if (!videoRef.current) return;
+    if (hasEnded) {
+      setHasEnded(false);
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch((err) => {
+        console.error("Failed to replay video:", err);
+      });
+      return;
+    }
     if (videoRef.current.paused) {
       videoRef.current.play().catch((err) => {
         console.error("Failed to play video:", err);
@@ -233,17 +249,35 @@ function ProductPreview() {
           <video
             ref={videoRef}
             src="https://dl.godel-labs.ai/website/hero-page-video-godel-gate.mp4"
-            poster="https://dl.godel-labs.ai/website/hero-page-video-godel-gate.png"
+            poster="/mockup/hero-thumbnail.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
-            loop
             playsInline
             preload="metadata"
             onPlay={handlePlay}
             onPause={handlePause}
+            onEnded={handleEnded}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onClick={togglePlay}
           />
+
+          {/* Outro Image Screen when Video Finishes */}
+          {hasEnded && (
+            <div
+              onClick={togglePlay}
+              className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
+            >
+              <Image
+                src="/mockup/hero-outro.png"
+                alt="Gödel's Gate Outro"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:scale-105 transition-all duration-200 z-30">
+                <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
+              </div>
+            </div>
+          )}
 
           <div
             onClick={togglePlay}
