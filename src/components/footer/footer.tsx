@@ -11,7 +11,6 @@ const columns = [
     links: [
       ["Use cases", "/#use-cases"],
       ["Product", "/#product"],
-      ["Data Authority", "/#data-authority"],
       ["Gödel's Sieve", "https://sieve.godel-labs.ai"],
     ],
   },
