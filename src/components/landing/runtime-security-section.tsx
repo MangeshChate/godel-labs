@@ -1,10 +1,13 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import Reveal from "@/components/landing/reveal";
 import ScrollRevealTitle from "@/components/ui/scroll-reveal-title";
 
 interface CapabilityItem {
   title: string;
+  slug: string;
   body: string;
   tagType: "blocked" | "logged" | "report";
   tagContent: string;
@@ -14,6 +17,7 @@ interface CapabilityItem {
 const capabilities: CapabilityItem[] = [
   {
     title: "Session Visibility & Oversight",
+    slug: "session-visibility-oversight",
     body: "See every prompt, session, MCP tool call and action across browser, CLI and desktop agents. Real-time and historical audit of all agent surfaces.",
     tagType: "logged",
     tagContent: "LOGGED",
@@ -21,6 +25,7 @@ const capabilities: CapabilityItem[] = [
   },
   {
     title: "Content Classification",
+    slug: "content-classification",
     body: "Classify every prompt, document, tool output and context source before the agent can use it. Block agents from accessing legal, HR, finance, board materials and source code.",
     tagType: "blocked",
     tagContent: "BLOCKED",
@@ -28,6 +33,7 @@ const capabilities: CapabilityItem[] = [
   },
   {
     title: "Action & Execution Guardrails",
+    slug: "action-execution-guardrails",
     body: "Risk-score and gate shell, git, package, network, cloud and admin actions. Prevent unsafe downstream actions when suspicious or restricted context is in scope.",
     tagType: "blocked",
     tagContent: "BLOCKED",
@@ -35,6 +41,7 @@ const capabilities: CapabilityItem[] = [
   },
   {
     title: "AI Attacks & Trust-surface Defense",
+    slug: "ai-attacks-defense",
     body: "Detect AI attacks in docs, images, PRs, issues, tool output, emails and web content. Monitor CLAUDE.md, AGENTS.md, skills, hooks and local trust files for malicious changes.",
     tagType: "blocked",
     tagContent: "BLOCKED",
@@ -42,6 +49,7 @@ const capabilities: CapabilityItem[] = [
   },
   {
     title: "Data Loss Prevention",
+    slug: "data-loss-prevention",
     body: "Prevent sensitive data from leaving through agent-driven channels, not just email and web. Block classified code, credentials, PII and internal data from reaching Slack, SaaS apps or external LLMs.",
     tagType: "blocked",
     tagContent: "BLOCKED",
@@ -49,6 +57,7 @@ const capabilities: CapabilityItem[] = [
   },
   {
     title: "Audit & Compliance Reporting",
+    slug: "audit-compliance-reporting",
     body: "Generate comprehensive audit trails and compliance reports that demonstrate agent governance in action. Meet SOC 2, ISO 27001, HIPAA and regulatory requirements with one-click evidence.",
     tagType: "report",
     tagContent: "REPORT",
@@ -67,37 +76,50 @@ export default function RuntimeSecuritySection() {
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {capabilities.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05} className="h-full">
-              <div className="group flex h-full flex-col justify-between rounded-[24px] border border-[#6d49fd]/30 bg-white p-7 shadow-[0_1px_3px_rgba(17,19,34,.05),0_8px_24px_rgba(109,73,253,.06)] transition-all duration-300 hover:-translate-y-1 hover:border-2 hover:border-[#6d49fd]/50 hover:shadow-[0_20px_50px_rgba(45,20,110,.08)]">
+              <Link
+                href={`/use-cases/${item.slug}`}
+                className="group flex h-full flex-col justify-between rounded-[24px] border border-[#6d49fd]/30 bg-white p-7 shadow-[0_1px_3px_rgba(17,19,34,.05),0_8px_24px_rgba(109,73,253,.06)] transition-all duration-300 hover:-translate-y-1 hover:border-2 hover:border-[#6d49fd]/60 hover:shadow-[0_20px_50px_rgba(45,20,110,.12)]"
+              >
                 <div>
-                  <h3 className="mb-3 mt-1 text-lg font-bold tracking-[-0.025em] text-[#111322]">
-                    {item.title}
-                  </h3>
-                  <p className="mb-6 text-sm leading-relaxed text-[#54586f]">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="my-1 text-lg font-bold tracking-[-0.025em] text-[#111322] transition group-hover:text-[#6d49fd]">
+                      {item.title}
+                    </h3>
+                    <ArrowRight className="h-4.5 w-4.5 shrink-0 text-[#6d49fd] opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100" />
+                  </div>
+                  <p className="mb-6 mt-3 text-sm leading-relaxed text-[#54586f]">
                     {item.body}
                   </p>
                 </div>
 
-                <div
-                  className={`flex items-center gap-2.5 truncate rounded-[10px] border px-3.5 py-2.5 font-mono text-[12px] ${item.tagType === "logged"
-                    ? "border-[#d5edd9] bg-[#f4faf6] text-[#247c40]"
-                    : item.tagType === "report"
-                      ? "border-[#e4def5] bg-[#f4f3ff] text-[#5e32ff]"
-                      : "border-[#f3d0d0] bg-[#fff5f5] text-[#a83232]"
-                    }`}
-                >
-                  <span
-                    className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${item.tagType === "logged"
-                      ? "bg-green-100 text-green-800"
+                <div className="flex flex-col gap-3">
+                  <div
+                    className={`flex items-center gap-2.5 truncate rounded-[10px] border px-3.5 py-2.5 font-mono text-[12px] ${item.tagType === "logged"
+                      ? "border-[#d5edd9] bg-[#f4faf6] text-[#247c40]"
                       : item.tagType === "report"
-                        ? "bg-[#e4dfff] text-[#5e32ff]"
-                        : "bg-red-100 text-red-800"
+                        ? "border-[#e4def5] bg-[#f4f3ff] text-[#5e32ff]"
+                        : "border-[#f3d0d0] bg-[#fff5f5] text-[#a83232]"
                       }`}
                   >
-                    {item.tagContent}
-                  </span>
-                  <span className="truncate">{item.commandContent}</span>
+                    <span
+                      className={`inline-block rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${item.tagType === "logged"
+                        ? "bg-green-100 text-green-800"
+                        : item.tagType === "report"
+                          ? "bg-[#e4dfff] text-[#5e32ff]"
+                          : "bg-red-100 text-red-800"
+                        }`}
+                    >
+                      {item.tagContent}
+                    </span>
+                    <span className="truncate">{item.commandContent}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1 text-xs font-semibold text-[#6d49fd]">
+                    <span>Explore use case</span>
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>
