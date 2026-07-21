@@ -135,22 +135,25 @@ export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex flex-col justify-start px-1 py-1">
-      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-        USE CASES
-      </span>
-      <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="mb-2.5 flex items-center justify-between border-b border-[#eee8f6] pb-2 px-1">
+        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
+          USE CASES
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 items-stretch">
         {useCaseItems.map((item) => (
           <Link
             key={item.title}
             href={item.href}
             onClick={onClose}
-            className="group flex flex-col justify-between rounded-xl border border-[#e2daf0] bg-[#fbfaff] p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,0.08)]"
+            className="group flex h-full min-h-[98px] flex-col justify-between rounded-xl border border-[#e2daf0] bg-[#fbfaff] p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,0.08)]"
           >
-            <div>
-              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+            <div className="flex h-full flex-col justify-between">
+              <p className="text-sm font-semibold leading-snug text-[#211c2a] transition group-hover:text-[#6d49fd]">
                 {item.title}
               </p>
-              <p className="mt-1 text-xs leading-4 text-[#736c7e]">
+              <p className="mt-2 text-xs leading-4 text-[#736c7e]">
                 {item.desc}
               </p>
             </div>
