@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowUpRight, MessageCircle } from "lucide-react";
-import { GithubIcon, LinkedinIcon, type BrandIcon } from "@/components/icons/brand";
+import { ArrowUpRight } from "lucide-react";
+import { GithubIcon, LinkedinIcon, DiscordIcon, type BrandIcon } from "@/components/icons/brand";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ const columns = [
   {
     title: "Product",
     links: [
-      ["Use cases", "/#use-cases"],
+      ["Use cases", "/use-cases"],
       ["Product", "/#product"],
       ["Gödel's Sieve", "https://sieve.godel-labs.ai"],
     ],
@@ -50,7 +50,7 @@ export default function Footer() {
               {[
                 [GithubIcon, "https://github.com/godellabs-ai", "GitHub"],
                 [LinkedinIcon, "https://www.linkedin.com/company/godel-labs/", "LinkedIn"],
-                [MessageCircle, "https://discord.gg/HGXeCxJ532", "Discord"],
+                [DiscordIcon, "https://discord.gg/HGXeCxJ532", "Discord"],
               ].map(([Icon, href, label]) => {
                 const I = Icon as BrandIcon;
                 return <Link key={String(label)} href={String(href)} target="_blank" rel="noreferrer" aria-label={String(label)} className="grid h-10 w-10 place-items-center rounded-full border border-white/12 bg-white/5 text-white/55 transition hover:-translate-y-0.5 hover:border-[#8e75f8] hover:bg-[#6d49fd] hover:text-white"><I className="h-4 w-4" /></Link>;

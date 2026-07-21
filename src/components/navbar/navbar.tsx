@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll } from "lucide-react";
+import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll, Globe, Cpu, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,16 +10,16 @@ import { NavMegaPanel } from "@/components/ui/navigation-menu";
 
 const standardLinks = [
   { label: "Product", href: "/#product" },
-  { label: "Use cases", href: "/#use-cases" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<"resources" | "company" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"use-cases" | "resources" | "company" | null>(null);
   const pathname = usePathname();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [mobileUseCasesOpen, setMobileUseCasesOpen] = useState(false);
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false);
 
@@ -54,7 +54,7 @@ export default function Navbar() {
     }
   };
 
-  const handleMouseEnter = (dropdown: "resources" | "company") => {
+  const handleMouseEnter = (dropdown: "use-cases" | "resources" | "company") => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setActiveDropdown(dropdown);
   };
@@ -62,7 +62,7 @@ export default function Navbar() {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 180);
+    }, 150);
   };
 
   return (
@@ -99,6 +99,32 @@ export default function Navbar() {
           {/* Desktop & Tablet Navigation Links & Triggers */}
           <div className="pointer-events-none hidden lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
             <div className="pointer-events-auto flex items-center gap-1.5 lg:gap-2">
+              {/* Use Cases Trigger */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("use-cases")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveDropdown(activeDropdown === "use-cases" ? null : "use-cases")
+                  }
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[15px] font-medium transition-all duration-200 ${
+                    activeDropdown === "use-cases"
+                      ? "bg-[#6d49fd]/10 text-[#6d49fd]"
+                      : "text-black hover:text-[#6d49fd]"
+                  }`}
+                >
+                  <span>Use Cases</span>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      activeDropdown === "use-cases" ? "rotate-180 text-[#6d49fd]" : "text-[#7b7489]"
+                    }`}
+                  />
+                </button>
+              </div>
+
               {standardLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -243,14 +269,93 @@ export default function Navbar() {
                     Product
                   </Link>
 
-                  {/* Use Cases Link */}
-                  <Link
-                    href="/#use-cases"
-                    onClick={(e) => handleNavClick(e, "/#use-cases")}
-                    className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
-                  >
-                    Use cases
-                  </Link>
+                  {/* Use Cases Mobile Accordion Card */}
+                  <div className="rounded-2xl border border-[#ece6f7] bg-[#f9f8fe] p-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setMobileUseCasesOpen(!mobileUseCasesOpen)}
+                      className="flex w-full items-center justify-between px-2 py-1.5 text-base font-semibold text-[#1c1825]"
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <ShieldCheck className="h-4.5 w-4.5 text-[#6d49fd]" /> Use Cases
+                      </span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          mobileUseCasesOpen ? "rotate-180 text-[#6d49fd]" : "text-[#8a8298]"
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {mobileUseCasesOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
+                            <Link
+                              href="/use-cases/secure-ai-coding-agents"
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
+                                <Code className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1c1825]">AI Coding Agents</p>
+                                <p className="text-[11px] text-[#736c7e]">Protect .env, keys & terminals</p>
+                              </div>
+                            </Link>
+
+                            <Link
+                              href="/use-cases/secure-browser-agents"
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
+                                <Globe className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1c1825]">Browser Agents</p>
+                                <p className="text-[11px] text-[#736c7e]">Stop prompt injection & DLP leaks</p>
+                              </div>
+                            </Link>
+
+                            <Link
+                              href="/use-cases/secure-ai-frameworks"
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
+                                <Cpu className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1c1825]">Frameworks & MCP</p>
+                                <p className="text-[11px] text-[#736c7e]">Govern MCP tools & pipelines</p>
+                              </div>
+                            </Link>
+
+                            <Link
+                              href="/use-cases/data-authority-dlp"
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
+                                <ShieldCheck className="h-4 w-4" />
+                              </span>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1c1825]">Data Authority & DLP</p>
+                                <p className="text-[11px] text-[#736c7e]">LLM input/output classification</p>
+                              </div>
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
                   {/* Resources Mobile Accordion Card */}
                   <div className="rounded-2xl border border-[#ece6f7] bg-[#f9f8fe] p-2.5">

@@ -14,6 +14,9 @@ import {
   FileText,
   Sparkles,
   Scroll,
+  Globe,
+  Cpu,
+  ShieldCheck,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, DiscordIcon } from "@/components/icons/brand";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +30,7 @@ export function NavMegaPanel({
   onClose,
 }: {
   isOpen: boolean;
-  activeKey: "resources" | "company" | null;
+  activeKey: "use-cases" | "resources" | "company" | null;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   onClose: () => void;
@@ -50,7 +53,17 @@ export function NavMegaPanel({
           {/* Wide & Minimalist Panel Card (840px wide) */}
           <div className="relative w-[840px] overflow-hidden rounded-[24px] border border-[#e2daee]/90 bg-white p-5 shadow-[0_24px_60px_rgba(24,14,50,.11)] backdrop-blur-2xl">
             <AnimatePresence mode="wait">
-              {activeKey === "company" ? (
+              {activeKey === "use-cases" ? (
+                <motion.div
+                  key="use-cases"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 8 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <UseCasesMegaContent onClose={onClose} />
+                </motion.div>
+              ) : activeKey === "company" ? (
                 <motion.div
                   key="company"
                   initial={{ opacity: 0, x: 8 }}
@@ -79,7 +92,114 @@ export function NavMegaPanel({
   );
 }
 
-// ── Company Dropdown Content (Clickable Card & Footer Social Links) ───────────
+// ── Use Cases Dropdown Content ────────────────────────────────────────────────
+export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="flex gap-6">
+      {/* Left Featured Card */}
+      <div className="flex w-[290px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5">
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
+            ENTERPRISE SECURITY
+          </span>
+          <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825]">
+            Zero-Trust Data Authority for AI Agents
+          </h4>
+          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
+            Enforce real-time policies across coding agents, browser automation, MCP tools, and LLM pipelines.
+          </p>
+        </div>
+
+        <Link
+          href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
+          target="_blank"
+          rel="noreferrer"
+          onClick={onClose}
+          className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd] hover:underline"
+        >
+          <span>Explore documentation</span>
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      </div>
+
+      {/* Right 2-Column Use Cases Grid */}
+      <div className="grid flex-1 grid-cols-2 gap-4 py-1">
+        <Link
+          href="/use-cases/secure-ai-coding-agents"
+          onClick={onClose}
+          className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+        >
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+            <Code className="h-4.5 w-4.5" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+              AI Coding Agents
+            </p>
+            <p className="mt-0.5 text-xs text-[#736c7e]">
+              Protect .env, keys & terminals in Claude Code, Cursor & Codex
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/use-cases/secure-browser-agents"
+          onClick={onClose}
+          className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+        >
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+            <Globe className="h-4.5 w-4.5" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+              Browser Agents
+            </p>
+            <p className="mt-0.5 text-xs text-[#736c7e]">
+              Prevent prompt injection & DLP leaks in web automation
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/use-cases/secure-ai-frameworks"
+          onClick={onClose}
+          className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+        >
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+            <Cpu className="h-4.5 w-4.5" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+              Frameworks & MCP
+            </p>
+            <p className="mt-0.5 text-xs text-[#736c7e]">
+              Govern MCP tools, LangChain & agent workflows
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/use-cases/data-authority-dlp"
+          onClick={onClose}
+          className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+        >
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+            <ShieldCheck className="h-4.5 w-4.5" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+              Data Authority & DLP
+            </p>
+            <p className="mt-0.5 text-xs text-[#736c7e]">
+              Real-time classification for LLM prompts & responses
+            </p>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 // ── Company Dropdown Content (Clickable Card & Company Links) ───────────
 export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
   return (
