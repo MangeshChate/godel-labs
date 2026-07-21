@@ -232,7 +232,7 @@ function ProductPreview() {
         >
           <video
             ref={videoRef}
-            src="https://dl.godel-labs.ai/website/hero-godel-gate-screen-recording.mp4"
+            src="https://dl.godel-labs.ai/website/hero-page-video-godel-gate.mov"
             poster="/mockup/godel-gate.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
             loop
