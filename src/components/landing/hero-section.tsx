@@ -290,7 +290,7 @@ function ProductPreview() {
 
           <div
             onClick={togglePlay}
-            className={`absolute inset-0 z-10 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-all duration-300 ${isPlaying && !showControls ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
+            className={`absolute inset-0 z-10 flex items-center justify-center bg-transparent transition-all duration-300 ${isPlaying && !showControls ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
               }`}
           >
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
