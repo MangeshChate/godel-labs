@@ -35,6 +35,11 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  // Other use cases to navigate to
+  const otherUseCases = Object.values(useCasesData).filter(
+    (item) => item.slug !== slug
+  );
+
   return (
     <main className="min-h-screen bg-[#f7f5ff] text-[#111322]">
       <Navbar />
@@ -127,6 +132,56 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Explore Other Use Cases Section */}
+      <section className="border-t border-[#e5dff0] bg-white px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-[1020px]">
+          <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <SectionLabel>Ecosystem Navigation</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[#111322] sm:text-4xl">
+                Explore Other Use Cases
+              </h2>
+            </div>
+            <Link
+              href="/use-cases"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd] hover:underline"
+            >
+              <span>View All 6 Use Cases</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </Reveal>
+
+          {/* Grid of Other Use Cases */}
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {otherUseCases.map((item, idx) => (
+              <Reveal key={item.slug} delay={idx * 0.06}>
+                <Link
+                  href={`/use-cases/${item.slug}`}
+                  className="group flex h-full flex-col justify-between rounded-2xl border border-[#e5dfef] bg-[#fbfaff] p-5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-md"
+                >
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
+                      {item.badge}
+                    </span>
+                    <h3 className="mt-2 text-base font-semibold text-[#1c1825] transition group-hover:text-[#6d49fd]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-5 text-[#6e6878]">
+                      {item.shortDescription}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-[#6d49fd]">
+                    <span>Learn more</span>
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

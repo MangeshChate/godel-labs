@@ -98,56 +98,38 @@ export function NavMegaPanel({
   );
 }
 
-// ── Use Cases Dropdown Content (Premium 2-Column Card Grid UI) ─────────────────
+// ── Use Cases Dropdown Content (Minimalist Bordered Card Grid, No Icons, No Tags) ─────
 export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
   const useCaseItems = [
     {
       title: "Session Visibility & Oversight",
-      desc: "See every prompt, session, MCP call & action across all agent surfaces in real time.",
+      desc: "See every prompt, session, MCP call & action across all agents in real time.",
       href: "/use-cases/session-visibility-oversight",
-      icon: Eye,
-      tag: "LOGGED",
-      tagStyle: "border-[#ccebd2] bg-[#f2faf4] text-[#1b7a37]",
     },
     {
       title: "Content Classification",
       desc: "Classify prompts & context sources before agents read legal, HR or source code.",
       href: "/use-cases/content-classification",
-      icon: FileCheck,
-      tag: "BLOCKED",
-      tagStyle: "border-[#fcd7d7] bg-[#fff3f3] text-[#b92525]",
     },
     {
       title: "Action & Execution Guardrails",
       desc: "Risk-score and gate shell, git, package, cloud and network actions dynamically.",
       href: "/use-cases/action-execution-guardrails",
-      icon: ShieldAlert,
-      tag: "BLOCKED",
-      tagStyle: "border-[#fcd7d7] bg-[#fff3f3] text-[#b92525]",
     },
     {
       title: "AI Attacks & Trust-Surface Defense",
       desc: "Detect prompt injections & monitor CLAUDE.md, AGENTS.md and trust files.",
       href: "/use-cases/ai-attacks-defense",
-      icon: Lock,
-      tag: "BLOCKED",
-      tagStyle: "border-[#fcd7d7] bg-[#fff3f3] text-[#b92525]",
     },
     {
       title: "Data Loss Prevention (DLP)",
       desc: "Block classified code, credentials, PII and internal data from reaching external LLMs.",
       href: "/use-cases/data-loss-prevention",
-      icon: Shield,
-      tag: "BLOCKED",
-      tagStyle: "border-[#fcd7d7] bg-[#fff3f3] text-[#b92525]",
     },
     {
       title: "Audit & Compliance Reporting",
       desc: "One-click audit evidence generation for SOC 2, ISO 27001, HIPAA & EU AI Act.",
       href: "/use-cases/audit-compliance-reporting",
-      icon: ClipboardCheck,
-      tag: "REPORT",
-      tagStyle: "border-[#e0d8f7] bg-[#f4f1ff] text-[#5e32ff]",
     },
   ];
 
@@ -156,53 +138,37 @@ export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
       {/* Sub-header Bar */}
       <div className="flex items-center justify-between border-b border-[#eee8f6] pb-2 px-1">
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
-          RUNTIME AGENT SECURITY USE CASES
+          USE CASES
         </span>
         <Link
           href="/use-cases"
           onClick={onClose}
           className="flex items-center gap-1 text-xs font-semibold text-[#6d49fd] transition hover:underline"
         >
-          <span>View Overview</span>
+          <span>View All Use Cases</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
 
-      {/* 2-Column Grid of 6 Premium Interactive Cards */}
+      {/* 2-Column Minimalist Bordered Grid */}
       <div className="grid grid-cols-2 gap-3 pt-1">
-        {useCaseItems.map((item) => {
-          const IconComp = item.icon;
-          return (
-            <Link
-              key={item.title}
-              href={item.href}
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-2xl border border-[#ece6f7] bg-[#fbfaff] p-3 transition-all duration-200 hover:border-[#6d49fd]/45 hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,.07)]"
-            >
-              <span className="mt-0.5 grid h-8.5 w-8.5 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition-all duration-200 group-hover:bg-[#6d49fd] group-hover:text-white group-hover:scale-105">
-                <IconComp className="h-4 w-4" />
-              </span>
-
-              <div className="flex flex-1 flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-1.5">
-                    <p className="text-xs font-bold tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-                      {item.title}
-                    </p>
-                    <span
-                      className={`inline-block shrink-0 rounded-md border px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider ${item.tagStyle}`}
-                    >
-                      {item.tag}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-[11px] leading-4 text-[#6e6878]">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+        {useCaseItems.map((item) => (
+          <Link
+            key={item.title}
+            href={item.href}
+            onClick={onClose}
+            className="group flex flex-col justify-between rounded-xl border border-[#e5dfef] bg-white p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f8f5fe] hover:shadow-[0_4px_16px_rgba(109,73,253,.07)]"
+          >
+            <div>
+              <p className="text-xs font-bold tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+                {item.title}
+              </p>
+              <p className="mt-1 text-[11px] leading-4 text-[#6e6878]">
+                {item.desc}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
