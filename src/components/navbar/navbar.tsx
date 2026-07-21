@@ -309,6 +309,13 @@ export default function Navbar() {
                           <Building2 className="h-4 w-4 text-[#6d49fd]" /> About Us
                         </Link>
                         <Link
+                          href="/about-us#manifesto"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <BookOpen className="h-4 w-4 text-[#6d49fd]" /> Manifesto
+                        </Link>
+                        <Link
                           href="/demo"
                           onClick={() => setOpen(false)}
                           className="flex items-center gap-2 text-sm font-medium text-[#524a61]"

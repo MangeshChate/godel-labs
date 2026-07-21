@@ -13,6 +13,7 @@ import {
   ExternalLink,
   MessageCircle,
   FileText,
+  Sparkles,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/brand";
 import { motion, AnimatePresence } from "framer-motion";
@@ -84,7 +85,7 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
     <div className="flex gap-6">
       {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Resources) */}
       <Link
-        href="/demo"
+        href="/about-us"
         onClick={onClose}
         className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
       >
@@ -93,15 +94,12 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
             GÖDEL LABS
           </span>
           <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-            Building the runtime security layer for an AI-native world.
+            “Software is becoming agency. Security must move with it.”
           </h4>
-          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
-            Partner with our security team to protect ambitious enterprise AI programs.
-          </p>
         </div>
 
         <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
-          <span>Request a demo</span>
+          <span>Learn about our mission</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
         </div>
       </Link>
@@ -127,6 +125,22 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
                   About Us
                 </p>
                 <p className="mt-0.5 text-xs text-[#736c7e]">Mission & team</p>
+              </div>
+            </Link>
+
+            <Link
+              href="/about-us#manifesto"
+              onClick={onClose}
+              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
+            >
+              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                  Manifesto
+                </p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Core principles</p>
               </div>
             </Link>
 
