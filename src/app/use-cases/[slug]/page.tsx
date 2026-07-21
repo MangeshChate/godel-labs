@@ -51,10 +51,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
 
         <div className="relative mx-auto max-w-[1020px]">
           <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#6d49fd]/20 bg-[#6d49fd]/8 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
-              <span>{useCase.badge}</span>
-            </div>
-            <h1 className="mt-4 max-w-[880px] text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111322] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-[880px] text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111322] sm:text-5xl lg:text-6xl">
               {useCase.title}
             </h1>
             <p className="mt-5 max-w-[760px] text-base leading-7 text-[#5d576a] sm:text-lg sm:leading-8">
@@ -163,10 +160,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
                   className="group flex h-full flex-col justify-between rounded-2xl border border-[#e5dfef] bg-[#fbfaff] p-5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-md"
                 >
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
-                      {item.badge}
-                    </span>
-                    <h3 className="mt-2 text-base font-semibold text-[#1c1825] transition group-hover:text-[#6d49fd]">
+                    <h3 className="text-base font-semibold text-[#1c1825] transition group-hover:text-[#6d49fd]">
                       {item.title}
                     </h3>
                     <p className="mt-1.5 text-xs leading-5 text-[#6e6878]">

@@ -40,14 +40,14 @@ export default function UseCasesIndexPage() {
       {/* All 6 Use Cases List In One Place */}
       <section className="border-t border-[#e5dff0] bg-white px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-[1040px] flex flex-col gap-20">
-          {useCasesList.map((uc, idx) => (
+          {useCasesList.map((uc) => (
             <Reveal key={uc.slug} delay={0.05}>
               <div className="overflow-hidden rounded-[28px] border border-[#e5dfef] bg-[#fbfaff] p-6 shadow-sm transition hover:border-[#6d49fd]/40 hover:shadow-md sm:p-8">
                 {/* Header info */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#6d49fd]/20 bg-[#6d49fd]/8 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
-                    <span>{uc.badge}</span>
-                  </div>
+                  <h2 className="text-2xl font-semibold tracking-tight text-[#111322] sm:text-3xl">
+                    {uc.title}
+                  </h2>
                   <Link
                     href={`/use-cases/${uc.slug}`}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd] hover:underline"
@@ -57,9 +57,6 @@ export default function UseCasesIndexPage() {
                   </Link>
                 </div>
 
-                <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[#111322] sm:text-3xl">
-                  {uc.title}
-                </h2>
                 <p className="mt-3 text-sm leading-6 text-[#5d576a] sm:text-base">
                   {uc.description}
                 </p>
