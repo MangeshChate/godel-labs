@@ -98,62 +98,52 @@ export function NavMegaPanel({
   );
 }
 
-// ── Use Cases Dropdown Content (Clean 3-Column Grid, No Side Card, No Icons) ───────────────
+// ── Use Cases Dropdown Content (4 Agent Use Case Blocks) ───────────────
 export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
   const useCaseItems = [
     {
-      title: "Session Visibility & Oversight",
-      desc: "See every prompt, MCP call & action across all agents",
-      href: "/use-cases/session-visibility-oversight",
+      title: "Secure Coding Agents",
+      desc: "Govern every file read, shell command & MCP tool call your coding agents make",
+      href: "/use-cases/secure-coding-agents",
     },
     {
-      title: "Content Classification",
-      desc: "Block access to HR, board memo, legal & source code",
-      href: "/use-cases/content-classification",
+      title: "Secure Browser Agents",
+      desc: "Govern what agentic browsers read, fill, click, and submit across the web",
+      href: "/use-cases/secure-browser-agents",
     },
     {
-      title: "Action & Execution Guardrails",
-      desc: "Risk-score & gate shell, git, package & cloud actions",
-      href: "/use-cases/action-execution-guardrails",
+      title: "Secure Desktop Agents",
+      desc: "Govern file access, desktop app actions, and screen captures on the endpoint",
+      href: "/use-cases/secure-desktop-agents",
     },
     {
-      title: "AI Attacks & Defense",
-      desc: "Detect prompt injection & monitor CLAUDE.md & trust files",
-      href: "/use-cases/ai-attacks-defense",
-    },
-    {
-      title: "Data Loss Prevention (DLP)",
-      desc: "Block classified code, keys & PII from external LLMs",
-      href: "/use-cases/data-loss-prevention",
-    },
-    {
-      title: "Audit & Compliance Reporting",
-      desc: "1-click audit reporting for SOC 2, ISO 27001 & HIPAA",
-      href: "/use-cases/audit-compliance-reporting",
+      title: "Secure Framework Agents",
+      desc: "Enforce policy inside LangChain, LangGraph, CrewAI & AutoGen pipelines",
+      href: "/use-cases/secure-framework-agents",
     },
   ];
 
   return (
     <div className="flex flex-col justify-start px-1 py-1">
-      <div className="mb-2 flex items-center justify-between px-1">
+      <div className="mb-2.5 flex items-center justify-between px-1">
         <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-          USE CASES
+          USE CASES BY AGENT SURFACE
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-3.5 w-full items-stretch">
+      <div className="grid grid-cols-2 gap-3.5 w-full items-stretch">
         {useCaseItems.map((item) => (
           <Link
             key={item.title}
             href={item.href}
             onClick={onClose}
-            className="group flex h-full min-h-[122px] w-full flex-col justify-between rounded-xl border border-[#e2daf0] bg-[#fbfaff] p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,0.08)]"
+            className="group flex h-full min-h-[110px] w-full flex-col justify-between rounded-xl border border-[#e2daf0] bg-[#fbfaff] p-4 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,0.08)]"
           >
             <div className="flex h-full flex-col justify-between">
               <p className="text-sm font-semibold leading-snug text-[#211c2a] transition group-hover:text-[#6d49fd]">
                 {item.title}
               </p>
-              <p className="mt-2 text-xs leading-relaxed text-[#736c7e]">
+              <p className="mt-1.5 text-xs leading-relaxed text-[#736c7e]">
                 {item.desc}
               </p>
             </div>

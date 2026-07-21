@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/footer/footer";
 import Reveal from "@/components/landing/reveal";
 import SectionLabel from "@/components/landing/section-label";
 import { useCasesData } from "@/data/use-cases";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, VideoOff } from "lucide-react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -35,7 +36,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  // Other use cases to navigate to
+  // Other 3 use cases to navigate to
   const otherUseCases = Object.values(useCasesData).filter(
     (item) => item.slug !== slug
   );
@@ -44,20 +45,26 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
     <main className="min-h-screen bg-[#f7f5ff] text-[#111322]">
       <Navbar />
 
-      {/* Header / Title Section */}
-      <section className="relative overflow-hidden px-4 pb-12 pt-28 sm:px-6 sm:pb-14 sm:pt-36">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden px-4 pb-12 pt-28 sm:px-6 sm:pb-16 sm:pt-36">
         <div className="hero-grid absolute inset-0 opacity-45" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-[linear-gradient(to_bottom,rgba(109,73,253,.08),transparent_80%)]" />
 
         <div className="relative mx-auto max-w-[1020px]">
           <Reveal>
-            <h1 className="max-w-[880px] text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111322] sm:text-5xl lg:text-6xl">
-              {useCase.title}
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#6d49fd]/20 bg-[#6d49fd]/8 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
+              <span>{useCase.badge}</span>
+            </div>
+
+            <h1 className="mt-4 max-w-[880px] text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-[#111322] sm:text-5xl lg:text-6xl">
+              {useCase.heroHeading}
             </h1>
+
             <p className="mt-5 max-w-[760px] text-base leading-7 text-[#5d576a] sm:text-lg sm:leading-8">
               {useCase.description}
             </p>
 
+            {/* CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
@@ -76,43 +83,172 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
                 <ArrowRight className="h-4 w-4 text-[#6d49fd]" />
               </Link>
             </div>
+
+            {/* Supported Tools List */}
+            {useCase.supportedTools && useCase.supportedTools.length > 0 && (
+              <div className="mt-11 border-t border-[#e5dff0] pt-6">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#8b849b]">
+                  Works with every {useCase.shortTitle.toLowerCase().replace(/s$/, "")}
+                </p>
+                <div className="mt-3.5 flex flex-wrap items-center gap-2.5">
+                  {useCase.supportedTools.map((tool) => (
+                    <span
+                      key={tool.name}
+                      className="inline-flex items-center gap-2 rounded-full border border-[#e2dcf3] bg-white px-4 py-2 text-xs font-semibold text-[#3d3849] shadow-sm"
+                    >
+                      {tool.icon && (
+                        <Image
+                          src={tool.icon}
+                          alt={tool.name}
+                          width={16}
+                          height={16}
+                          className="h-4 w-4 object-contain"
+                        />
+                      )}
+                      <span>{tool.name}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </Reveal>
         </div>
       </section>
 
-      {/* Video Demonstration Section */}
+      {/* Walkthrough Demonstration Section */}
       <section className="border-t border-[#e5dff0] bg-white px-4 py-14 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-[1020px]">
           <Reveal className="max-w-[760px]">
             <SectionLabel>Walkthrough Demonstration</SectionLabel>
             <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-[#111322] sm:text-3xl">
-              See {useCase.shortTitle} in action
+              See {useCase.shortTitle.toLowerCase()} security in action
             </h2>
             <p className="mt-2 text-sm leading-6 text-[#625d6e] sm:text-base">
               {useCase.videoCaption}
             </p>
           </Reveal>
 
-          {/* Video Player Frame */}
+          {/* Video Player Frame or Blank Video Placeholder */}
           <Reveal className="mt-8 overflow-hidden rounded-[24px] border border-[#ded5f0] bg-[#110e1c] p-2 shadow-[0_20px_50px_rgba(24,14,50,.15)] sm:p-3">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[18px] bg-black">
-              <video
-                src={useCase.videoSrc}
-                controls
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-cover"
-              >
-                Your browser does not support HTML5 video playback.
-              </video>
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[18px] bg-[#141124]">
+              {useCase.videoSrc ? (
+                <video
+                  src={useCase.videoSrc}
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover"
+                >
+                  Your browser does not support HTML5 video playback.
+                </video>
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#6d49fd]/20 text-[#a58fff] sm:h-16 sm:w-16">
+                    <VideoOff className="h-7 w-7" />
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-white sm:text-lg">
+                    Desktop Agent Walkthrough Demonstration
+                  </h3>
+                  <p className="mt-1.5 max-w-md text-xs leading-relaxed text-[#9d93b8] sm:text-sm">
+                    Watch Gödel intercept a desktop agent reaching for files outside its task scope — attributed, checked, and stopped before data leaves the machine.
+                  </p>
+                </div>
+              )}
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Information Paragraphs Below Video */}
+      {/* Threat Scenarios Section */}
+      {useCase.threatScenarios && useCase.threatScenarios.length > 0 && (
+        <section className="border-t border-[#e5dff0] bg-[#f7f5ff] px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-[1020px]">
+            <Reveal>
+              <SectionLabel>Caught at runtime</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-[#111322] sm:text-4xl">
+                Six ways a {useCase.shortTitle.toLowerCase().replace(/s$/, "")} goes wrong.<br />
+                Six verdicts before it can.
+              </h2>
+              <p className="mt-3 max-w-[680px] text-sm leading-6 text-[#5d576a] sm:text-base">
+                Real traces from the enforcement path. Every action is attributed to its user and agent identity, checked against the data it touches, and decided in under 5 ms.
+              </p>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {useCase.threatScenarios.map((ts) => (
+                  <div
+                    key={ts.title}
+                    className="flex flex-col justify-between gap-3.5 rounded-[18px] border border-[#e4dced] bg-white p-6 shadow-sm transition hover:border-[#6d49fd]/40 hover:shadow-md"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm font-semibold text-[#111322]">
+                          {ts.title}
+                        </p>
+                        <span
+                          className={`inline-block shrink-0 rounded-md px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${
+                            ts.chipType === "blocked"
+                              ? "border border-[#f6cdd1] bg-[#fdebec] text-[#c92a3a]"
+                              : ts.chipType === "redacted"
+                              ? "border border-[#f3ddb8] bg-[#fdf3e4] text-[#b06a08]"
+                              : "border border-[#c6e8d4] bg-[#e9f7ef] text-[#177245]"
+                          }`}
+                        >
+                          {ts.chipText}
+                        </span>
+                      </div>
+
+                      <p className="mt-3 rounded-xl border border-[#eae4f8] bg-[#f6f3fd] p-3 font-mono text-[12px] leading-relaxed text-[#524a66] break-all">
+                        {ts.command}
+                      </p>
+
+                      <p className="mt-3 text-xs leading-relaxed text-[#625d6e]">
+                        {ts.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* Six Controls Section */}
+      {useCase.controls && useCase.controls.length > 0 && (
+        <section className="border-t border-[#e5dff0] bg-white px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-[1020px]">
+            <Reveal>
+              <SectionLabel>Full coverage</SectionLabel>
+              <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-[#111322] sm:text-4xl">
+                All six controls, on this surface
+              </h2>
+              <p className="mt-3 max-w-[680px] text-sm leading-6 text-[#5d576a] sm:text-base">
+                Every Gödel enforcement capability applies to {useCase.shortTitle.toLowerCase()} out of the box — one policy engine across identity, data access, and runtime action.
+              </p>
+
+              <div className="mt-9 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+                {useCase.controls.map((ctrl) => (
+                  <div
+                    key={ctrl.title}
+                    className="rounded-2xl border border-[#e5dfef] bg-[#fbfaff] p-5"
+                  >
+                    <p className="text-sm font-semibold text-[#1c1825]">
+                      {ctrl.title}
+                    </p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-[#6e6878]">
+                      {ctrl.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* Overview & Architecture Section */}
       <section className="border-t border-[#e5dff0] bg-[#f7f5ff] px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-[920px]">
           <Reveal>
@@ -121,7 +257,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
               How Gödel secures {useCase.shortTitle.toLowerCase()}
             </h2>
 
-            <div className="mt-8 flex flex-col gap-6 text-base leading-8 text-[#484254] sm:text-[17px] sm:leading-8">
+            <div className="mt-8 flex flex-col gap-5 text-base leading-8 text-[#484254] sm:text-[16.5px] sm:leading-8">
               {useCase.detailedParagraphs.map((paragraph, index) => (
                 <p key={index} className="rounded-2xl border border-[#e4dced] bg-white p-6 sm:p-7 shadow-sm">
                   {paragraph}
@@ -137,22 +273,21 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
         <div className="mx-auto max-w-[1020px]">
           <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <SectionLabel>Ecosystem Navigation</SectionLabel>
+              <SectionLabel>Every agent surface</SectionLabel>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[#111322] sm:text-4xl">
-                Explore Other Use Cases
+                Explore other use cases
               </h2>
             </div>
             <Link
               href="/use-cases"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd] hover:underline"
             >
-              <span>View All 6 Use Cases</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>View All Use Cases →</span>
             </Link>
           </Reveal>
 
-          {/* Grid of Other Use Cases */}
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Grid of 3 Other Agent Use Cases */}
+          <div className="mt-9 grid gap-4 sm:grid-cols-3">
             {otherUseCases.map((item, idx) => (
               <Reveal key={item.slug} delay={idx * 0.06}>
                 <Link
@@ -163,7 +298,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
                     <h3 className="text-base font-semibold text-[#1c1825] transition group-hover:text-[#6d49fd]">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 text-xs leading-5 text-[#6e6878]">
+                    <p className="mt-2 text-xs leading-relaxed text-[#6e6878]">
                       {item.shortDescription}
                     </p>
                   </div>
@@ -176,6 +311,39 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="border-t border-[#e5dff0] bg-[#f7f5ff] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[760px] text-center">
+          <Reveal>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight text-[#111322] sm:text-5xl">
+              Put a gate in front of every {useCase.shortTitle.toLowerCase().replace(/s$/, "")}.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-[#625d6e]">
+              Local-first enforcement, deployed in minutes. Your agents keep shipping — the unsafe actions don't.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#6d49fd] px-7 py-3.5 text-sm font-semibold text-white shadow-md transition duration-150 hover:bg-[#5e32ff] active:scale-[0.97]"
+              >
+                <span>Install Gödel Security Gate</span>
+                <Download className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/demo"
+                className="inline-flex items-center gap-2 rounded-full border border-[#d6ceed] bg-white px-7 py-3.5 text-sm font-semibold text-[#221d2d] transition duration-150 hover:border-[#6d49fd]/40 hover:bg-[#f3effd] active:scale-[0.97]"
+              >
+                <span>Book Demo</span>
+                <ArrowRight className="h-4 w-4 text-[#6d49fd]" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 

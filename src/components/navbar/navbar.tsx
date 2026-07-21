@@ -297,57 +297,39 @@ export default function Navbar() {
                         >
                           <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
                             <Link
-                              href="/use-cases/session-visibility-oversight"
+                              href="/use-cases/secure-coding-agents"
                               onClick={() => setOpen(false)}
                               className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Session Visibility & Oversight</p>
-                              <p className="text-[11px] text-[#736c7e]">Real-time session oversight</p>
+                              <p className="text-sm font-semibold text-[#1c1825]">Secure Coding Agents</p>
+                              <p className="text-[11px] text-[#736c7e]">Govern shell, git & MCP tool calls</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/content-classification"
+                              href="/use-cases/secure-browser-agents"
                               onClick={() => setOpen(false)}
                               className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Content Classification</p>
-                              <p className="text-[11px] text-[#736c7e]">Block legal, HR, board & code</p>
+                              <p className="text-sm font-semibold text-[#1c1825]">Secure Browser Agents</p>
+                              <p className="text-[11px] text-[#736c7e]">Govern web page reads, clicks & fills</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/action-execution-guardrails"
+                              href="/use-cases/secure-desktop-agents"
                               onClick={() => setOpen(false)}
                               className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Execution Guardrails</p>
-                              <p className="text-[11px] text-[#736c7e]">Gate shell, git & cloud actions</p>
+                              <p className="text-sm font-semibold text-[#1c1825]">Secure Desktop Agents</p>
+                              <p className="text-[11px] text-[#736c7e]">Govern files, desktop apps & screens</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/ai-attacks-defense"
+                              href="/use-cases/secure-framework-agents"
                               onClick={() => setOpen(false)}
                               className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">AI Attacks Defense</p>
-                              <p className="text-[11px] text-[#736c7e]">Monitor CLAUDE.md & trust files</p>
-                            </Link>
-
-                            <Link
-                              href="/use-cases/data-loss-prevention"
-                              onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
-                            >
-                              <p className="text-sm font-semibold text-[#1c1825]">Data Loss Prevention (DLP)</p>
-                              <p className="text-[11px] text-[#736c7e]">Block data leakage to LLMs</p>
-                            </Link>
-
-                            <Link
-                              href="/use-cases/audit-compliance-reporting"
-                              onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
-                            >
-                              <p className="text-sm font-semibold text-[#1c1825]">Audit & Compliance</p>
-                              <p className="text-[11px] text-[#736c7e]">SOC 2 & ISO compliance audit</p>
+                              <p className="text-sm font-semibold text-[#1c1825]">Secure Framework Agents</p>
+                              <p className="text-[11px] text-[#736c7e]">Enforce policy in LangChain & CrewAI</p>
                             </Link>
                           </div>
                         </motion.div>

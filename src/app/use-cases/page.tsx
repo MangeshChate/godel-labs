@@ -61,19 +61,27 @@ export default function UseCasesIndexPage() {
                   {uc.description}
                 </p>
 
-                {/* Video Player */}
+                {/* Video Player or Blank Placeholder */}
                 <div className="mt-6 overflow-hidden rounded-[20px] border border-[#ded5f0] bg-[#110e1c] p-2 shadow-sm sm:p-2.5">
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[14px] bg-black">
-                    <video
-                      src={uc.videoSrc}
-                      controls
-                      loop
-                      muted
-                      playsInline
-                      className="h-full w-full object-cover"
-                    >
-                      Your browser does not support HTML5 video playback.
-                    </video>
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[14px] bg-[#141124]">
+                    {uc.videoSrc ? (
+                      <video
+                        src={uc.videoSrc}
+                        controls
+                        loop
+                        muted
+                        playsInline
+                        className="h-full w-full object-cover"
+                      >
+                        Your browser does not support HTML5 video playback.
+                      </video>
+                    ) : (
+                      <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
+                        <p className="font-mono text-xs text-[#8f86b8]">
+                          [ Desktop agent walkthrough demonstration ]
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 

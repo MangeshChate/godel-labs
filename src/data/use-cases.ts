@@ -1,18 +1,36 @@
 import useCasesJson from "./use-cases.json";
 
+export interface SupportedTool {
+  name: string;
+  icon?: string;
+}
+
+export interface ThreatScenario {
+  title: string;
+  chipType: "blocked" | "redacted" | "held" | "logged";
+  chipText: string;
+  command: string;
+  description: string;
+}
+
+export interface ControlItem {
+  title: string;
+  description: string;
+}
+
 export interface UseCase {
   slug: string;
   badge: string;
   title: string;
   shortTitle: string;
+  heroHeading: string;
   description: string;
   shortDescription: string;
   videoSrc: string;
   videoCaption: string;
-  iconName: "Eye" | "FileCheck" | "ShieldAlert" | "Lock" | "Shield" | "ClipboardCheck";
-  tagType: "logged" | "blocked" | "report";
-  tagContent: string;
-  commandContent: string;
+  supportedTools?: SupportedTool[];
+  threatScenarios?: ThreatScenario[];
+  controls?: ControlItem[];
   detailedParagraphs: string[];
 }
 
