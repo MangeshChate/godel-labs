@@ -20,7 +20,7 @@ const capabilities: CapabilityItem[] = [
     commandContent: "session → 47 prompts, 12 files read",
   },
   {
-    title: "Content Classification & Access Control",
+    title: "Content Classification",
     body: "Classify every prompt, document, tool output and context source before the agent can use it. Block agents from accessing legal, HR, finance, board materials and source code.",
     tagType: "blocked",
     tagContent: "BLOCKED",
