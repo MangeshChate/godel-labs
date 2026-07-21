@@ -259,22 +259,22 @@ export default function Navbar() {
               className="overflow-hidden lg:hidden"
             >
               <div className="border-t border-[#e8e2f2] px-4 pb-6 pt-4">
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1 py-1">
                   {/* Product Link */}
                   <Link
                     href="/#product"
                     onClick={(e) => handleNavClick(e, "/#product")}
-                    className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                   >
                     Product
                   </Link>
 
-                  {/* Use Cases Mobile Accordion Card */}
-                  <div className="rounded-2xl border border-[#ece6f7] bg-[#f9f8fe] p-2.5">
+                  {/* Use Cases Mobile Dropdown */}
+                  <div>
                     <button
                       type="button"
                       onClick={() => setMobileUseCasesOpen(!mobileUseCasesOpen)}
-                      className="flex w-full items-center justify-between px-2 py-1.5 text-base font-semibold text-[#1c1825]"
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
                       <span className="flex items-center gap-2.5">
                         <ShieldCheck className="h-4.5 w-4.5 text-[#6d49fd]" /> Use Cases
@@ -292,44 +292,40 @@ export default function Navbar() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.18 }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
+                          <div className="ml-4 flex flex-col gap-1 border-l-2 border-[#e8e1f5] pl-3 py-1.5 my-1">
                             <Link
                               href="/use-cases/secure-coding-agents"
                               onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Secure Coding Agents</p>
-                              <p className="text-[11px] text-[#736c7e]">Govern shell, git & MCP tool calls</p>
+                              Secure Coding Agents
                             </Link>
 
                             <Link
                               href="/use-cases/secure-browser-agents"
                               onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Secure Browser Agents</p>
-                              <p className="text-[11px] text-[#736c7e]">Govern web page reads, clicks & fills</p>
+                              Secure Browser Agents
                             </Link>
 
                             <Link
                               href="/use-cases/secure-desktop-agents"
                               onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Secure Desktop Agents</p>
-                              <p className="text-[11px] text-[#736c7e]">Govern files, desktop apps & screens</p>
+                              Secure Desktop Agents
                             </Link>
 
                             <Link
                               href="/use-cases/secure-framework-agents"
                               onClick={() => setOpen(false)}
-                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <p className="text-sm font-semibold text-[#1c1825]">Secure Framework Agents</p>
-                              <p className="text-[11px] text-[#736c7e]">Enforce policy in LangChain & CrewAI</p>
+                              Secure Framework Agents
                             </Link>
                           </div>
                         </motion.div>
@@ -337,12 +333,12 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Resources Mobile Accordion Card */}
-                  <div className="rounded-2xl border border-[#ece6f7] bg-[#f9f8fe] p-2.5">
+                  {/* Resources Mobile Dropdown */}
+                  <div>
                     <button
                       type="button"
                       onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
-                      className="flex w-full items-center justify-between px-2 py-1.5 text-base font-semibold text-[#1c1825]"
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
                       <span className="flex items-center gap-2.5">
                         <BookOpen className="h-4.5 w-4.5 text-[#6d49fd]" /> Resources
@@ -360,36 +356,24 @@ export default function Navbar() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.18 }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
+                          <div className="ml-4 flex flex-col gap-1 border-l-2 border-[#e8e1f5] pl-3 py-1.5 my-1">
                             <Link
                               href="/blog"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <BookOpen className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Blog</p>
-                                <p className="text-[11px] text-[#736c7e]">Research & updates</p>
-                              </div>
+                              Blog
                             </Link>
 
                             <Link
                               href="/blog"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Newspaper className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">News</p>
-                                <p className="text-[11px] text-[#736c7e]">Latest announcements</p>
-                              </div>
+                              News
                             </Link>
 
                             <Link
@@ -397,17 +381,9 @@ export default function Navbar() {
                               target="_blank"
                               rel="noreferrer"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="flex items-center gap-1 rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Code className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="flex items-center gap-1 text-sm font-semibold text-[#1c1825]">
-                                  Docs <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
-                                </p>
-                                <p className="text-[11px] text-[#736c7e]">Installation & guides</p>
-                              </div>
+                              Docs <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
                             </Link>
                           </div>
                         </motion.div>
@@ -415,12 +391,12 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Company Mobile Accordion Card */}
-                  <div className="rounded-2xl border border-[#ece6f7] bg-[#f9f8fe] p-2.5">
+                  {/* Company Mobile Dropdown */}
+                  <div>
                     <button
                       type="button"
                       onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
-                      className="flex w-full items-center justify-between px-2 py-1.5 text-base font-semibold text-[#1c1825]"
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
                       <span className="flex items-center gap-2.5">
                         <Building2 className="h-4.5 w-4.5 text-[#6d49fd]" /> Company
@@ -438,36 +414,24 @@ export default function Navbar() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.18 }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
+                          <div className="ml-4 flex flex-col gap-1 border-l-2 border-[#e8e1f5] pl-3 py-1.5 my-1">
                             <Link
                               href="/about-us"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Building2 className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">About Us</p>
-                                <p className="text-[11px] text-[#736c7e]">Mission & team</p>
-                              </div>
+                              About Us
                             </Link>
 
                             <Link
                               href="/demo"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Mail className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Contact Us</p>
-                                <p className="text-[11px] text-[#736c7e]">Talk to our team</p>
-                              </div>
+                              Contact Us
                             </Link>
                           </div>
                         </motion.div>
@@ -479,7 +443,7 @@ export default function Navbar() {
                   <Link
                     href="/#why-godel"
                     onClick={(e) => handleNavClick(e, "/#why-godel")}
-                    className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                   >
                     Why Gödel
                   </Link>
@@ -488,7 +452,7 @@ export default function Navbar() {
                   <Link
                     href="/#faq"
                     onClick={(e) => handleNavClick(e, "/#faq")}
-                    className="flex items-center justify-between rounded-xl px-3.5 py-3 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                   >
                     FAQ
                   </Link>
