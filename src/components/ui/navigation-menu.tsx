@@ -98,7 +98,7 @@ export function NavMegaPanel({
   );
 }
 
-// ── Use Cases Dropdown Content (Matches Resources & Company Layout, No Icons) ───────────────
+// ── Use Cases Dropdown Content (Clean 3-Column Grid, No Side Card, No Icons) ───────────────
 export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
   const useCaseItems = [
     {
@@ -134,53 +134,26 @@ export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
   ];
 
   return (
-    <div className="flex gap-6">
-      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Resources & Company) */}
-      <Link
-        href="/use-cases"
-        onClick={onClose}
-        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
-      >
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-            USE CASES OVERVIEW
-          </span>
-          <h4 className="mt-2.5 text-[15px] font-semibold leading-5 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-            Zero-Trust Runtime Security for AI Agents
-          </h4>
-          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
-            Enforce real-time security policies across coding agents, browser automation, MCP tools, and LLM pipelines.
-          </p>
-        </div>
-
-        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
-          <span>View all 6 use cases</span>
-          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-        </div>
-      </Link>
-
-      {/* Right 2-Column Grid (No Icons, Matching Resources & Company Hover Style) */}
-      <div className="flex flex-1 flex-col justify-start py-1">
-        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-          USE CASES
-        </span>
-        <div className="mt-2.5 grid grid-cols-2 gap-2">
-          {useCaseItems.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              onClick={onClose}
-              className="group flex flex-col rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
-            >
-              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                {item.title}
-              </p>
-              <p className="mt-0.5 text-xs leading-4 text-[#736c7e]">
-                {item.desc}
-              </p>
-            </Link>
-          ))}
-        </div>
+    <div className="flex flex-col justify-start px-1 py-1">
+      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
+        USE CASES
+      </span>
+      <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {useCaseItems.map((item) => (
+          <Link
+            key={item.title}
+            href={item.href}
+            onClick={onClose}
+            className="group flex flex-col justify-start rounded-xl p-3 transition hover:bg-[#f5f2fd]"
+          >
+            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+              {item.title}
+            </p>
+            <p className="mt-1 text-xs leading-4 text-[#736c7e]">
+              {item.desc}
+            </p>
+          </Link>
+        ))}
       </div>
     </div>
   );
