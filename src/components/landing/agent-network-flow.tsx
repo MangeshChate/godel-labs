@@ -320,19 +320,19 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
 }
 
 const columnHeaders = [
-  { x: 34, label: "Users", color: "#7258e8", Icon: UserRound },
-  { x: 218, label: "Platform", color: "#3977eb", Icon: Laptop },
-  { x: 405, label: "Agents", color: "#079c8a", Icon: Bot },
-  { x: 590, label: "Taxonomy", color: "#12b981", Icon: FolderCheck },
-  { x: 775, label: "Data source", color: "#258fcf", Icon: Database },
-  { x: 982, label: "Decision", color: "#1aa775", Icon: ShieldCheck },
+  { x: 34, label: "users", color: "#7258e8", Icon: UserRound },
+  { x: 218, label: "platform", color: "#3977eb", Icon: Laptop },
+  { x: 405, label: "agents", color: "#079c8a", Icon: Bot },
+  { x: 590, label: "taxonomy", color: "#12b981", Icon: FolderCheck },
+  { x: 765, label: "data source / mcp", color: "#258fcf", Icon: Database },
+  { x: 982, label: "decision", color: "#1aa775", Icon: ShieldCheck },
 ];
 
 function HeaderLabels() {
   return (
     <>
       {columnHeaders.map(({ x, label, color, Icon }) => (
-        <div key={label} className="absolute top-7 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.13em]" style={{ left: x, color }}>
+        <div key={label} className="absolute top-7 flex items-center gap-1.5 text-[11px] font-medium lowercase tracking-wide" style={{ left: x, color }}>
           <Icon className="h-4 w-4" />
           {label}
         </div>
