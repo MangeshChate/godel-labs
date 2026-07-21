@@ -415,7 +415,7 @@ function GuardedAgents() {
                 return (
                   <div
                     key={agentName}
-                    className="group flex min-w-0 items-center justify-center gap-2 text-[11px] font-bold tracking-[0.02em] text-white transition sm:justify-start sm:pl-3 md:pl-5 lg:pl-7 sm:text-xs"
+                    className="group flex min-w-0 items-center justify-center gap-2 text-[11px] font-bold tracking-[0.02em] text-white transition sm:justify-center sm:pl-0 sm:text-xs"
                   >
                     <span
                       className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
