@@ -6,11 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import {
-  NavDropdown,
-  CompanyMegaMenu,
-  ResourcesMegaMenu,
-} from "@/components/ui/navigation-menu";
+import { NavMegaPanel } from "@/components/ui/navigation-menu";
 
 const standardLinks = [
   { label: "Why Gödel", href: "/#why-godel" },
@@ -67,14 +63,14 @@ export default function Navbar() {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150);
+    }, 180);
   };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <motion.nav
         layout
-        className={`mx-auto max-w-[1240px] rounded-[18px] border transition-all duration-300 ${
+        className={`relative mx-auto max-w-[1240px] rounded-[18px] border transition-all duration-300 ${
           scrolled || open || activeDropdown !== null
             ? "border-[#ddd7eb] bg-[#fbfaff]/95 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
             : "border-[#e3ddee]/80 bg-[#fbfaff]/72 backdrop-blur-md"
@@ -102,7 +98,7 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation Links & Triggers */}
           <div className="pointer-events-none hidden lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
             <div className="pointer-events-auto flex items-center gap-2">
               {standardLinks.map((link) => (
@@ -110,42 +106,70 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
+                  onMouseEnter={() => setActiveDropdown(null)}
                   className="rounded-full px-4 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
                 >
                   {link.label}
                 </Link>
               ))}
 
-              {/* Resources Dropdown */}
-              <NavDropdown
-                label="Resources"
-                isOpen={activeDropdown === "resources"}
-                onToggle={() =>
-                  setActiveDropdown(activeDropdown === "resources" ? null : "resources")
-                }
+              {/* Resources Trigger */}
+              <div
+                className="relative"
                 onMouseEnter={() => handleMouseEnter("resources")}
                 onMouseLeave={handleMouseLeave}
               >
-                <ResourcesMegaMenu onClose={() => setActiveDropdown(null)} />
-              </NavDropdown>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveDropdown(activeDropdown === "resources" ? null : "resources")
+                  }
+                  className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[15px] font-medium transition-all duration-200 ${
+                    activeDropdown === "resources"
+                      ? "bg-[#6d49fd]/10 font-semibold text-[#6d49fd]"
+                      : "text-black hover:text-[#6d49fd]"
+                  }`}
+                >
+                  <span>Resources</span>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      activeDropdown === "resources" ? "rotate-180 text-[#6d49fd]" : "text-[#7b7489]"
+                    }`}
+                  />
+                </button>
+              </div>
 
-              {/* Company Dropdown */}
-              <NavDropdown
-                label="Company"
-                isOpen={activeDropdown === "company"}
-                onToggle={() =>
-                  setActiveDropdown(activeDropdown === "company" ? null : "company")
-                }
+              {/* Company Trigger */}
+              <div
+                className="relative"
                 onMouseEnter={() => handleMouseEnter("company")}
                 onMouseLeave={handleMouseLeave}
               >
-                <CompanyMegaMenu onClose={() => setActiveDropdown(null)} />
-              </NavDropdown>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveDropdown(activeDropdown === "company" ? null : "company")
+                  }
+                  className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[15px] font-medium transition-all duration-200 ${
+                    activeDropdown === "company"
+                      ? "bg-[#6d49fd]/10 font-semibold text-[#6d49fd]"
+                      : "text-black hover:text-[#6d49fd]"
+                  }`}
+                >
+                  <span>Company</span>
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      activeDropdown === "company" ? "rotate-180 text-[#6d49fd]" : "text-[#7b7489]"
+                    }`}
+                  />
+                </button>
+              </div>
 
               {/* FAQ */}
               <Link
                 href="/#faq"
                 onClick={(e) => handleNavClick(e, "/#faq")}
+                onMouseEnter={() => setActiveDropdown(null)}
                 className="rounded-full px-4 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
               >
                 FAQ
@@ -175,6 +199,19 @@ export default function Navbar() {
               {open ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
             </button>
           </div>
+        </div>
+
+        {/* Seamless Shared Desktop Mega Dropdown Panel */}
+        <div className="hidden lg:block">
+          <NavMegaPanel
+            isOpen={activeDropdown !== null}
+            activeKey={activeDropdown}
+            onMouseEnter={() => {
+              if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            }}
+            onMouseLeave={handleMouseLeave}
+            onClose={() => setActiveDropdown(null)}
+          />
         </div>
 
         {/* Mobile Navigation Drawer */}
