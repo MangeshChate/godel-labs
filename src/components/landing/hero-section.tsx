@@ -280,7 +280,7 @@ function ProductPreview() {
                   className="object-cover"
                 />
                 {hasEnded && (
-                  <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:scale-105 transition-all duration-200 z-30">
+                  <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-black/40 hover:scale-105 transition-all duration-200 z-30">
                     <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
                   </div>
                 )}
@@ -302,7 +302,7 @@ function ProductPreview() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
+                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-black/40 hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
                   >
                     <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
                   </motion.div>
@@ -314,7 +314,7 @@ function ProductPreview() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
+                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-black/40 hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
                   >
                     <Pause className="h-10 w-10 sm:h-12 sm:w-12 fill-white" />
                   </motion.div>
