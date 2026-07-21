@@ -88,18 +88,15 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
       <Link
         href="/about-us"
         onClick={onClose}
-        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
+        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-6 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
       >
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-            GÖDEL LABS
-          </span>
-          <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+        <div className="flex flex-1 flex-col justify-center">
+          <h4 className="text-[19px] font-semibold leading-[1.38] tracking-tight text-[#171320] transition group-hover:text-[#6d49fd]">
             “Software is becoming agency. Security must move with it.”
           </h4>
         </div>
 
-        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
+        <div className="mt-6 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
           <span>Learn about our mission</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
         </div>
