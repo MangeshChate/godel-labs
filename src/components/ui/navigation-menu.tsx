@@ -226,7 +226,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
       >
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-            LATEST RESEARCH
+            LATEST BLOG
           </span>
           <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
             Detecting PII Leaks in LLM Pipeline Streams
@@ -237,7 +237,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
-          <span>Read research paper</span>
+          <span>Read blog post</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
         </div>
       </Link>
