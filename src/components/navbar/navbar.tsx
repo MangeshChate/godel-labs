@@ -1,25 +1,32 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Download, Menu, X } from "lucide-react";
+import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import {
+  NavDropdown,
+  CompanyMegaMenu,
+  ResourcesMegaMenu,
+} from "@/components/ui/navigation-menu";
 
-const links = [
+const standardLinks = [
   { label: "Why Gödel", href: "/#why-godel" },
   { label: "Product", href: "/#product" },
   { label: "Use cases", href: "/#use-cases" },
-  { label: "About us", href: "/about-us" },
-  { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/#faq" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<"resources" | "company" | null>(null);
   const pathname = usePathname();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
+  const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -37,6 +44,7 @@ export default function Navbar() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setOpen(false);
+    setActiveDropdown(null);
 
     if (href.startsWith("/#")) {
       const targetId = href.replace("/#", "");
@@ -51,13 +59,24 @@ export default function Navbar() {
     }
   };
 
+  const handleMouseEnter = (dropdown: "resources" | "company") => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveDropdown(dropdown);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <motion.nav
         layout
-        className={`mx-auto max-w-[1240px] overflow-hidden rounded-[18px] border transition-all duration-300 ${
-          scrolled || open
-            ? "border-[#ddd7eb] bg-[#fbfaff]/90 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
+        className={`mx-auto max-w-[1240px] rounded-[18px] border transition-all duration-300 ${
+          scrolled || open || activeDropdown !== null
+            ? "border-[#ddd7eb] bg-[#fbfaff]/95 shadow-[0_12px_38px_rgba(38,24,78,.09)] backdrop-blur-xl"
             : "border-[#e3ddee]/80 bg-[#fbfaff]/72 backdrop-blur-md"
         }`}
         aria-label="Main navigation"
@@ -66,7 +85,10 @@ export default function Navbar() {
           <Link
             href="/"
             className="relative z-10 flex shrink-0 items-center"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              setActiveDropdown(null);
+            }}
             aria-label="Gödel Labs home"
           >
             <Image
@@ -80,18 +102,54 @@ export default function Navbar() {
             />
           </Link>
 
+          {/* Desktop Navigation */}
           <div className="pointer-events-none hidden lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
-            <div className="pointer-events-auto flex items-center gap-7">
-              {links.map((link) => (
+            <div className="pointer-events-auto flex items-center gap-2">
+              {standardLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
+                  className="rounded-full px-4 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
                 >
                   {link.label}
                 </Link>
               ))}
+
+              {/* Resources Dropdown */}
+              <NavDropdown
+                label="Resources"
+                isOpen={activeDropdown === "resources"}
+                onToggle={() =>
+                  setActiveDropdown(activeDropdown === "resources" ? null : "resources")
+                }
+                onMouseEnter={() => handleMouseEnter("resources")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <ResourcesMegaMenu onClose={() => setActiveDropdown(null)} />
+              </NavDropdown>
+
+              {/* Company Dropdown */}
+              <NavDropdown
+                label="Company"
+                isOpen={activeDropdown === "company"}
+                onToggle={() =>
+                  setActiveDropdown(activeDropdown === "company" ? null : "company")
+                }
+                onMouseEnter={() => handleMouseEnter("company")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <CompanyMegaMenu onClose={() => setActiveDropdown(null)} />
+              </NavDropdown>
+
+              {/* FAQ */}
+              <Link
+                href="/#faq"
+                onClick={(e) => handleNavClick(e, "/#faq")}
+                className="rounded-full px-4 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
+              >
+                FAQ
+              </Link>
             </div>
           </div>
 
@@ -119,6 +177,7 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* Mobile Navigation Drawer */}
         <AnimatePresence initial={false}>
           {open && (
             <motion.div
@@ -130,7 +189,7 @@ export default function Navbar() {
             >
               <div className="border-t border-[#e5dfef] px-4 pb-5 pt-3">
                 <div className="flex flex-col">
-                  {links.map((link, index) => (
+                  {standardLinks.map((link, index) => (
                     <motion.div
                       key={link.label}
                       initial={{ opacity: 0, x: -8 }}
@@ -140,14 +199,107 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link.href)}
-                        className="flex items-center justify-between border-b border-[#ebe7f2] py-4 text-[15px] font-medium text-black"
+                        className="flex items-center justify-between border-b border-[#ebe7f2] py-3.5 text-[15px] font-medium text-black"
                       >
                         {link.label}
                         <span className="text-[#9b93a8]">0{index + 1}</span>
                       </Link>
                     </motion.div>
                   ))}
+
+                  {/* Mobile Accordion: Resources */}
+                  <div className="border-b border-[#ebe7f2] py-3">
+                    <button
+                      onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                      className="flex w-full items-center justify-between py-1 text-[15px] font-medium text-black"
+                    >
+                      <span>Resources</span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${
+                          mobileResourcesOpen ? "rotate-180 text-[#6d49fd]" : "text-[#9b93a8]"
+                        }`}
+                      />
+                    </button>
+                    {mobileResourcesOpen && (
+                      <div className="mt-2 flex flex-col gap-2.5 pl-3 pt-1">
+                        <Link
+                          href="/blog"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <BookOpen className="h-4 w-4 text-[#6d49fd]" /> Blog
+                        </Link>
+                        <Link
+                          href="/blog"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <Newspaper className="h-4 w-4 text-[#6d49fd]" /> News
+                        </Link>
+                        <Link
+                          href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <Code className="h-4 w-4 text-[#6d49fd]" /> Docs <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Accordion: Company */}
+                  <div className="border-b border-[#ebe7f2] py-3">
+                    <button
+                      onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
+                      className="flex w-full items-center justify-between py-1 text-[15px] font-medium text-black"
+                    >
+                      <span>Company</span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${
+                          mobileCompanyOpen ? "rotate-180 text-[#6d49fd]" : "text-[#9b93a8]"
+                        }`}
+                      />
+                    </button>
+                    {mobileCompanyOpen && (
+                      <div className="mt-2 flex flex-col gap-2.5 pl-3 pt-1">
+                        <Link
+                          href="/about-us"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <Building2 className="h-4 w-4 text-[#6d49fd]" /> About Us
+                        </Link>
+                        <Link
+                          href="/demo"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <Mail className="h-4 w-4 text-[#6d49fd]" /> Contact Us
+                        </Link>
+                        <Link
+                          href="/about-us#manifesto"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <BookOpen className="h-4 w-4 text-[#6d49fd]" /> Manifesto
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* FAQ */}
+                  <Link
+                    href="/#faq"
+                    onClick={(e) => handleNavClick(e, "/#faq")}
+                    className="flex items-center justify-between border-b border-[#ebe7f2] py-3.5 text-[15px] font-medium text-black"
+                  >
+                    FAQ
+                    <span className="text-[#9b93a8]">06</span>
+                  </Link>
                 </div>
+
                 <Link
                   href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
                   target="_blank"
