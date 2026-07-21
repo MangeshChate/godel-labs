@@ -41,6 +41,13 @@ export function NavMegaPanel({
   onMouseLeave: () => void;
   onClose: () => void;
 }) {
+  const arrowLeftStyle =
+    activeKey === "use-cases"
+      ? "left-[165px]"
+      : activeKey === "resources"
+      ? "left-[380px]"
+      : "left-[497px]";
+
   return (
     <AnimatePresence>
       {isOpen && activeKey && (
@@ -53,8 +60,10 @@ export function NavMegaPanel({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
-          {/* Subtle top indicator triangle */}
-          <div className="absolute top-2 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-l border-t border-[#e2daee] bg-white" />
+          {/* Top indicator triangle pointing directly under the active link */}
+          <div
+            className={`absolute top-2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-l border-t border-[#e2daee] bg-white transition-all duration-300 ease-out z-10 ${arrowLeftStyle}`}
+          />
 
           {/* Wide & Minimalist Panel Card (840px wide) */}
           <div className="relative w-[840px] overflow-hidden rounded-[24px] border border-[#e2daee]/90 bg-white p-5 shadow-[0_24px_60px_rgba(24,14,50,.11)] backdrop-blur-2xl">
