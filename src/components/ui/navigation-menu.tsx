@@ -11,12 +11,11 @@ import {
   Code,
   Newspaper,
   ExternalLink,
-  MessageCircle,
   FileText,
   Sparkles,
   Scroll,
 } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/icons/brand";
+import { GithubIcon, LinkedinIcon, DiscordIcon } from "@/components/icons/brand";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ── Shared Mega Panel Container for Seamless Transitions ──────────────────────
@@ -210,7 +209,7 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <MessageCircle className="h-4 w-4" />
+                <DiscordIcon className="h-4 w-4" />
               </span>
               <div>
                 <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
@@ -232,7 +231,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
     <div className="flex gap-6">
       {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Company) */}
       <Link
-        href="/blog/securing-ai-coding-agents-in-sandbox-environments"
+        href="/blog/why-claude-code-can-read-your-env-ssh-keys-and-cloud-credentials-and-what-to-do-about-it"
         onClick={onClose}
         className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
       >
@@ -240,11 +239,11 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
             LATEST BLOG
           </span>
-          <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-            Securing AI Coding Agents in Sandbox Environments
+          <h4 className="mt-2.5 text-[15px] font-semibold leading-5 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+            Why Claude Code Can Read Your .env, SSH Keys, and Cloud Credentials
           </h4>
           <p className="mt-2 text-xs leading-5 text-[#6e6878]">
-            Analyzing execution paths of autonomous coding agents and preventing host compromise.
+            Your coding agent can read your secret keys right now. Here is how to prevent credential exposure.
           </p>
         </div>
 
