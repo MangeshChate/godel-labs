@@ -405,7 +405,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-3 gap-x-1.5 gap-y-3.5 px-0.5 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
+              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-3 gap-x-2 gap-y-3.5 px-2 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
             >
               {currentCategory.agents.map((agentName) => {
                 const logoSrc = agentLogoMap[agentName];
@@ -415,7 +415,7 @@ function GuardedAgents() {
                 return (
                   <div
                     key={agentName}
-                    className="group flex min-w-0 items-center justify-start gap-1.5 text-[10.5px] font-bold tracking-[0.02em] text-white transition sm:w-1/5 sm:justify-center sm:text-xs"
+                    className="group flex min-w-0 items-center justify-center gap-1.5 text-[11px] font-bold tracking-[0.02em] text-white transition sm:w-1/5 sm:text-xs"
                   >
                     <span
                       className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
