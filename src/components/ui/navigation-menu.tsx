@@ -135,7 +135,7 @@ export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex flex-col justify-start px-1 py-1">
-      <div className="mb-2.5 flex items-center justify-between border-b border-[#eee8f6] pb-2 px-1">
+      <div className="mb-2 flex items-center justify-between px-1">
         <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
           USE CASES
         </span>
