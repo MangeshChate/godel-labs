@@ -365,8 +365,9 @@ function GuardedAgents() {
   }, []);
 
   return (
-    <div className="mx-auto mt-8 max-w-[1040px]">
-      <div className="relative flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:p-6">
+    <div className="relative z-20 mx-auto mt-8 max-w-[1040px] px-2 sm:mt-12">
+      <div className="relative flex flex-col items-center">
+        {/* Category Header */}
         <div className="h-6 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.p
@@ -375,13 +376,14 @@ function GuardedAgents() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="text-xs font-bold uppercase tracking-[0.14em] text-white/90 sm:text-sm"
+              className="text-xs font-bold uppercase tracking-[0.16em] text-white sm:text-sm"
             >
               {currentCategory.title}
             </motion.p>
           </AnimatePresence>
         </div>
 
+        {/* Bullet indicators */}
         <div className="mt-2 flex items-center gap-1.5">
           {categories.map((_, idx) => (
             <button
@@ -394,7 +396,8 @@ function GuardedAgents() {
           ))}
         </div>
 
-        <div className="relative mt-5 h-[135px] w-full sm:h-[92px]">
+        {/* Agents carousel container — fixed height to prevent layout shift & overflow */}
+        <div className="relative mt-5 h-[145px] w-full sm:h-[92px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -402,7 +405,7 @@ function GuardedAgents() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-2 gap-y-3 px-1 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
+              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-3 gap-x-1.5 gap-y-3.5 px-0.5 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
             >
               {currentCategory.agents.map((agentName) => {
                 const logoSrc = agentLogoMap[agentName];
@@ -412,31 +415,29 @@ function GuardedAgents() {
                 return (
                   <div
                     key={agentName}
-                    className="group flex items-center justify-start pl-2 text-[11px] font-bold tracking-[0.03em] text-white transition sm:w-1/5 sm:justify-center sm:pl-0 sm:text-xs"
+                    className="group flex min-w-0 items-center justify-start gap-1.5 text-[10.5px] font-bold tracking-[0.02em] text-white transition sm:w-1/5 sm:justify-center sm:text-xs"
                   >
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <span
-                        className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
-                          isWideLogo ? "sm:w-[70px]" : "sm:w-8"
-                        } ${
-                          needsFrame
-                            ? "border border-white/60 bg-white/30 shadow-sm"
-                            : ""
-                        }`}
-                      >
-                        <Image
-                          src={logoSrc}
-                          alt=""
-                          fill
-                          sizes={isWideLogo ? "(min-width: 640px) 70px, 32px" : "(min-width: 640px) 32px, 28px"}
-                          className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
-                        />
-                      </span>
-                      <span className="truncate font-bold text-white drop-shadow-sm">
-                        <span className="inline sm:hidden">{mobileName}</span>
-                        <span className="hidden sm:inline">{agentName}</span>
-                      </span>
-                    </div>
+                    <span
+                      className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
+                        isWideLogo ? "sm:w-[70px]" : "sm:w-8"
+                      } ${
+                        needsFrame
+                          ? "border border-white/60 bg-white/30 shadow-sm"
+                          : ""
+                      }`}
+                    >
+                      <Image
+                        src={logoSrc}
+                        alt=""
+                        fill
+                        sizes={isWideLogo ? "(min-width: 640px) 70px, 32px" : "(min-width: 640px) 32px, 28px"}
+                        className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
+                      />
+                    </span>
+                    <span className="truncate font-bold text-white drop-shadow-sm">
+                      <span className="inline sm:hidden">{mobileName}</span>
+                      <span className="hidden sm:inline">{agentName}</span>
+                    </span>
                   </div>
                 );
               })}
