@@ -316,11 +316,22 @@ export default function Navbar() {
                           <Mail className="h-4 w-4 text-[#6d49fd]" /> Contact Us
                         </Link>
                         <Link
-                          href="/about-us#manifesto"
+                          href="https://github.com/godellabs-ai"
+                          target="_blank"
+                          rel="noreferrer"
                           onClick={() => setOpen(false)}
                           className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
                         >
-                          <BookOpen className="h-4 w-4 text-[#6d49fd]" /> Manifesto
+                          <Code className="h-4 w-4 text-[#6d49fd]" /> GitHub <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
+                        </Link>
+                        <Link
+                          href="https://www.linkedin.com/company/godel-labs/"
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 text-sm font-medium text-[#524a61]"
+                        >
+                          <Building2 className="h-4 w-4 text-[#6d49fd]" /> LinkedIn <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
                         </Link>
                       </div>
                     )}

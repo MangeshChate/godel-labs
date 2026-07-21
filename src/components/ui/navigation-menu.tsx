@@ -5,16 +5,16 @@ import Link from "next/link";
 import {
   ChevronDown,
   ArrowRight,
-  Sparkles,
   BookOpen,
   Building2,
   Mail,
   Code,
   Newspaper,
   ExternalLink,
-  ShieldCheck,
+  MessageCircle,
   FileText,
 } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/icons/brand";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ── Shared Mega Panel Container for Seamless Transitions ──────────────────────
@@ -47,7 +47,7 @@ export function NavMegaPanel({
           <div className="absolute top-2 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-l border-t border-[#e2daee] bg-white" />
 
           {/* Wide & Minimalist Panel Card (840px wide) */}
-          <div className="relative w-[840px] overflow-hidden rounded-[24px] border border-[#e2daee]/90 bg-white p-6 shadow-[0_24px_60px_rgba(24,14,50,.11)] backdrop-blur-2xl">
+          <div className="relative w-[840px] overflow-hidden rounded-[24px] border border-[#e2daee]/90 bg-white p-5 shadow-[0_24px_60px_rgba(24,14,50,.11)] backdrop-blur-2xl">
             <AnimatePresence mode="wait">
               {activeKey === "company" ? (
                 <motion.div
@@ -78,40 +78,33 @@ export function NavMegaPanel({
   );
 }
 
-// ── Company Dropdown Content (Minimalist & Wide) ─────────────────────────────
+// ── Company Dropdown Content (Clickable Card & Footer Social Links) ───────────
 export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
   return (
-    <div className="flex gap-7">
-      {/* Left Featured Banner */}
-      <div className="flex w-[320px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5">
+    <div className="flex gap-6">
+      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Resources) */}
+      <Link
+        href="/demo"
+        onClick={onClose}
+        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
+      >
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-            COMPANY
+            GÖDEL LABS
           </span>
-          <h4 className="mt-2 text-base font-semibold leading-6 tracking-tight text-[#1c1825]">
-            An AI-native team building the control layer for an AI-native world.
+          <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+            Building the runtime security layer for an AI-native world.
           </h4>
+          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
+            Partner with our security team to protect ambitious enterprise AI programs.
+          </p>
         </div>
 
-        <div className="mt-6 rounded-[14px] border border-[#e5dffa] bg-white p-4 shadow-sm transition hover:border-[#6d49fd]/40">
-          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0b8c66]">
-            TALK WITH US
-          </span>
-          <h5 className="mt-1 text-sm font-semibold text-[#1c1825]">
-            Build With Gödel
-          </h5>
-          <p className="mt-1 text-xs leading-5 text-[#6e6878]">
-            Partner with our security team to protect ambitious AI programs.
-          </p>
-          <Link
-            href="/demo"
-            onClick={onClose}
-            className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd] hover:underline"
-          >
-            Request a demo <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
+          <span>Request a demo</span>
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
         </div>
-      </div>
+      </Link>
 
       {/* Right 2-Column Grid */}
       <div className="grid flex-1 grid-cols-2 gap-6 py-1">
@@ -120,7 +113,7 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
             COMPANY
           </span>
-          <div className="mt-3.5 flex flex-col gap-2">
+          <div className="mt-3 flex flex-col gap-2">
             <Link
               href="/about-us"
               onClick={onClose}
@@ -155,28 +148,12 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* Column 2: Community & Principles */}
+        {/* Column 2: Connect / Social Media (Replaced Manifesto & Open Source) */}
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-            COMMUNITY & CAREERS
+            CONNECT
           </span>
-          <div className="mt-3.5 flex flex-col gap-2">
-            <Link
-              href="/about-us#manifesto"
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
-            >
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Sparkles className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Our Manifesto
-                </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Core principles</p>
-              </div>
-            </Link>
-
+          <div className="mt-3 flex flex-col gap-2">
             <Link
               href="https://github.com/godellabs-ai"
               target="_blank"
@@ -185,13 +162,49 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Code className="h-4 w-4" />
+                <GithubIcon className="h-4 w-4" />
               </span>
               <div>
                 <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Open Source <ExternalLink className="h-3 w-3 text-[#a098ae]" />
+                  GitHub <ExternalLink className="h-3 w-3 text-[#a098ae]" />
                 </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Inspectable primitives</p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Open source & repos</p>
+              </div>
+            </Link>
+
+            <Link
+              href="https://www.linkedin.com/company/godel-labs/"
+              target="_blank"
+              rel="noreferrer"
+              onClick={onClose}
+              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
+            >
+              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+                <LinkedinIcon className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                  LinkedIn <ExternalLink className="h-3 w-3 text-[#a098ae]" />
+                </p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Company updates</p>
+              </div>
+            </Link>
+
+            <Link
+              href="https://discord.gg/HGXeCxJ532"
+              target="_blank"
+              rel="noreferrer"
+              onClick={onClose}
+              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
+            >
+              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+                <MessageCircle className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                  Discord <ExternalLink className="h-3 w-3 text-[#a098ae]" />
+                </p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Join AI community</p>
               </div>
             </Link>
           </div>
@@ -201,17 +214,21 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
   );
 }
 
-// ── Resources Dropdown Content (Minimalist & Wide) ───────────────────────────
+// ── Resources Dropdown Content (Clickable Card, Compact Size) ─────────────────
 export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
   return (
-    <div className="flex gap-7">
-      {/* Left Featured Banner */}
-      <div className="flex w-[320px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5">
+    <div className="flex gap-6">
+      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Company) */}
+      <Link
+        href="/blog/detecting-pii-leaks-in-llm-pipeline-streams"
+        onClick={onClose}
+        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
+      >
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
             LATEST RESEARCH
           </span>
-          <h4 className="mt-2 text-base font-semibold leading-6 tracking-tight text-[#1c1825]">
+          <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
             Detecting PII Leaks in LLM Pipeline Streams
           </h4>
           <p className="mt-2 text-xs leading-5 text-[#6e6878]">
@@ -219,22 +236,11 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
           </p>
         </div>
 
-        <Link
-          href="/blog/detecting-pii-leaks-in-llm-pipeline-streams"
-          onClick={onClose}
-          className="mt-4 flex items-center justify-between rounded-[14px] border border-[#e5dffa] bg-white p-3.5 shadow-sm transition hover:border-[#6d49fd]/40"
-        >
-          <div>
-            <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-              READ ARTICLE
-            </span>
-            <p className="text-xs font-semibold text-[#211c2a]">
-              Full research paper & benchmark
-            </p>
-          </div>
-          <ArrowRight className="h-4 w-4 text-[#6d49fd]" />
-        </Link>
-      </div>
+        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
+          <span>Read research paper</span>
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+        </div>
+      </Link>
 
       {/* Right 2-Column Grid */}
       <div className="grid flex-1 grid-cols-2 gap-6 py-1">
@@ -243,7 +249,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
             RESOURCES
           </span>
-          <div className="mt-3.5 flex flex-col gap-2">
+          <div className="mt-3 flex flex-col gap-2">
             <Link
               href="/blog"
               onClick={onClose}
@@ -283,7 +289,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
             DOCUMENTATION
           </span>
-          <div className="mt-3.5 flex flex-col gap-2">
+          <div className="mt-3 flex flex-col gap-2">
             <Link
               href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
               target="_blank"
