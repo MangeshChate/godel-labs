@@ -9,7 +9,6 @@ import { useEffect, useState, useRef } from "react";
 import { NavMegaPanel } from "@/components/ui/navigation-menu";
 
 const standardLinks = [
-  { label: "Why Gödel", href: "/#why-godel" },
   { label: "Product", href: "/#product" },
   { label: "Use cases", href: "/#use-cases" },
 ];
@@ -164,6 +163,16 @@ export default function Navbar() {
                   />
                 </button>
               </div>
+
+              {/* Why Gödel */}
+              <Link
+                href="/#why-godel"
+                onClick={(e) => handleNavClick(e, "/#why-godel")}
+                onMouseEnter={() => setActiveDropdown(null)}
+                className="rounded-full px-4 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
+              >
+                Why Gödel
+              </Link>
 
               {/* FAQ */}
               <Link
@@ -343,6 +352,16 @@ export default function Navbar() {
                       </div>
                     )}
                   </div>
+
+                  {/* Why Gödel */}
+                  <Link
+                    href="/#why-godel"
+                    onClick={(e) => handleNavClick(e, "/#why-godel")}
+                    className="flex items-center justify-between border-b border-[#ebe7f2] py-3.5 text-[15px] font-medium text-black"
+                  >
+                    Why Gödel
+                    <span className="text-[#9b93a8]">05</span>
+                  </Link>
 
                   {/* FAQ */}
                   <Link
