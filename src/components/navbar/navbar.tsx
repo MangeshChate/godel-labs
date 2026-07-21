@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll, Globe, Cpu, ShieldCheck } from "lucide-react";
+import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll, Globe, Cpu, ShieldCheck, Eye, Shield, ClipboardCheck, Lock, FileCheck, ShieldAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -297,59 +297,57 @@ export default function Navbar() {
                         >
                           <div className="mt-2 flex flex-col gap-1.5 border-t border-[#e8e1f5] pt-2.5">
                             <Link
-                              href="/use-cases/secure-ai-coding-agents"
+                              href="/use-cases/session-visibility-oversight"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Code className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">AI Coding Agents</p>
-                                <p className="text-[11px] text-[#736c7e]">Protect .env, keys & terminals</p>
-                              </div>
+                              <p className="text-sm font-semibold text-[#1c1825]">Session Visibility & Oversight</p>
+                              <p className="text-[11px] text-[#736c7e]">Real-time session oversight</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/secure-browser-agents"
+                              href="/use-cases/content-classification"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Globe className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Browser Agents</p>
-                                <p className="text-[11px] text-[#736c7e]">Stop prompt injection & DLP leaks</p>
-                              </div>
+                              <p className="text-sm font-semibold text-[#1c1825]">Content Classification</p>
+                              <p className="text-[11px] text-[#736c7e]">Block legal, HR, board & code</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/secure-ai-frameworks"
+                              href="/use-cases/action-execution-guardrails"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Cpu className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Frameworks & MCP</p>
-                                <p className="text-[11px] text-[#736c7e]">Govern MCP tools & pipelines</p>
-                              </div>
+                              <p className="text-sm font-semibold text-[#1c1825]">Execution Guardrails</p>
+                              <p className="text-[11px] text-[#736c7e]">Gate shell, git & cloud actions</p>
                             </Link>
 
                             <Link
-                              href="/use-cases/data-authority-dlp"
+                              href="/use-cases/ai-attacks-defense"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
                             >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <ShieldCheck className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Data Authority & DLP</p>
-                                <p className="text-[11px] text-[#736c7e]">LLM input/output classification</p>
-                              </div>
+                              <p className="text-sm font-semibold text-[#1c1825]">AI Attacks Defense</p>
+                              <p className="text-[11px] text-[#736c7e]">Monitor CLAUDE.md & trust files</p>
+                            </Link>
+
+                            <Link
+                              href="/use-cases/data-loss-prevention"
+                              onClick={() => setOpen(false)}
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <p className="text-sm font-semibold text-[#1c1825]">Data Loss Prevention (DLP)</p>
+                              <p className="text-[11px] text-[#736c7e]">Block data leakage to LLMs</p>
+                            </Link>
+
+                            <Link
+                              href="/use-cases/audit-compliance-reporting"
+                              onClick={() => setOpen(false)}
+                              className="flex flex-col rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
+                            >
+                              <p className="text-sm font-semibold text-[#1c1825]">Audit & Compliance</p>
+                              <p className="text-[11px] text-[#736c7e]">SOC 2 & ISO compliance audit</p>
                             </Link>
                           </div>
                         </motion.div>

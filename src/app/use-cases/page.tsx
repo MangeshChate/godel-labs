@@ -4,7 +4,7 @@ import Footer from "@/components/footer/footer";
 import Reveal from "@/components/landing/reveal";
 import SectionLabel from "@/components/landing/section-label";
 import { useCasesData } from "@/data/use-cases";
-import { ArrowRight, Code, Globe, Cpu, ShieldCheck, Download } from "lucide-react";
+import { ArrowRight, Download, Eye, FileCheck, ShieldAlert, Lock, Shield, ClipboardCheck } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,10 +13,12 @@ export const metadata: Metadata = {
 };
 
 const iconMap = {
-  Code,
-  Globe,
-  Cpu,
-  ShieldCheck,
+  Eye,
+  FileCheck,
+  ShieldAlert,
+  Lock,
+  Shield,
+  ClipboardCheck,
 };
 
 export default function UseCasesIndexPage() {

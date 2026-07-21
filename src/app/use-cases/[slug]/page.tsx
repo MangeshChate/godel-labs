@@ -29,6 +29,9 @@ import {
   EyeOff,
   Activity,
   ArrowUpRight,
+  Eye,
+  Shield,
+  ClipboardCheck,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -51,6 +54,9 @@ const iconMap = {
   Activity,
   Code,
   Cpu,
+  Eye,
+  Shield,
+  ClipboardCheck,
 };
 
 interface PageProps {
