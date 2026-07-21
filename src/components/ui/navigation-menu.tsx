@@ -98,77 +98,89 @@ export function NavMegaPanel({
   );
 }
 
-// ── Use Cases Dropdown Content (Minimalist Bordered Card Grid, No Icons, No Tags) ─────
+// ── Use Cases Dropdown Content (Matches Resources & Company Layout, No Icons) ───────────────
 export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
   const useCaseItems = [
     {
       title: "Session Visibility & Oversight",
-      desc: "See every prompt, session, MCP call & action across all agents in real time.",
+      desc: "See every prompt, MCP call & action across all agents",
       href: "/use-cases/session-visibility-oversight",
     },
     {
       title: "Content Classification",
-      desc: "Classify prompts & context sources before agents read legal, HR or source code.",
+      desc: "Block access to HR, board memo, legal & source code",
       href: "/use-cases/content-classification",
     },
     {
       title: "Action & Execution Guardrails",
-      desc: "Risk-score and gate shell, git, package, cloud and network actions dynamically.",
+      desc: "Risk-score & gate shell, git, package & cloud actions",
       href: "/use-cases/action-execution-guardrails",
     },
     {
-      title: "AI Attacks & Trust-Surface Defense",
-      desc: "Detect prompt injections & monitor CLAUDE.md, AGENTS.md and trust files.",
+      title: "AI Attacks & Defense",
+      desc: "Detect prompt injection & monitor CLAUDE.md & trust files",
       href: "/use-cases/ai-attacks-defense",
     },
     {
       title: "Data Loss Prevention (DLP)",
-      desc: "Block classified code, credentials, PII and internal data from reaching external LLMs.",
+      desc: "Block classified code, keys & PII from external LLMs",
       href: "/use-cases/data-loss-prevention",
     },
     {
       title: "Audit & Compliance Reporting",
-      desc: "One-click audit evidence generation for SOC 2, ISO 27001, HIPAA & EU AI Act.",
+      desc: "1-click audit reporting for SOC 2, ISO 27001 & HIPAA",
       href: "/use-cases/audit-compliance-reporting",
     },
   ];
 
   return (
-    <div className="flex flex-col gap-2.5 p-0.5">
-      {/* Sub-header Bar */}
-      <div className="flex items-center justify-between border-b border-[#eee8f6] pb-2 px-1">
-        <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
+    <div className="flex gap-6">
+      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Resources & Company) */}
+      <Link
+        href="/use-cases"
+        onClick={onClose}
+        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
+      >
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
+            USE CASES OVERVIEW
+          </span>
+          <h4 className="mt-2.5 text-[15px] font-semibold leading-5 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+            Zero-Trust Runtime Security for AI Agents
+          </h4>
+          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
+            Enforce real-time security policies across coding agents, browser automation, MCP tools, and LLM pipelines.
+          </p>
+        </div>
+
+        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
+          <span>View all 6 use cases</span>
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+        </div>
+      </Link>
+
+      {/* Right 2-Column Grid (No Icons, Matching Resources & Company Hover Style) */}
+      <div className="flex flex-1 flex-col justify-start py-1">
+        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
           USE CASES
         </span>
-        <Link
-          href="/use-cases"
-          onClick={onClose}
-          className="flex items-center gap-1 text-xs font-semibold text-[#6d49fd] transition hover:underline"
-        >
-          <span>View All Use Cases</span>
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
-      </div>
-
-      {/* 2-Column Minimalist Bordered Grid */}
-      <div className="grid grid-cols-2 gap-3 pt-1">
-        {useCaseItems.map((item) => (
-          <Link
-            key={item.title}
-            href={item.href}
-            onClick={onClose}
-            className="group flex flex-col justify-between rounded-xl border border-[#e5dfef] bg-white p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f8f5fe] hover:shadow-[0_4px_16px_rgba(109,73,253,.07)]"
-          >
-            <div>
-              <p className="text-xs font-bold tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+        <div className="mt-2.5 grid grid-cols-2 gap-2">
+          {useCaseItems.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              onClick={onClose}
+              className="group flex flex-col rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+            >
+              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
                 {item.title}
               </p>
-              <p className="mt-1 text-[11px] leading-4 text-[#6e6878]">
+              <p className="mt-0.5 text-xs leading-4 text-[#736c7e]">
                 {item.desc}
               </p>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
