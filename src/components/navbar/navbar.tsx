@@ -11,7 +11,6 @@ const links = [
   { label: "Why Gödel", href: "/#why-godel" },
   { label: "Product", href: "/#product" },
   { label: "Use cases", href: "/#use-cases" },
-  { label: "Data Authority", href: "/#data-authority" },
   { label: "About us", href: "/about-us" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
