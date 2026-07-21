@@ -144,14 +144,16 @@ export function UseCasesMegaContent({ onClose }: { onClose: () => void }) {
             key={item.title}
             href={item.href}
             onClick={onClose}
-            className="group flex flex-col justify-start rounded-xl p-3 transition hover:bg-[#f5f2fd]"
+            className="group flex flex-col justify-between rounded-xl border border-[#e2daf0] bg-[#fbfaff] p-3.5 transition-all duration-200 hover:border-[#6d49fd] hover:bg-[#f6f2fd] hover:shadow-[0_4px_16px_rgba(109,73,253,0.08)]"
           >
-            <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-              {item.title}
-            </p>
-            <p className="mt-1 text-xs leading-4 text-[#736c7e]">
-              {item.desc}
-            </p>
+            <div>
+              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                {item.title}
+              </p>
+              <p className="mt-1 text-xs leading-4 text-[#736c7e]">
+                {item.desc}
+              </p>
+            </div>
           </Link>
         ))}
       </div>
