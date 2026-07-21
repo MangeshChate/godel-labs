@@ -261,23 +261,32 @@ function ProductPreview() {
             onClick={togglePlay}
           />
 
-          {/* Outro Image Screen when Video Finishes */}
-          {hasEnded && (
-            <div
-              onClick={togglePlay}
-              className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
-            >
-              <Image
-                src="/mockup/hero-outro.png"
-                alt="Gödel's Gate Outro"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:scale-105 transition-all duration-200 z-30">
-                <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
-              </div>
-            </div>
-          )}
+          {/* Outro Image Screen with Fade Effect in Last 3 Seconds */}
+          <AnimatePresence>
+            {((hasStarted && duration > 3 && duration - currentTime <= 3) || hasEnded) && (
+              <motion.div
+                key="hero-outro-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                onClick={togglePlay}
+                className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
+              >
+                <Image
+                  src="/mockup/hero-outro.png"
+                  alt="Gödel's Gate Outro"
+                  fill
+                  className="object-cover"
+                />
+                {hasEnded && (
+                  <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/25 backdrop-blur-lg border border-white/40 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:scale-105 transition-all duration-200 z-30">
+                    <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div
             onClick={togglePlay}
