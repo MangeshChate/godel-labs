@@ -232,7 +232,7 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
     <div className="flex gap-6">
       {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Company) */}
       <Link
-        href="/blog/detecting-pii-leaks-in-llm-pipeline-streams"
+        href="/blog/securing-ai-coding-agents-in-sandbox-environments"
         onClick={onClose}
         className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
       >
@@ -241,10 +241,10 @@ export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
             LATEST BLOG
           </span>
           <h4 className="mt-2.5 text-base font-semibold leading-6 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-            Detecting PII Leaks in LLM Pipeline Streams
+            Securing AI Coding Agents in Sandbox Environments
           </h4>
           <p className="mt-2 text-xs leading-5 text-[#6e6878]">
-            How runtime context inspection prevents sensitive data exposure in real-time LLM outputs.
+            Analyzing execution paths of autonomous coding agents and preventing host compromise.
           </p>
         </div>
 
