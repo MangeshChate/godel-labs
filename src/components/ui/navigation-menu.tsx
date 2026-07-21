@@ -80,6 +80,7 @@ export function NavMegaPanel({
 }
 
 // ── Company Dropdown Content (Clickable Card & Footer Social Links) ───────────
+// ── Company Dropdown Content (Clickable Card & Company Links) ───────────
 export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex gap-6">
@@ -101,65 +102,138 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
         </div>
       </Link>
 
+      {/* Right Column: Company (Only About Us and Contact) */}
+      <div className="flex flex-1 flex-col justify-start py-1">
+        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
+          COMPANY
+        </span>
+        <div className="mt-3 flex flex-col gap-2">
+          <Link
+            href="/about-us"
+            onClick={onClose}
+            className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+          >
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+              <Building2 className="h-4.5 w-4.5" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                About Us
+              </p>
+              <p className="mt-0.5 text-xs text-[#736c7e]">Our mission, team & story</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/demo"
+            onClick={onClose}
+            className="group flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-[#f5f2fd]"
+          >
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
+              <Mail className="h-4.5 w-4.5" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                Contact
+              </p>
+              <p className="mt-0.5 text-xs text-[#736c7e]">Get in touch with our team</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Resources Dropdown Content (Clickable Card, Resources & Connect Links) ─────────────────
+export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="flex gap-6">
+      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Company) */}
+      <Link
+        href="/blog/why-claude-code-can-read-your-env-ssh-keys-and-cloud-credentials-and-what-to-do-about-it"
+        onClick={onClose}
+        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
+      >
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
+            LATEST BLOG
+          </span>
+          <h4 className="mt-2.5 text-[15px] font-semibold leading-5 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
+            Why Claude Code Can Read Your .env, SSH Keys, and Cloud Credentials
+          </h4>
+          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
+            Your coding agent can read your secret keys right now. Here is how to prevent credential exposure.
+          </p>
+        </div>
+
+        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
+          <span>Read blog post</span>
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+        </div>
+      </Link>
+
       {/* Right 2-Column Grid */}
       <div className="grid flex-1 grid-cols-2 gap-6 py-1">
-        {/* Column 1: Company */}
+        {/* Column 1: Resources & Docs */}
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-            COMPANY
+            RESOURCES
           </span>
           <div className="mt-3 flex flex-col gap-2">
             <Link
-              href="/about-us"
+              href="/blog"
               onClick={onClose}
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Building2 className="h-4 w-4" />
+                <BookOpen className="h-4 w-4" />
               </span>
               <div>
                 <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  About Us
+                  Blog
                 </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Mission & team</p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Research & updates</p>
               </div>
             </Link>
 
             <Link
-              href="/about-us#manifesto"
+              href="/blog"
               onClick={onClose}
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Scroll className="h-4 w-4" />
+                <Newspaper className="h-4 w-4" />
               </span>
               <div>
                 <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Manifesto
+                  News
                 </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Core principles</p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Latest announcements</p>
               </div>
             </Link>
 
             <Link
-              href="/demo"
+              href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
+              target="_blank"
+              rel="noreferrer"
               onClick={onClose}
               className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
             >
               <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Mail className="h-4 w-4" />
+                <FileText className="h-4 w-4" />
               </span>
               <div>
-                <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Contact
+                <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
+                  Docs <ExternalLink className="h-3 w-3 text-[#a098ae]" />
                 </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Talk to our team</p>
+                <p className="mt-0.5 text-xs text-[#736c7e]">Installation & guides</p>
               </div>
             </Link>
           </div>
         </div>
 
-        {/* Column 2: Connect / Social Media (Replaced Manifesto & Open Source) */}
+        {/* Column 2: Connect Social Icons */}
         <div>
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
             CONNECT
@@ -216,124 +290,6 @@ export function CompanyMegaContent({ onClose }: { onClose: () => void }) {
                   Discord <ExternalLink className="h-3 w-3 text-[#a098ae]" />
                 </p>
                 <p className="mt-0.5 text-xs text-[#736c7e]">Join AI community</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Resources Dropdown Content (Clickable Card, Compact Size) ─────────────────
-export function ResourcesMegaContent({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="flex gap-6">
-      {/* Left Featured Card (Entire Card Clickable, Same Dimensions as Company) */}
-      <Link
-        href="/blog/why-claude-code-can-read-your-env-ssh-keys-and-cloud-credentials-and-what-to-do-about-it"
-        onClick={onClose}
-        className="group flex w-[310px] shrink-0 flex-col justify-between rounded-[18px] border border-[#eee9f8] bg-[#f9f8fe] p-5 transition-all duration-200 hover:border-[#6d49fd]/40 hover:bg-[#f5f1fd]"
-      >
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#6d49fd]">
-            LATEST BLOG
-          </span>
-          <h4 className="mt-2.5 text-[15px] font-semibold leading-5 tracking-tight text-[#1c1825] transition group-hover:text-[#6d49fd]">
-            Why Claude Code Can Read Your .env, SSH Keys, and Cloud Credentials
-          </h4>
-          <p className="mt-2 text-xs leading-5 text-[#6e6878]">
-            Your coding agent can read your secret keys right now. Here is how to prevent credential exposure.
-          </p>
-        </div>
-
-        <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#6d49fd]">
-          <span>Read blog post</span>
-          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-        </div>
-      </Link>
-
-      {/* Right 2-Column Grid */}
-      <div className="grid flex-1 grid-cols-2 gap-6 py-1">
-        {/* Column 1: Resources */}
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-            RESOURCES
-          </span>
-          <div className="mt-3 flex flex-col gap-2">
-            <Link
-              href="/blog"
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
-            >
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <BookOpen className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Blog
-                </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Research & updates</p>
-              </div>
-            </Link>
-
-            <Link
-              href="/blog"
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
-            >
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Newspaper className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  News
-                </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Latest announcements</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-
-        {/* Column 2: Documentation */}
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a098ae]">
-            DOCUMENTATION
-          </span>
-          <div className="mt-3 flex flex-col gap-2">
-            <Link
-              href="https://godels-gate.godel-labs.ai/docs/desktop/installation"
-              target="_blank"
-              rel="noreferrer"
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
-            >
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <FileText className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  Docs <ExternalLink className="h-3 w-3 text-[#a098ae]" />
-                </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Installation & guides</p>
-              </div>
-            </Link>
-
-            <Link
-              href="https://github.com/godellabs-ai"
-              target="_blank"
-              rel="noreferrer"
-              onClick={onClose}
-              className="group flex items-start gap-3 rounded-xl p-2 transition hover:bg-[#f5f2fd]"
-            >
-              <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd] transition group-hover:bg-[#6d49fd] group-hover:text-white">
-                <Code className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="flex items-center gap-1 text-sm font-semibold text-[#211c2a] transition group-hover:text-[#6d49fd]">
-                  GitHub <ExternalLink className="h-3 w-3 text-[#a098ae]" />
-                </p>
-                <p className="mt-0.5 text-xs text-[#736c7e]">Repositories & code</p>
               </div>
             </Link>
           </div>

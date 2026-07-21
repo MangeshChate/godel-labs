@@ -372,20 +372,6 @@ export default function Navbar() {
                             </Link>
 
                             <Link
-                              href="/about-us#manifesto"
-                              onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
-                            >
-                              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eee9ff] text-[#6d49fd]">
-                                <Scroll className="h-4 w-4" />
-                              </span>
-                              <div>
-                                <p className="text-sm font-semibold text-[#1c1825]">Manifesto</p>
-                                <p className="text-[11px] text-[#736c7e]">Core principles</p>
-                              </div>
-                            </Link>
-
-                            <Link
                               href="/demo"
                               onClick={() => setOpen(false)}
                               className="flex items-center gap-3 rounded-xl bg-white p-2.5 shadow-sm transition active:scale-[0.98]"
