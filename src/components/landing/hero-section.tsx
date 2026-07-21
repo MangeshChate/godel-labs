@@ -341,8 +341,21 @@ function ProductPreview() {
   );
 }
 
+const mobileAgentShortNameMap: Record<string, string> = {
+  "Claude Code": "Claude",
+  "Codex CLI": "Codex",
+  "Gemini CLI": "Gemini",
+  "GitHub Copilot": "Copilot",
+  "Google Chrome": "Chrome",
+  "Microsoft Edge": "Edge",
+  "OpenAI Assistants": "Assistants",
+  "OpenAI Swarm": "Swarm",
+  "Semantic Kernel": "SKernel",
+};
+
 function GuardedAgents() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const currentCategory = categories[activeIndex];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -351,29 +364,24 @@ function GuardedAgents() {
     return () => clearInterval(timer);
   }, []);
 
-  const currentCategory = categories[activeIndex];
-
   return (
-    <div className="relative z-20 mx-auto mt-12 max-w-[1120px] px-2 pb-2 pt-2 sm:mt-16 sm:pt-0">
-      <div className="flex flex-col items-center">
-        {/* Title carousel container */}
-        {/* Category Title Heading */}
-        <div className="h-6 overflow-hidden flex items-center justify-center">
+    <div className="mx-auto mt-8 max-w-[1040px]">
+      <div className="relative flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:p-6">
+        <div className="h-6 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.p
               key={activeIndex}
-              initial={{ opacity: 0, y: 6 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25 }}
-              className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-white sm:text-xs"
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="text-xs font-bold uppercase tracking-[0.14em] text-white/90 sm:text-sm"
             >
               {currentCategory.title}
             </motion.p>
           </AnimatePresence>
         </div>
 
-        {/* Bullet indicators */}
         <div className="mt-2 flex items-center gap-1.5">
           {categories.map((_, idx) => (
             <button
@@ -386,8 +394,7 @@ function GuardedAgents() {
           ))}
         </div>
 
-        {/* Agents carousel container — fixed height to prevent layout shift */}
-        <div className="relative mt-5 h-[150px] w-full sm:h-[92px]">
+        <div className="relative mt-5 h-[135px] w-full sm:h-[92px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -395,19 +402,19 @@ function GuardedAgents() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-2 gap-y-3 px-2 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
+              className="absolute inset-x-0 top-0 mx-auto grid w-full max-w-[980px] grid-cols-2 gap-y-3 px-1 sm:flex sm:flex-wrap sm:content-start sm:justify-center sm:gap-y-5 sm:px-0"
             >
               {currentCategory.agents.map((agentName) => {
                 const logoSrc = agentLogoMap[agentName];
                 const needsFrame = framedAgentLogos.has(agentName);
                 const isWideLogo = wideAgentLogos.has(agentName);
-                const isSwarm = agentName === "OpenAI Swarm";
+                const mobileName = mobileAgentShortNameMap[agentName] || agentName;
                 return (
                   <div
                     key={agentName}
-                    className="group flex items-center justify-start pl-4 text-[11px] font-bold tracking-[0.04em] text-white transition sm:w-1/5 sm:justify-center sm:pl-0 sm:text-xs"
+                    className="group flex items-center justify-start pl-2 text-[11px] font-bold tracking-[0.03em] text-white transition sm:w-1/5 sm:justify-center sm:pl-0 sm:text-xs"
                   >
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2 overflow-hidden">
                       <span
                         className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
                           isWideLogo ? "sm:w-[70px]" : "sm:w-8"
@@ -425,15 +432,9 @@ function GuardedAgents() {
                           className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
                         />
                       </span>
-                      <span className="font-bold text-white drop-shadow-sm">
-                        {isSwarm ? (
-                          <>
-                            <span className="inline sm:hidden">Swarm</span>
-                            <span className="hidden sm:inline">OpenAI Swarm</span>
-                          </>
-                        ) : (
-                          agentName
-                        )}
+                      <span className="truncate font-bold text-white drop-shadow-sm">
+                        <span className="inline sm:hidden">{mobileName}</span>
+                        <span className="hidden sm:inline">{agentName}</span>
                       </span>
                     </div>
                   </div>
