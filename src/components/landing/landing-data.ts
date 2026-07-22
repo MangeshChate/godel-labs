@@ -26,7 +26,7 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: "What does Data Authority mean?",
-    answer: "Data Authority does not grant permissions to GitHub, Jira, SaaS applications, or data stores. It classifies content inside AI interactions and enforces how that content may be processed, retained, shared, or used to influence an agent action.",
+    answer: "Data Authority governs agent execution by trust. Trusted data becomes context; untrusted data doesn’t. And only trusted context can change the agent’s behavior — so a hidden instruction buried in a page or a ticket can be read, but never obeyed.",
   },
   {
     question: "Does content need to be classified in advance?",
