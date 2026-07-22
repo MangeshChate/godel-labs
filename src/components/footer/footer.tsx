@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon, DiscordIcon, type BrandIcon } from "@/components/icons/brand";
+import { GithubIcon, LinkedinIcon, DiscordIcon, SlackIcon, XIcon, type BrandIcon } from "@/components/icons/brand";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,6 +20,7 @@ const columns = [
       ["Documentation", "https://godels-gate.godel-labs.ai/docs"],
       ["Blog", "/blog"],
       ["GitHub", "https://github.com/godellabs-ai"],
+      ["Slack", "https://join.slack.com/t/godellabscommunity/shared_invite/zt-3qhv7u46o-1A1hwp1xnGQQkL8DtLyjHw"],
       ["Community", "https://discord.gg/HGXeCxJ532"],
     ],
   },
@@ -46,10 +47,12 @@ export default function Footer() {
               Runtime security for the agents already inside your business.
             </h2>
             <p className="mt-5 max-w-md text-sm leading-6 text-white/45">Runtime security for coding agents, browser agents, desktop agents, and framework agents.</p>
-            <div className="mt-8 flex gap-2">
+            <div className="mt-8 flex flex-wrap gap-2">
               {[
                 [GithubIcon, "https://github.com/godellabs-ai", "GitHub"],
+                [XIcon, "https://x.com/godellabs", "X"],
                 [LinkedinIcon, "https://www.linkedin.com/company/godel-labs/", "LinkedIn"],
+                [SlackIcon, "https://join.slack.com/t/godellabscommunity/shared_invite/zt-3qhv7u46o-1A1hwp1xnGQQkL8DtLyjHw", "Slack"],
                 [DiscordIcon, "https://discord.gg/HGXeCxJ532", "Discord"],
               ].map(([Icon, href, label]) => {
                 const I = Icon as BrandIcon;
