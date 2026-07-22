@@ -65,7 +65,7 @@ const agentLogoMap: Record<string, string> = {
   "Opera GX": "/logos/grayscale/opera-gx.svg",
   "Chromium": "/logos/grayscale/chromium.svg",
   "Safari": "/logos/grayscale/safari.svg",
-  "LangChain": "/logos/grayscale/langgraph.svg",
+  "LangChain": "/logos/grayscale/langchain.svg",
   "LangGraph": "/logos/grayscale/langgraph.svg",
   "CrewAI": "/logos/grayscale/crewai.svg",
   "AutoGen": "/logos/grayscale/autogen.svg",
