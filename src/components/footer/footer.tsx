@@ -46,7 +46,7 @@ export default function Footer() {
             <h2 className="mt-8 max-w-xl text-balance text-3xl font-medium leading-[1.08] tracking-[-0.04em] text-white sm:text-4xl">
               Runtime security for the agents already inside your business.
             </h2>
-            <p className="mt-5 max-w-md text-sm leading-6 text-white/45">Runtime security for coding agents, browser agents, desktop agents, and framework agents.</p>
+            <p className="mt-5 max-w-md text-sm leading-6 text-white/45">Every agent accountable to an identity, every action checked against policy, every decision auditable — on every surface your agents touch.</p>
             <div className="mt-8 flex flex-wrap gap-2">
               {[
                 [GithubIcon, "https://github.com/godellabs-ai", "GitHub"],
