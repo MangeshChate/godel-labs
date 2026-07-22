@@ -61,10 +61,11 @@ export const metadata: Metadata = {
   description: "Runtime security for coding, browser, desktop, and custom AI agents. Inspect every prompt, tool call, and action before it executes.",
   icons: {
     icon: [
-      { url: "/favicon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", type: "image/x-icon" },
     ],
-    shortcut: "/favicon-light.svg",
+    shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
