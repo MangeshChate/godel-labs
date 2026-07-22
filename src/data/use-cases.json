@@ -201,8 +201,7 @@
       { "name": "Claude Cowork", "icon": "/logos/claude.svg" },
       { "name": "Claude Desktop", "icon": "/logos/claude.svg" },
       { "name": "ChatGPT Desktop", "icon": "/logos/openai.svg" },
-      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" },
-      { "name": "Gemini Desktop", "icon": "/logos/gemini-cli.svg" }
+      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" }
     ],
     "threatScenarios": [
       {
