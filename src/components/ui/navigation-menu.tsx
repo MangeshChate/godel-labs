@@ -43,10 +43,10 @@ export function NavMegaPanel({
 }) {
   const arrowLeftStyle =
     activeKey === "use-cases"
-      ? "left-[165px]"
+      ? "left-[315px]"
       : activeKey === "resources"
-      ? "left-[380px]"
-      : "left-[497px]";
+      ? "left-[436px]"
+      : "left-[623px]";
 
   return (
     <AnimatePresence>

@@ -99,6 +99,16 @@ export default function Navbar() {
           {/* Desktop & Tablet Navigation Links & Triggers */}
           <div className="pointer-events-none hidden lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center">
             <div className="pointer-events-auto flex items-center gap-1.5 lg:gap-2">
+              {/* Product */}
+              <Link
+                href="/#product"
+                onClick={(e) => handleNavClick(e, "/#product")}
+                onMouseEnter={() => setActiveDropdown(null)}
+                className="rounded-full px-3.5 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
+              >
+                Product
+              </Link>
+
               {/* Use Cases Trigger */}
               <div
                 className="relative"
@@ -124,18 +134,6 @@ export default function Navbar() {
                   />
                 </button>
               </div>
-
-              {standardLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  onMouseEnter={() => setActiveDropdown(null)}
-                  className="rounded-full px-3.5 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
-                >
-                  {link.label}
-                </Link>
-              ))}
 
               {/* Resources Trigger */}
               <div
@@ -163,6 +161,16 @@ export default function Navbar() {
                 </button>
               </div>
 
+              {/* FAQ */}
+              <Link
+                href="/#faq"
+                onClick={(e) => handleNavClick(e, "/#faq")}
+                onMouseEnter={() => setActiveDropdown(null)}
+                className="rounded-full px-3.5 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
+              >
+                FAQ
+              </Link>
+
               {/* Company Trigger */}
               <div
                 className="relative"
@@ -188,26 +196,6 @@ export default function Navbar() {
                   />
                 </button>
               </div>
-
-              {/* Why Gödel */}
-              <Link
-                href="/#why-godel"
-                onClick={(e) => handleNavClick(e, "/#why-godel")}
-                onMouseEnter={() => setActiveDropdown(null)}
-                className="rounded-full px-3.5 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
-              >
-                Why Gödel
-              </Link>
-
-              {/* FAQ */}
-              <Link
-                href="/#faq"
-                onClick={(e) => handleNavClick(e, "/#faq")}
-                onMouseEnter={() => setActiveDropdown(null)}
-                className="rounded-full px-3.5 py-1.5 text-[15px] font-medium text-black transition hover:text-[#6d49fd]"
-              >
-                FAQ
-              </Link>
             </div>
           </div>
 
@@ -391,6 +379,15 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
+                  {/* FAQ Link */}
+                  <Link
+                    href="/#faq"
+                    onClick={(e) => handleNavClick(e, "/#faq")}
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
+                  >
+                    FAQ
+                  </Link>
+
                   {/* Company Mobile Dropdown */}
                   <div>
                     <button
@@ -438,24 +435,6 @@ export default function Navbar() {
                       )}
                     </AnimatePresence>
                   </div>
-
-                  {/* Why Gödel Link */}
-                  <Link
-                    href="/#why-godel"
-                    onClick={(e) => handleNavClick(e, "/#why-godel")}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
-                  >
-                    Why Gödel
-                  </Link>
-
-                  {/* FAQ Link */}
-                  <Link
-                    href="/#faq"
-                    onClick={(e) => handleNavClick(e, "/#faq")}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
-                  >
-                    FAQ
-                  </Link>
                 </div>
 
                 <Link
