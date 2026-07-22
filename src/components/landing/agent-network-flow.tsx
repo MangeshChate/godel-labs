@@ -31,44 +31,66 @@ type FlowPath = {
 const paths: FlowPath[] = [
   // Users (x=72) to Platform (x=260)
   { from: { x: 72, y: 166 }, to: { x: 260, y: 210 }, fromColor: "#7258e8", toColor: "#3977eb", width: 5, delay: 0 },
+  { from: { x: 72, y: 166 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .1 },
+  { from: { x: 72, y: 270 }, to: { x: 260, y: 210 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .12 },
   { from: { x: 72, y: 270 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 4, delay: .17 },
+  { from: { x: 72, y: 395 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .25 },
   { from: { x: 72, y: 395 }, to: { x: 260, y: 430 }, fromColor: "#7258e8", toColor: "#3977eb", width: 4, delay: .34 },
-  { from: { x: 72, y: 510 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .5 },
+  { from: { x: 72, y: 510 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .42 },
+  { from: { x: 72, y: 510 }, to: { x: 260, y: 430 }, fromColor: "#7258e8", toColor: "#3977eb", width: 4, delay: .5 },
 
   // Platform (x=260) to Agents (x=445)
   { from: { x: 260, y: 210 }, to: { x: 445, y: 190 }, fromColor: "#3977eb", toColor: "#079c8a", width: 6, delay: .1 },
   { from: { x: 260, y: 210 }, to: { x: 445, y: 310 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .3 },
+  { from: { x: 260, y: 320 }, to: { x: 445, y: 190 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .15 },
   { from: { x: 260, y: 320 }, to: { x: 445, y: 310 }, fromColor: "#3977eb", toColor: "#079c8a", width: 5, delay: .25 },
   { from: { x: 260, y: 320 }, to: { x: 445, y: 440 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .45 },
   { from: { x: 260, y: 430 }, to: { x: 445, y: 190 }, fromColor: "#3977eb", toColor: "#079c8a", width: 4, delay: .2 },
+  { from: { x: 260, y: 430 }, to: { x: 445, y: 310 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .38 },
   { from: { x: 260, y: 430 }, to: { x: 445, y: 440 }, fromColor: "#3977eb", toColor: "#079c8a", width: 4, delay: .55 },
 
   // Agents (x=445) to Taxonomy (x=635)
   { from: { x: 445, y: 190 }, to: { x: 635, y: 150 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .2 },
+  { from: { x: 445, y: 190 }, to: { x: 635, y: 270 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .3 },
   { from: { x: 445, y: 190 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 6, delay: .43 },
   { from: { x: 445, y: 190 }, to: { x: 635, y: 510 }, fromColor: "#079c8a", toColor: "#12b981", width: 4, delay: .63 },
   { from: { x: 445, y: 310 }, to: { x: 635, y: 150 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .32 },
   { from: { x: 445, y: 310 }, to: { x: 635, y: 270 }, fromColor: "#079c8a", toColor: "#12b981", width: 4, delay: .55 },
   { from: { x: 445, y: 310 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .7 },
+  { from: { x: 445, y: 310 }, to: { x: 635, y: 510 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .6 },
+  { from: { x: 445, y: 440 }, to: { x: 635, y: 270 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .35 },
   { from: { x: 445, y: 440 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .48 },
   { from: { x: 445, y: 440 }, to: { x: 635, y: 510 }, fromColor: "#079c8a", toColor: "#12b981", width: 5, delay: .77 },
 
   // Taxonomy (x=635) to Data Source (x=825)
   { from: { x: 635, y: 150 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .2 },
+  { from: { x: 635, y: 150 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .4 },
   { from: { x: 635, y: 150 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 2, delay: .7 },
+  { from: { x: 635, y: 270 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .25 },
   { from: { x: 635, y: 270 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .38 },
+  { from: { x: 635, y: 270 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .5 },
   { from: { x: 635, y: 390 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .56 },
+  { from: { x: 635, y: 390 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .42 },
   { from: { x: 635, y: 390 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 5, delay: .28 },
+  { from: { x: 635, y: 390 }, to: { x: 825, y: 520 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .65 },
   { from: { x: 635, y: 510 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .76 },
   { from: { x: 635, y: 510 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .62 },
+  { from: { x: 635, y: 510 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .45 },
   { from: { x: 635, y: 510 }, to: { x: 825, y: 520 }, fromColor: "#12b981", toColor: "#258fcf", width: 7, delay: .18 },
 
   // Data Source (x=825) to Decision (x=1045)
   { from: { x: 825, y: 160 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 5, delay: .2 },
   { from: { x: 825, y: 160 }, to: { x: 1045, y: 355 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: .62 },
+  { from: { x: 825, y: 160 }, to: { x: 1045, y: 470 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: .5 },
   { from: { x: 825, y: 285 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 4, delay: .36 },
+  { from: { x: 825, y: 285 }, to: { x: 1045, y: 355 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: .48 },
+  { from: { x: 825, y: 285 }, to: { x: 1045, y: 470 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: .55 },
+  { from: { x: 825, y: 410 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 3, delay: .3 },
+  { from: { x: 825, y: 410 }, to: { x: 1045, y: 355 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: .42 },
   { from: { x: 825, y: 410 }, to: { x: 1045, y: 470 }, fromColor: "#258fcf", toColor: "#e3554f", width: 5, delay: .48 },
   { from: { x: 825, y: 520 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 4, delay: .72 },
+  { from: { x: 825, y: 520 }, to: { x: 1045, y: 355 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: .6 },
+  { from: { x: 825, y: 520 }, to: { x: 1045, y: 470 }, fromColor: "#258fcf", toColor: "#e3554f", width: 4, delay: .52 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
