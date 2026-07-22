@@ -102,6 +102,7 @@ export default async function UseCaseDetailPage({ params }: PageProps) {
                           alt={tool.name}
                           width={16}
                           height={16}
+                          unoptimized
                           className="h-4 w-4 object-contain"
                         />
                       )}
