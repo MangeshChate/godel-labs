@@ -105,7 +105,7 @@
     "videoCaption": "Watch Gödel redact sensitive customer data and block unauthorized browser submissions in real time.",
     "supportedTools": [
       { "name": "Claude in Chrome", "icon": "/logos/claude.svg" },
-      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" },
+      { "name": "Perplexity Comet", "icon": "/logos/comet.png" },
       { "name": "OpenAI Atlas", "icon": "/logos/openai.svg" },
       { "name": "Gemini in Chrome", "icon": "/logos/gemini-cli.svg" },
       { "name": "Copilot in Edge", "icon": "/logos/github-copilot.svg" },
@@ -199,9 +199,8 @@
     "videoCaption": "Desktop agent walkthrough & runtime enforcement.",
     "supportedTools": [
       { "name": "Claude Cowork", "icon": "/logos/claude.svg" },
-      { "name": "Claude Desktop", "icon": "/logos/claude.svg" },
       { "name": "ChatGPT Desktop", "icon": "/logos/openai.svg" },
-      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" }
+      { "name": "Perplexity Comet", "icon": "/logos/comet.png" }
     ],
     "threatScenarios": [
       {
