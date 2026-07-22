@@ -249,7 +249,7 @@ function ProductPreview() {
           <video
             ref={videoRef}
             src="https://dl.godel-labs.ai/website/hero-page-video-godel-gate.mp4"
-            poster="/mockup/hero-thumbnail.png"
+            poster="https://dl.godel-labs.ai/website/video-thumbnail.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
             playsInline
             preload="metadata"
@@ -260,6 +260,20 @@ function ProductPreview() {
             onLoadedMetadata={handleLoadedMetadata}
             onClick={togglePlay}
           />
+
+          {/* Initial Crisp Unblurred Video Thumbnail Overlay before play */}
+          {!hasStarted && (
+            <div
+              className="absolute inset-0 z-10 cursor-pointer"
+              onClick={togglePlay}
+            >
+              <img
+                src="https://dl.godel-labs.ai/website/video-thumbnail.png"
+                alt="Gödel's Gate Video Thumbnail"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+          )}
 
           {/* Outro Image Screen with Fade Effect in Last 3 Seconds */}
           <AnimatePresence>
