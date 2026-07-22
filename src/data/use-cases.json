@@ -105,7 +105,7 @@
     "videoCaption": "Watch Gödel redact sensitive customer data and block unauthorized browser submissions in real time.",
     "supportedTools": [
       { "name": "Claude in Chrome", "icon": "/logos/claude.svg" },
-      { "name": "Perplexity Comet", "icon": "/logos/perplexity.svg" },
+      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" },
       { "name": "OpenAI Atlas", "icon": "/logos/openai.svg" },
       { "name": "Gemini in Chrome", "icon": "/logos/gemini-cli.svg" },
       { "name": "Copilot in Edge", "icon": "/logos/github-copilot.svg" },
@@ -201,7 +201,7 @@
       { "name": "Claude Cowork", "icon": "/logos/claude.svg" },
       { "name": "Claude Desktop", "icon": "/logos/claude.svg" },
       { "name": "ChatGPT Desktop", "icon": "/logos/openai.svg" },
-      { "name": "Perplexity Comet", "icon": "/logos/perplexity.svg" },
+      { "name": "Perplexity Comet", "icon": "/logos/perplexity-comet.png" },
       { "name": "Gemini Desktop", "icon": "/logos/gemini-cli.svg" }
     ],
     "threatScenarios": [
@@ -291,15 +291,15 @@
     "videoSrc": "https://dl.godel-labs.ai/website/godel-sdk.mp4",
     "videoCaption": "Watch Gödel SDK enforce real-time policies inside headless agent loops without changing your prompts.",
     "supportedTools": [
-      { "name": "LangChain", "icon": "/logos/langchain.svg" },
-      { "name": "LangGraph", "icon": "/logos/langchain.svg" },
-      { "name": "CrewAI", "icon": "/logos/crewai.svg" },
-      { "name": "AutoGen", "icon": "/logos/autogen.svg" },
+      { "name": "LangChain", "icon": "/logos/langchain.png" },
+      { "name": "LangGraph", "icon": "/logos/langgraph.png" },
+      { "name": "CrewAI", "icon": "/logos/crewai.png" },
+      { "name": "AutoGen", "icon": "/logos/autogen.png" },
       { "name": "Claude Agent SDK", "icon": "/logos/claude.svg" },
       { "name": "OpenAI Assistants", "icon": "/logos/openai.svg" },
-      { "name": "LlamaIndex", "icon": "/logos/llamaindex.svg" },
-      { "name": "Haystack", "icon": "/logos/haystack.svg" },
-      { "name": "Semantic Kernel", "icon": "/logos/semantic-kernel.svg" }
+      { "name": "LlamaIndex", "icon": "/logos/llamaindex.png" },
+      { "name": "Haystack", "icon": "/logos/haystack.png" },
+      { "name": "Semantic Kernel", "icon": "/logos/semantic_kernel.png" }
     ],
     "threatScenarios": [
       {
