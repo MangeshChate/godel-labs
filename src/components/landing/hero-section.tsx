@@ -95,19 +95,9 @@ function ProductPreview() {
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const audioPlayPromiseRef = useRef<Promise<void> | void>(undefined);
-
-  const safePauseAudio = () => {
-    if (!audioRef.current) return;
-    if (audioPlayPromiseRef.current !== undefined) {
-      audioPlayPromiseRef.current.then(() => {
-        audioRef.current?.pause();
-      }).catch(() => {
-        audioRef.current?.pause();
-      });
-    } else {
-      audioRef.current.pause();
-    }
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMuted((prev) => !prev);
   };
 
   const handlePlay = () => {
@@ -115,24 +105,36 @@ function ProductPreview() {
     setHasStarted(true);
     setHasEnded(false);
     resetControlsTimeout();
+    // Capture duration dynamically if not set yet
+    if (videoRef.current && videoRef.current.duration) {
+      setDuration(videoRef.current.duration);
+    }
     if (audioRef.current) {
-      audioPlayPromiseRef.current = audioRef.current.play();
-      if (audioPlayPromiseRef.current !== undefined) {
-        audioPlayPromiseRef.current.catch(() => {});
-      }
+      audioRef.current.play().catch((err) => console.error("Failed to play audio:", err));
     }
   };
 
   const handlePause = () => {
-    const videoEnded = videoRef.current && videoRef.current.duration > 0 && videoRef.current.currentTime >= videoRef.current.duration;
-    if (videoEnded) return; // Let the audio keep playing if video ends first
-
     setIsPlaying(false);
     setShowControls(true);
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
     }
-    safePauseAudio();
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  };
+
+  const handleWaiting = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  };
+
+  const handlePlaying = () => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.play().catch((err) => console.error("Failed to play audio:", err));
+    }
   };
 
   const handleEnded = () => {
@@ -152,7 +154,7 @@ function ProductPreview() {
       });
       return;
     }
-    if (videoRef.current.paused && !isPlaying) {
+    if (videoRef.current.paused) {
       videoRef.current.play().catch((err) => {
         console.error("Failed to play video:", err);
       });
@@ -211,55 +213,26 @@ function ProductPreview() {
     };
   }, []);
 
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsMuted((prev) => !prev);
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-    }
-  };
-
   const handleTimeUpdate = () => {
-    if (videoRef.current && audioRef.current) {
-      const vDuration = videoRef.current.duration || 0;
-      const aDuration = audioRef.current.duration || 0;
-      const maxDuration = Math.max(vDuration, aDuration);
-      
-      const videoEnded = vDuration > 0 && videoRef.current.currentTime >= vDuration;
-      
-      // Robust sync check: if audio drifts by > 0.3s, snap it to video (only while video is playing)
-      if (!videoEnded && !audioRef.current.paused && !videoRef.current.paused) {
-        if (Math.abs(audioRef.current.currentTime - videoRef.current.currentTime) > 0.3) {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+      // Capture duration dynamically if not set yet
+      if (duration === 0 && videoRef.current.duration) {
+        setDuration(videoRef.current.duration);
+      }
+      // Strictly sync audio to video
+      if (audioRef.current) {
+        const diff = Math.abs(videoRef.current.currentTime - audioRef.current.currentTime);
+        if (diff > 0.25) {
           audioRef.current.currentTime = videoRef.current.currentTime;
         }
-      }
-
-      setCurrentTime(videoEnded ? audioRef.current.currentTime : videoRef.current.currentTime);
-      if (duration !== maxDuration && maxDuration > 0) {
-        setDuration(maxDuration);
       }
     }
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current && audioRef.current) {
-      const maxDuration = Math.max(videoRef.current.duration || 0, audioRef.current.duration || 0);
-      setDuration(maxDuration);
-    }
-  };
-
-  const handleWaiting = () => {
-    // If video buffers, pause audio safely
-    safePauseAudio();
-  };
-
-  const handlePlaying = () => {
-    // If video resumes from buffering, play audio
-    if (audioRef.current && isPlaying) {
-      audioPlayPromiseRef.current = audioRef.current.play();
-      if (audioPlayPromiseRef.current !== undefined) {
-        audioPlayPromiseRef.current.catch(() => {});
-      }
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration);
     }
   };
 
@@ -318,6 +291,7 @@ function ProductPreview() {
             preload="metadata"
             onPlay={handlePlay}
             onPause={handlePause}
+            onEnded={handleEnded}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onWaiting={handleWaiting}
@@ -328,8 +302,7 @@ function ProductPreview() {
             ref={audioRef}
             src="https://dl.godel-labs.ai/website/britteny-voiceover-godel-gate.mp3"
             preload="auto"
-            onEnded={handleEnded}
-            onTimeUpdate={handleTimeUpdate}
+            muted={isMuted}
           />
 
           {/* Initial Crisp Unblurred Video Thumbnail Overlay before play */}
@@ -463,7 +436,7 @@ function ProductPreview() {
 
               <button
                 onClick={toggleFullscreen}
-                className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none ml-1 cursor-pointer"
+                className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none ml-2 cursor-pointer"
                 aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
               >
                 {isFullscreen ? <Minimize className="h-4.5 w-4.5" /> : <Maximize className="h-4.5 w-4.5" />}
