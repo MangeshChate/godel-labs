@@ -434,7 +434,7 @@ export default function AgentNetworkFlow() {
       {/* Scrollable Container on Mobile, Centered on Desktop */}
       <div className="relative w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex xl:justify-center px-0 sm:px-8 xl:px-0">
         {/* Dynamic wrapper reserves exact space for the scaled diagram, preventing overflow scroll bugs */}
-        <div className="relative w-[928px] sm:w-[1044px] xl:w-[1160px] h-[520px] sm:h-[585px] xl:h-[650px] shrink-0 overflow-hidden xl:overflow-visible xl:translate-x-16 -ml-6 sm:ml-0">
+        <div className="relative w-[928px] sm:w-[1044px] xl:w-[1160px] h-[520px] sm:h-[585px] xl:h-[650px] shrink-0 overflow-hidden xl:overflow-visible -ml-6 sm:ml-0 xl:ml-16">
           <div className="absolute top-0 left-[-30px] sm:left-0 origin-top-left transform scale-[0.8] sm:scale-[0.9] xl:scale-100 h-[650px] w-[1160px] bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
             <NetworkCanvas hoveredNode={hoveredNode} />
             <HeaderLabels />
