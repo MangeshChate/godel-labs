@@ -95,16 +95,16 @@ export default function DataAuthoritySection() {
           </Reveal>
         </div>
 
-        <Reveal className="mt-14 border-l-4 border-[#6d49fd] bg-[#f5f2ff] px-6 py-5 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:px-8">
+        <Reveal className="mt-12 sm:mt-14 rounded-xl sm:rounded-r-xl border-l-4 border-[#6d49fd] bg-[#f5f2ff] px-5 py-6 sm:px-8 sm:py-6">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
               Signal & Decision
             </p>
-            <p className="mt-2 text-sm font-semibold text-[#24202d] sm:text-base">
-              Classification is the signal. Handling policy is the decision.
+            <p className="mt-3 sm:mt-2 text-[15px] leading-relaxed text-[#1c1825] sm:text-base">
+              <span className="font-semibold block sm:inline">Classification is the signal.</span>{" "}
+              <span className="text-[#6e6878] block sm:inline mt-1 sm:mt-0">Handling policy is the decision.</span>
             </p>
           </div>
-
         </Reveal>
       </div>
     </section>
