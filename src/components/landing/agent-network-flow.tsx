@@ -8,6 +8,7 @@ const SETTLED = 0.004;
 
 const WIDTH = 1160;
 const HEIGHT = 650;
+const NODE_RADIUS = 24; // 48px width / 2
 
 type Point = { x: number; y: number };
 type FlowPath = { 
@@ -69,12 +70,14 @@ const paths: FlowPath[] = [
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
-  const distance = path.to.x - path.from.x;
+  const startX = path.from.x + NODE_RADIUS;
+  const endX = path.to.x - NODE_RADIUS;
+  const distance = endX - startX;
   const bend = path.bend ?? 0.48;
-  const p0 = path.from;
-  const p1 = { x: p0.x + distance * bend, y: p0.y };
-  const p2 = { x: path.to.x - distance * bend, y: path.to.y };
-  const p3 = path.to;
+  const p0 = { x: startX, y: path.from.y };
+  const p1 = { x: startX + distance * bend, y: p0.y };
+  const p2 = { x: endX - distance * bend, y: path.to.y };
+  const p3 = { x: endX, y: path.to.y };
   const u = 1 - t;
   return {
     x: u ** 3 * p0.x + 3 * u ** 2 * t * p1.x + 3 * u * t ** 2 * p2.x + t ** 3 * p3.x,
@@ -166,7 +169,7 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
     const start = performance.now();
 
     const gradients = paths.map((path) => {
-      const gradient = context.createLinearGradient(path.from.x, path.from.y, path.to.x, path.to.y);
+      const gradient = context.createLinearGradient(path.from.x + NODE_RADIUS, path.from.y, path.to.x - NODE_RADIUS, path.to.y);
       gradient.addColorStop(0, path.fromColor);
       gradient.addColorStop(1, path.toColor);
       return gradient;
@@ -209,19 +212,21 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
         }
         const currentOpacity = opacityRef.current[index];
 
-        const distance = path.to.x - path.from.x;
+        const startX = path.from.x + NODE_RADIUS;
+        const endX = path.to.x - NODE_RADIUS;
+        const distance = endX - startX;
         const bend = path.bend ?? 0.48;
 
         context.save();
         context.globalAlpha = currentOpacity;
         context.beginPath();
-        context.moveTo(path.from.x, path.from.y);
+        context.moveTo(startX, path.from.y);
         context.bezierCurveTo(
-          path.from.x + distance * bend,
+          startX + distance * bend,
           path.from.y,
-          path.to.x - distance * bend,
+          endX - distance * bend,
           path.to.y,
-          path.to.x,
+          endX,
           path.to.y
         );
         context.strokeStyle = gradients[index];
