@@ -20,47 +20,52 @@ type FlowPath = {
   bend?: number 
 };
 
-// 4 Column Flow Paths: DATA SOURCE (x=110) -> AGENT (x=400) -> ACTION (x=700) -> EFFECT (x=990)
+// 4 Column Flow Paths:
+// Stage 0: DATA SOURCE (x=110)
+// Stage 1: AGENT (x=400)
+// Stage 2: ACTION (x=700)
+// Stage 3: EFFECT (x=990)
+
 const paths: FlowPath[] = [
   // -------------------------------------------------------------
-  // Stage 0: DATA SOURCE (x=110) -> AGENT (x=400)
+  // Stage 0 -> Stage 1: DATA SOURCE (x=110) -> AGENT (x=400)
   // -------------------------------------------------------------
-  // GitHub Issue (y=140) -> Claude Code (y=160)
+  // GitHub Issue (110, 140) -> Claude Code (400, 160)
   { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
-  // Jira Ticket (y=240) -> Claude Code (y=160)
+  // Jira Ticket (110, 240) -> Claude Code (400, 160)
   { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.15 },
-  // Slack Channel (y=340) -> Cursor AI (y=400)
-  { from: { x: 110, y: 340 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.3 },
-  // npm Package (y=440) -> Gemini CLI (y=520)
-  { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
-  // Web Document (y=540) -> OpenAI Codex (y=280)
-  { from: { x: 110, y: 540 }, to: { x: 400, y: 280 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
+  // Slack Channel (110, 340) -> OpenAI Codex (400, 280)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.3 },
+  // npm Package (110, 440) -> Cursor AI (400, 400)
+  { from: { x: 110, y: 440 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
+  // Web Document (110, 540) -> Gemini CLI (400, 520)
+  { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
 
   // -------------------------------------------------------------
-  // Stage 1: AGENT (x=400) -> ACTION (x=700)
+  // Stage 1 -> Stage 2: AGENT (x=400) -> ACTION (x=700)
   // -------------------------------------------------------------
-  // Claude Code (y=160) -> Shell Execution (y=160)
+  // Claude Code (400, 160) -> Shell Execution (700, 160)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  // Claude Code (y=160) -> Config Mutation (y=280)
-  { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
-  // OpenAI Codex (y=280) -> MCP Launch (y=400)
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.35 },
-  // Cursor AI (y=400) -> Package Install (y=520)
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.5 },
-  // Gemini CLI (y=520) -> Shell Execution (y=160)
-  { from: { x: 400, y: 520 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.65 },
+  // Claude Code (400, 160) -> Config Mutation (700, 280)
+  { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.25 },
+  // OpenAI Codex (400, 280) -> MCP Launch (700, 400)
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.35 },
+  // Cursor AI (400, 400) -> Package Install (700, 520)
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.5 },
+  // Gemini CLI (400, 520) -> Package Install (700, 520)
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.65 },
 
   // -------------------------------------------------------------
-  // Stage 2: ACTION (x=700) -> EFFECT (x=990)
+  // Stage 2 -> Stage 3: ACTION (x=700) -> EFFECT (x=990)
   // -------------------------------------------------------------
-  // Shell Execution (y=160) -> Code Blocked (y=160)
+  // Shell Execution (700, 160) -> Code Blocked (990, 160)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  // Config Mutation (y=280) -> Config Denied (y=280)
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.35 },
-  // MCP Launch (y=400) -> MCP Allowed (y=400)
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.45 },
-  // Package Install (y=520) -> Artifact Allowed (y=520)
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.6 },
+  // Config Mutation (700, 280) -> Config Denied (990, 280)
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
+  // MCP Launch (700, 400) -> MCP Allowed (990, 400)
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.45 },
+  // Package Install (700, 520) -> Artifact Allowed (990, 520)
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.6 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
@@ -86,38 +91,26 @@ function getActivePathIndices(hovered: Point | null, pathsList: FlowPath[]): Set
     return activeIndices;
   }
 
-  const col0: number[] = []; // x = 110
-  const col1: number[] = []; // x = 400
-  const col2: number[] = []; // x = 700
-
+  // 1st pass: directly connected paths
   pathsList.forEach((p, idx) => {
-    if (p.from.x === 110) col0.push(idx);
-    else if (p.from.x === 400) col1.push(idx);
-    else if (p.from.x === 700) col2.push(idx);
+    if ((p.from.x === hovered.x && p.from.y === hovered.y) || (p.to.x === hovered.x && p.to.y === hovered.y)) {
+      activeIndices.add(idx);
+    }
   });
 
-  const eq = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
+  // 2nd pass: multi-hop connections across columns
+  const connectedNodes = new Set<string>();
+  activeIndices.forEach((idx) => {
+    const p = pathsList[idx];
+    connectedNodes.add(`${p.from.x},${p.from.y}`);
+    connectedNodes.add(`${p.to.x},${p.to.y}`);
+  });
 
-  for (const i0 of col0) {
-    const p0 = pathsList[i0];
-    for (const i1 of col1) {
-      const p1 = pathsList[i1];
-      if (!eq(p0.to, p1.from)) continue;
-
-      for (const i2 of col2) {
-        const p2 = pathsList[i2];
-        if (!eq(p1.to, p2.from)) continue;
-
-        const routePoints = [p0.from, p0.to, p1.to, p2.to];
-
-        if (routePoints.some((pt) => eq(pt, hovered))) {
-          activeIndices.add(i0);
-          activeIndices.add(i1);
-          activeIndices.add(i2);
-        }
-      }
+  pathsList.forEach((p, idx) => {
+    if (connectedNodes.has(`${p.from.x},${p.from.y}`) || connectedNodes.has(`${p.to.x},${p.to.y}`)) {
+      activeIndices.add(idx);
     }
-  }
+  });
 
   return activeIndices;
 }
@@ -421,7 +414,7 @@ export default function AgentNetworkFlow() {
           {renderFlowNode(700, 400, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
           {renderFlowNode(700, 520, "Package Install", "2 events", "package", "purple")}
 
-          {/* Stage 3: Effect column (x = 990) - 4 nodes (ALL matching exact FlowNode UI style) */}
+          {/* Stage 3: Effect column (x = 990) - 4 nodes */}
           {renderFlowNode(990, 160, "Code Blocked", "4 events", "shield-alert", "red")}
           {renderFlowNode(990, 280, "Config Denied", "2 events", "shield-alert", "red")}
           {renderFlowNode(990, 400, "MCP Allowed", "2 events", "shield-check", "green")}
