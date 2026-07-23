@@ -1,0 +1,76 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.000 --> 00:00:02.940
+Your engineers are already running AI agents.
+
+00:00:02.940 --> 00:00:06.680
+Gödel's Gate is the runtime security layer
+that sees everything they do,
+
+00:00:06.680 --> 00:00:08.780
+and decides what they're allowed to do.
+
+00:00:08.780 --> 00:00:14.820
+Every action flows from the user, to the agent,
+to the data source, and ends in a decision.
+
+00:00:14.820 --> 00:00:16.820
+Safe work moves at full speed.
+
+00:00:16.820 --> 00:00:19.280
+Risky actions stop before they cause damage.
+
+00:00:19.280 --> 00:00:21.600
+Every event is counted and attributed.
+
+00:00:21.600 --> 00:00:25.300
+Open any event to see the full story:
+who initiated it,
+
+00:00:25.300 --> 00:00:28.900
+which device was used,
+and which agent and model were involved,
+
+00:00:28.900 --> 00:00:32.500
+along with a threat summary
+and a tamper-evident audit trail.
+
+00:00:32.500 --> 00:00:35.720
+Data Authority governs agent execution through trust.
+
+00:00:35.720 --> 00:00:40.100
+Trusted data becomes context.
+Untrusted data does not.
+
+00:00:40.100 --> 00:00:43.500
+Only trusted context can change an agent's behavior.
+
+00:00:43.500 --> 00:00:47.480
+So, a hidden instruction buried inside a webpage or ticket
+can be read,
+
+00:00:47.480 --> 00:00:49.180
+but never obeyed.
+
+00:00:49.180 --> 00:00:51.920
+Every alert includes a complete causal chain,
+
+00:00:51.920 --> 00:00:54.600
+from data origin, to action, to effect.
+
+00:00:54.600 --> 00:00:57.760
+Not a guess. A provable sequence of events.
+
+00:00:57.760 --> 00:01:01.440
+Apply organization-wide policies
+across your entire agent fleet.
+
+00:01:01.440 --> 00:01:05.000
+Connect once,
+and every agent is detected automatically.
+
+00:01:05.000 --> 00:01:08.320
+Gödel's Gate.
+Protecting AI agents everywhere they run.
