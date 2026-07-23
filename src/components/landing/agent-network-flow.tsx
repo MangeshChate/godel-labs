@@ -29,53 +29,69 @@ type FlowPath = {
 
 const paths: FlowPath[] = [
   // -------------------------------------------------------------
-  // Stage 0 -> Stage 1: DATA SOURCE (x=110) -> AGENT (x=400)
+  // Stage 0 -> Stage 1: DATA SOURCE (220, 340, 460) -> AGENT (160, 280, 400, 520)
   // -------------------------------------------------------------
   // Main Routes
-  { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
-  { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.15 },
-  { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.3 },
-  { from: { x: 110, y: 440 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.45 },
-  { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
+  // GitHub Issue (220) -> Claude Code (160)
+  { from: { x: 110, y: 220 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
+  // GitHub Issue (220) -> OpenAI Codex (280)
+  { from: { x: 110, y: 220 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.15 },
+  // Jira Ticket (340) -> Cursor AI (400)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.3 },
+  // Slack Channel (460) -> Gemini CLI (520)
+  { from: { x: 110, y: 460 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.45 },
+  
   // Clutter Connections
-  { from: { x: 110, y: 140 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.1 },
-  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
-  { from: { x: 110, y: 340 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.35 },
-  { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.5 },
-  { from: { x: 110, y: 540 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.7 },
+  // Jira Ticket (340) -> OpenAI Codex (280)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.2 },
+  // Slack Channel (460) -> Cursor AI (400)
+  { from: { x: 110, y: 460 }, to: { x: 400, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.35 },
+  // Jira Ticket (340) -> Claude Code (160)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.5 },
+  // GitHub Issue (220) -> Cursor AI (400)
+  { from: { x: 110, y: 220 }, to: { x: 400, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.65 },
 
   // -------------------------------------------------------------
-  // Stage 1 -> Stage 2: AGENT (x=400) -> ACTION (x=700)
+  // Stage 1 -> Stage 2: AGENT (160, 280, 400, 520) -> ACTION (160, 280, 400, 520)
   // -------------------------------------------------------------
   // Main Routes
+  // Claude Code (160) -> Shell Execution (160)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.25 },
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.4 },
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.55 },
-  { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#e3554f", width: 3, delay: 0.7 },
+  // OpenAI Codex (280) -> Config Mutation (280)
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.25 },
+  // Cursor AI (400) -> MCP Launch (400)
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.4 },
+  // Gemini CLI (520) -> Package Install (520)
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.55 },
+  
   // Clutter Connections
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.3 },
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.4 },
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.6 },
-  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#e3554f", toColor: "#258fcf", width: 3, delay: 0.6 },
+  { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.2 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.5 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.65 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: 0.75 },
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.85 },
 
   // -------------------------------------------------------------
-  // Stage 2 -> Stage 3: ACTION (x=700) -> EFFECT (x=990)
+  // Stage 2 -> Stage 3: ACTION (160, 280, 400, 520) -> EFFECT (160, 280, 400, 520)
   // -------------------------------------------------------------
   // Main Routes
+  // Shell Execution (160) -> Code Blocked (160)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#12b981", width: 4, delay: 0.5 },
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.65 },
+  // Config Mutation (280) -> Config Denied (280)
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.35 },
+  // MCP Launch (400) -> MCP Allowed (400)
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.5 },
+  // Package Install (520) -> Artifact Allowed (520)
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.65 },
+  
   // Clutter Connections
-  { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
-  { from: { x: 700, y: 160 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.4 },
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.3 },
   { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.45 },
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 520 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.55 },
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.6 },
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.7 },
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.75 },
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.6 },
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 280 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.75 },
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: 0.85 },
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.95 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
@@ -414,19 +430,17 @@ export default function AgentNetworkFlow() {
   };
 
   return (
-    <div className="relative mx-auto mt-14 w-full max-w-[1160px] sm:mt-16">
+    <div className="relative mx-auto mt-14 w-full sm:mt-16 flex justify-center">
       <div className="absolute inset-x-[8%] -bottom-10 h-44 rounded-[50%] bg-[#7455f6]/28 blur-[95px]" />
-      <div className="relative mx-auto overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="relative h-[650px] w-[1160px] bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
+      <div className="relative overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex w-full justify-center">
+        <div className="relative h-[650px] w-[1160px] shrink-0 bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
           <NetworkCanvas hoveredNode={hoveredNode} />
           <HeaderLabels />
 
-          {/* Stage 0: Data Source column (x = 110) - 5 nodes */}
-          {renderFlowNode(110, 140, "GitHub Issue", "6 events", "github", "blue")}
-          {renderFlowNode(110, 240, "Jira Ticket", "4 events", "jira", "blue")}
-          {renderFlowNode(110, 340, "Slack Channel", "2 events", "slack", "blue")}
-          {renderFlowNode(110, 440, "npm Package", "2 events", "dotenv", "blue")}
-          {renderFlowNode(110, 540, "Web Document", "2 events", "globe", "blue")}
+          {/* Stage 0: Data Source column (x = 110) - 3 nodes */}
+          {renderFlowNode(110, 220, "GitHub Issue", "6 events", "github", "blue")}
+          {renderFlowNode(110, 340, "Jira Ticket", "4 events", "jira", "blue")}
+          {renderFlowNode(110, 460, "Slack Channel", "2 events", "slack", "blue")}
 
           {/* Stage 1: Agent column (x = 400) - 4 nodes */}
           {renderFlowNode(400, 160, "Claude Code", "6 events", "anthropic", "teal")}
