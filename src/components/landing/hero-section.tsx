@@ -110,7 +110,9 @@ function ProductPreview() {
       setDuration(videoRef.current.duration);
     }
     if (audioRef.current) {
-      audioRef.current.play().catch((err) => console.error("Failed to play audio:", err));
+      audioRef.current.play().catch((err) => {
+        if (err.name !== "AbortError") console.error("Failed to play audio:", err);
+      });
     }
   };
 
@@ -135,7 +137,9 @@ function ProductPreview() {
 
   const handlePlaying = () => {
     if (audioRef.current && isPlaying) {
-      audioRef.current.play().catch((err) => console.error("Failed to play audio:", err));
+      audioRef.current.play().catch((err) => {
+        if (err.name !== "AbortError") console.error("Failed to play audio:", err);
+      });
     }
   };
 
@@ -152,13 +156,13 @@ function ProductPreview() {
       videoRef.current.currentTime = 0;
       if (audioRef.current) audioRef.current.currentTime = 0;
       videoRef.current.play().catch((err) => {
-        console.error("Failed to replay video:", err);
+        if (err.name !== "AbortError") console.error("Failed to replay video:", err);
       });
       return;
     }
     if (videoRef.current.paused) {
       videoRef.current.play().catch((err) => {
-        console.error("Failed to play video:", err);
+        if (err.name !== "AbortError") console.error("Failed to play video:", err);
       });
     } else {
       videoRef.current.pause();
