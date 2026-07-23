@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Play, Pause, Maximize, Minimize, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Captions, Play, Pause, Maximize, Minimize, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 
 const categories = [
@@ -89,9 +89,12 @@ function ProductPreview() {
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [captionsEnabled, setCaptionsEnabled] = useState(false);
+  const [activeCaption, setActiveCaption] = useState("");
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const captionTrackRef = useRef<HTMLTrackElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -99,6 +102,25 @@ function ProductPreview() {
     e.stopPropagation();
     setIsMuted((prev) => !prev);
   };
+
+  const toggleCaptions = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCaptionsEnabled((enabled) => !enabled);
+  };
+
+  useEffect(() => {
+    const textTrack = captionTrackRef.current?.track;
+    if (!textTrack) return;
+
+    textTrack.mode = "hidden";
+    const handleCueChange = () => {
+      const cue = textTrack.activeCues?.[0] as VTTCue | undefined;
+      setActiveCaption(cue?.text ?? "");
+    };
+
+    textTrack.addEventListener("cuechange", handleCueChange);
+    return () => textTrack.removeEventListener("cuechange", handleCueChange);
+  }, []);
 
   const handlePlay = () => {
     setIsPlaying(true);
@@ -303,13 +325,41 @@ function ProductPreview() {
             onWaiting={handleWaiting}
             onPlaying={handlePlaying}
             onClick={togglePlay}
-          />
+          >
+            <track
+              ref={captionTrackRef}
+              kind="captions"
+              src="/captions/hero-video.en.vtt"
+              srcLang="en"
+              label="English"
+            />
+          </video>
           <audio
             ref={audioRef}
             src="https://dl.godel-labs.ai/website/britteny-voiceover-godel-gate.mp3"
             preload="auto"
             muted={isMuted}
           />
+
+          <AnimatePresence>
+            {hasStarted && captionsEnabled && activeCaption && !hasEnded && (
+              <motion.div
+                key="hero-caption"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 2 }}
+                transition={{ duration: 0.12 }}
+                className={`pointer-events-none absolute inset-x-0 z-30 flex justify-center px-3 transition-[bottom] duration-200 sm:px-6 ${
+                  showControls ? "bottom-16 sm:bottom-20" : "bottom-3 sm:bottom-4"
+                }`}
+                aria-live="off"
+              >
+                <p className="max-w-[92%] whitespace-pre-line rounded-md bg-[rgba(13,11,20,.88)] px-3.5 py-2 text-center text-[11px] font-medium leading-[1.4] text-white shadow-[0_8px_28px_rgba(0,0,0,.32)] backdrop-blur-md sm:max-w-[78%] sm:px-5 sm:py-2.5 sm:text-sm lg:max-w-[70%] lg:text-[15px]">
+                  {activeCaption}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Initial Crisp Unblurred Video Thumbnail Overlay before play */}
           {!hasStarted && (
@@ -438,6 +488,17 @@ function ProductPreview() {
                 aria-label={isMuted ? "Unmute" : "Mute"}
               >
                 {isMuted ? <VolumeX className="h-4.5 w-4.5" /> : <Volume2 className="h-4.5 w-4.5" />}
+              </button>
+
+              <button
+                onClick={toggleCaptions}
+                className={`ml-2 cursor-pointer rounded-md p-1 transition-all duration-150 focus:outline-none hover:scale-110 active:scale-95 ${
+                  captionsEnabled ? "bg-white/20 text-white" : "text-white/55 hover:text-white"
+                }`}
+                aria-label={captionsEnabled ? "Turn captions off" : "Turn captions on"}
+                aria-pressed={captionsEnabled}
+              >
+                <Captions className="h-4.5 w-4.5" />
               </button>
 
               <button
