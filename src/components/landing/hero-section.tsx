@@ -120,13 +120,15 @@ function ProductPreview() {
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
     }
-    if (audioRef.current) {
+    // Only pause the audio if the video hasn't ended.
+    // If the video ended, let the audio finish playing during the outro.
+    if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
       audioRef.current.pause();
     }
   };
 
   const handleWaiting = () => {
-    if (audioRef.current) {
+    if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
       audioRef.current.pause();
     }
   };
