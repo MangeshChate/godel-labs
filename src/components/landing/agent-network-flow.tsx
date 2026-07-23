@@ -31,42 +31,51 @@ const paths: FlowPath[] = [
   // -------------------------------------------------------------
   // Stage 0 -> Stage 1: DATA SOURCE (x=110) -> AGENT (x=400)
   // -------------------------------------------------------------
-  // Route 1: GitHub Issue (110, 140) -> Claude Code (400, 160)
+  // Main Routes
   { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
-  // Route 2: Jira Ticket (110, 240) -> Claude Code (400, 160)
   { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.15 },
-  // Route 3: Slack Channel (110, 340) -> OpenAI Codex (400, 280)
   { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.3 },
-  // Route 4: npm Package (110, 440) -> Cursor AI (400, 400)
   { from: { x: 110, y: 440 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.45 },
-  // Route 5: Web Document (110, 540) -> Gemini CLI (400, 520)
   { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
+  // Clutter Connections
+  { from: { x: 110, y: 140 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 2, delay: 0.1 },
+  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 2, delay: 0.25 },
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#258fcf", width: 2, delay: 0.35 },
+  { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 2, delay: 0.5 },
+  { from: { x: 110, y: 540 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 1.5, delay: 0.7 },
 
   // -------------------------------------------------------------
   // Stage 1 -> Stage 2: AGENT (x=400) -> ACTION (x=700)
   // -------------------------------------------------------------
-  // Route 1: Claude Code (400, 160) -> Shell Execution (700, 160)
+  // Main Routes
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  // Route 2: Claude Code (400, 160) -> Config Mutation (700, 280)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.25 },
-  // Route 3: OpenAI Codex (400, 280) -> MCP Launch (700, 400)
   { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.4 },
-  // Route 4: Cursor AI (400, 400) -> Package Install (700, 520)
   { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.55 },
-  // Route 5: Gemini CLI (400, 520) -> Package Install (700, 520)
   { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#e3554f", width: 3, delay: 0.7 },
+  // Clutter Connections
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.3 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 2, delay: 0.45 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 2, delay: 0.4 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.6 },
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#e3554f", toColor: "#258fcf", width: 2, delay: 0.6 },
 
   // -------------------------------------------------------------
   // Stage 2 -> Stage 3: ACTION (x=700) -> EFFECT (x=990)
   // -------------------------------------------------------------
-  // Route 1: Shell Execution (700, 160) -> Code Blocked (990, 160)
+  // Main Routes
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  // Route 2: Config Mutation (700, 280) -> Config Denied (990, 280)
   { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
-  // Route 3: MCP Launch (700, 400) -> MCP Allowed (990, 400)
   { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#12b981", width: 4, delay: 0.5 },
-  // Route 4 & 5: Package Install (700, 520) -> Artifact Allowed (990, 520)
   { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.65 },
+  // Clutter Connections
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 2, delay: 0.25 },
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.4 },
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 2, delay: 0.45 },
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 520 }, fromColor: "#12b981", toColor: "#12b981", width: 2, delay: 0.55 },
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.6 },
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 2, delay: 0.7 },
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.75 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
