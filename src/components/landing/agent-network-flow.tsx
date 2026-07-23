@@ -52,46 +52,44 @@ const paths: FlowPath[] = [
   { from: { x: 110, y: 220 }, to: { x: 400, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.65 },
 
   // -------------------------------------------------------------
-  // Stage 1 -> Stage 2: AGENT (160, 280, 400, 520) -> ACTION (160, 280, 400, 520)
+  // Stage 1 -> Stage 2: AGENT (160, 280, 400, 520) -> ACTION (220, 340, 460)
   // -------------------------------------------------------------
   // Main Routes
-  // Claude Code (160) -> Shell Execution (160)
-  { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  // OpenAI Codex (280) -> Config Mutation (280)
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.25 },
-  // Cursor AI (400) -> MCP Launch (400)
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.4 },
-  // Gemini CLI (520) -> Package Install (520)
-  { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.55 },
+  // Claude Code (160) -> Shell Execution (220)
+  { from: { x: 400, y: 160 }, to: { x: 700, y: 220 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
+  // OpenAI Codex (280) -> Config Mutation (340)
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 340 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.25 },
+  // Cursor AI (400) -> MCP Launch (460)
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 460 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.4 },
+  // Gemini CLI (520) -> MCP Launch (460)
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 460 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.55 },
   
   // Clutter Connections
-  { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.2 },
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
-  { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.5 },
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.65 },
-  { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: 0.75 },
-  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.85 },
+  { from: { x: 400, y: 160 }, to: { x: 700, y: 340 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.2 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 220 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 460 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.5 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 340 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.65 },
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 340 }, fromColor: "#d98a19", toColor: "#12b981", width: 3, delay: 0.75 },
 
   // -------------------------------------------------------------
-  // Stage 2 -> Stage 3: ACTION (160, 280, 400, 520) -> EFFECT (160, 280, 400, 520)
+  // Stage 2 -> Stage 3: ACTION (220, 340, 460) -> EFFECT (160, 280, 400, 520)
   // -------------------------------------------------------------
   // Main Routes
-  // Shell Execution (160) -> Code Blocked (160)
-  { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  // Config Mutation (280) -> Config Denied (280)
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.35 },
-  // MCP Launch (400) -> MCP Allowed (400)
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.5 },
-  // Package Install (520) -> Artifact Allowed (520)
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.65 },
+  // Shell Execution (220) -> Code Blocked (160)
+  { from: { x: 700, y: 220 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
+  // Config Mutation (340) -> Config Denied (280)
+  { from: { x: 700, y: 340 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 4, delay: 0.35 },
+  // MCP Launch (460) -> MCP Allowed (400)
+  { from: { x: 700, y: 460 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.5 },
+  // MCP Launch (460) -> Artifact Allowed (520)
+  { from: { x: 700, y: 460 }, to: { x: 990, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 4, delay: 0.65 },
   
   // Clutter Connections
-  { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.3 },
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.45 },
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.6 },
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 280 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.75 },
-  { from: { x: 700, y: 400 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: 0.85 },
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#d98a19", toColor: "#258fcf", width: 3, delay: 0.95 },
+  { from: { x: 700, y: 220 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.3 },
+  { from: { x: 700, y: 340 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.45 },
+  { from: { x: 700, y: 340 }, to: { x: 990, y: 400 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: 0.6 },
+  { from: { x: 700, y: 460 }, to: { x: 990, y: 280 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.75 },
+  { from: { x: 700, y: 220 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#d98a19", width: 3, delay: 0.85 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
@@ -448,11 +446,10 @@ export default function AgentNetworkFlow() {
           {renderFlowNode(400, 400, "Cursor AI", "4 events", "cursor", "teal")}
           {renderFlowNode(400, 520, "Gemini CLI", "4 events", "googlegemini", "teal")}
 
-          {/* Stage 2: Action column (x = 700) - 4 nodes */}
-          {renderFlowNode(700, 160, "Shell Execution", "4 events", "terminal", "purple")}
-          {renderFlowNode(700, 280, "Config Mutation", "2 events", "zap", "purple")}
-          {renderFlowNode(700, 400, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
-          {renderFlowNode(700, 520, "Package Install", "2 events", "package", "purple")}
+          {/* Stage 2: Action column (x = 700) - 3 nodes */}
+          {renderFlowNode(700, 220, "Shell Execution", "4 events", "terminal", "purple")}
+          {renderFlowNode(700, 340, "Config Mutation", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 460, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
 
           {/* Stage 3: Effect column (x = 990) - 4 nodes */}
           {renderFlowNode(990, 160, "Code Blocked", "4 events", "shield-alert", "red")}
