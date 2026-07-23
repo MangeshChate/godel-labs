@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { Bot, Database, FolderCheck, Laptop, ShieldCheck, UserRound } from "lucide-react";
+import { Bot, Database, ShieldCheck, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const SETTLED = 0.004;
 
 const WIDTH = 1160;
-const HEIGHT = 650;
+const HEIGHT = 660;
 
 type Point = { x: number; y: number };
 type FlowPath = { 
@@ -20,60 +20,67 @@ type FlowPath = {
   bend?: number 
 };
 
-// Section Header Colors corresponding to headers:
-// Users: #7258e8
-// Platform: #3977eb
-// Agents: #079c8a
-// Taxonomy: #12b981
-// Data Source: #258fcf
-// Decisions: Allowed (#1aa775), Warned (#d98a19), Blocked (#e3554f)
+// Colors matching the diagram screenshot:
+// Data Source: #258fcf (Blue)
+// Agent: #12b981 (Teal Green)
+// Action: #8f79f4 (Purple)
+// Effect (Allowed): #1aa775 (Green)
+// Effect (Blocked): #e3554f (Red)
+// Effect (Warned): #d98a19 (Amber)
 
 const paths: FlowPath[] = [
-  // Users (x=72) to Platform (x=260)
-  { from: { x: 72, y: 166 }, to: { x: 260, y: 210 }, fromColor: "#7258e8", toColor: "#3977eb", width: 5, delay: 0 },
-  { from: { x: 72, y: 270 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 4, delay: .17 },
-  { from: { x: 72, y: 395 }, to: { x: 260, y: 430 }, fromColor: "#7258e8", toColor: "#3977eb", width: 4, delay: .34 },
-  { from: { x: 72, y: 510 }, to: { x: 260, y: 320 }, fromColor: "#7258e8", toColor: "#3977eb", width: 3, delay: .5 },
+  // -------------------------------------------------------------
+  // Stage 1: DATA SOURCE (x=110) -> AGENT (x=400)
+  // -------------------------------------------------------------
+  // GitHub issue -> Claude Code
+  { from: { x: 110, y: 135 }, to: { x: 400, y: 175 }, fromColor: "#e3554f", toColor: "#e3554f", width: 6, delay: 0 },
+  // Jira PROJ-1421 -> Claude Code
+  { from: { x: 110, y: 220 }, to: { x: 400, y: 175 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.15 },
+  // MCP tool output -> Codex
+  { from: { x: 110, y: 305 }, to: { x: 400, y: 285 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.3 },
+  // Slack #eng -> Cursor
+  { from: { x: 110, y: 390 }, to: { x: 400, y: 395 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.45 },
+  // malicious npm -> Gemini CLI
+  { from: { x: 110, y: 475 }, to: { x: 400, y: 505 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.6 },
+  // web page -> Gemini CLI
+  { from: { x: 110, y: 560 }, to: { x: 400, y: 505 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.75 },
 
-  // Platform (x=260) to Agents (x=445)
-  { from: { x: 260, y: 210 }, to: { x: 445, y: 190 }, fromColor: "#3977eb", toColor: "#079c8a", width: 6, delay: .1 },
-  { from: { x: 260, y: 210 }, to: { x: 445, y: 310 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .3 },
-  { from: { x: 260, y: 320 }, to: { x: 445, y: 310 }, fromColor: "#3977eb", toColor: "#079c8a", width: 5, delay: .25 },
-  { from: { x: 260, y: 320 }, to: { x: 445, y: 440 }, fromColor: "#3977eb", toColor: "#079c8a", width: 3, delay: .45 },
-  { from: { x: 260, y: 430 }, to: { x: 445, y: 190 }, fromColor: "#3977eb", toColor: "#079c8a", width: 4, delay: .2 },
-  { from: { x: 260, y: 430 }, to: { x: 445, y: 440 }, fromColor: "#3977eb", toColor: "#079c8a", width: 4, delay: .55 },
+  // -------------------------------------------------------------
+  // Stage 2: AGENT (x=400) -> ACTION (x=700)
+  // -------------------------------------------------------------
+  // Claude Code -> Shell execution
+  { from: { x: 400, y: 175 }, to: { x: 700, y: 135 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
+  // Claude Code -> Mutate config
+  { from: { x: 400, y: 175 }, to: { x: 700, y: 220 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
+  // Codex -> Launch MCP server
+  { from: { x: 400, y: 285 }, to: { x: 700, y: 305 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.35 },
+  // Codex -> Network connect
+  { from: { x: 400, y: 285 }, to: { x: 700, y: 390 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.5 },
+  // Cursor -> Install package
+  { from: { x: 400, y: 395 }, to: { x: 700, y: 475 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.6 },
+  // Gemini CLI -> Write persistence
+  { from: { x: 400, y: 505 }, to: { x: 700, y: 560 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.7 },
 
-  // Agents (x=445) to Taxonomy (x=635)
-  { from: { x: 445, y: 190 }, to: { x: 635, y: 150 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .2 },
-  { from: { x: 445, y: 190 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 6, delay: .43 },
-  { from: { x: 445, y: 190 }, to: { x: 635, y: 510 }, fromColor: "#079c8a", toColor: "#12b981", width: 4, delay: .63 },
-  { from: { x: 445, y: 310 }, to: { x: 635, y: 150 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .32 },
-  { from: { x: 445, y: 310 }, to: { x: 635, y: 270 }, fromColor: "#079c8a", toColor: "#12b981", width: 4, delay: .55 },
-  { from: { x: 445, y: 310 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .7 },
-  { from: { x: 445, y: 440 }, to: { x: 635, y: 390 }, fromColor: "#079c8a", toColor: "#12b981", width: 3, delay: .48 },
-  { from: { x: 445, y: 440 }, to: { x: 635, y: 510 }, fromColor: "#079c8a", toColor: "#12b981", width: 5, delay: .77 },
-
-  // Taxonomy (x=635) to Data Source (x=825)
-  { from: { x: 635, y: 150 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .2 },
-  { from: { x: 635, y: 150 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 2, delay: .7 },
-  { from: { x: 635, y: 270 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .38 },
-  { from: { x: 635, y: 390 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .56 },
-  { from: { x: 635, y: 390 }, to: { x: 825, y: 410 }, fromColor: "#12b981", toColor: "#258fcf", width: 5, delay: .28 },
-  { from: { x: 635, y: 510 }, to: { x: 825, y: 160 }, fromColor: "#12b981", toColor: "#258fcf", width: 3, delay: .76 },
-  { from: { x: 635, y: 510 }, to: { x: 825, y: 285 }, fromColor: "#12b981", toColor: "#258fcf", width: 4, delay: .62 },
-  { from: { x: 635, y: 510 }, to: { x: 825, y: 520 }, fromColor: "#12b981", toColor: "#258fcf", width: 7, delay: .18 },
-
-  // Data Source (x=825) to Decision (x=1045)
-  { from: { x: 825, y: 160 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 5, delay: .2 },
-  { from: { x: 825, y: 160 }, to: { x: 1045, y: 355 }, fromColor: "#258fcf", toColor: "#d98a19", width: 3, delay: .62 },
-  { from: { x: 825, y: 285 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 4, delay: .36 },
-  { from: { x: 825, y: 410 }, to: { x: 1045, y: 470 }, fromColor: "#258fcf", toColor: "#e3554f", width: 5, delay: .48 },
-  { from: { x: 825, y: 520 }, to: { x: 1045, y: 230 }, fromColor: "#258fcf", toColor: "#1aa775", width: 4, delay: .72 },
+  // -------------------------------------------------------------
+  // Stage 3: ACTION (x=700) -> EFFECT (x=990)
+  // -------------------------------------------------------------
+  // Shell execution -> Code execution (denied)
+  { from: { x: 700, y: 135 }, to: { x: 990, y: 135 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
+  // Mutate config -> Config change (denied)
+  { from: { x: 700, y: 220 }, to: { x: 990, y: 305 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.35 },
+  // Launch MCP server -> MCP server (allowed)
+  { from: { x: 700, y: 305 }, to: { x: 990, y: 475 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.45 },
+  // Network connect -> Network egress (allowed)
+  { from: { x: 700, y: 390 }, to: { x: 990, y: 390 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.55 },
+  // Install package -> Installed artifact (allowed)
+  { from: { x: 700, y: 475 }, to: { x: 990, y: 220 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.65 },
+  // Write persistence -> Persistence (allowed)
+  { from: { x: 700, y: 560 }, to: { x: 990, y: 560 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.8 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
   const distance = path.to.x - path.from.x;
-  const bend = path.bend ?? .48;
+  const bend = path.bend ?? 0.48;
   const p0 = path.from;
   const p1 = { x: p0.x + distance * bend, y: p0.y };
   const p2 = { x: path.to.x - distance * bend, y: path.to.y };
@@ -85,7 +92,7 @@ function bezierPoint(path: FlowPath, t: number) {
   };
 }
 
-// Compute all active path indices representing complete end-to-end chains from Column 0 to Column 5 that pass through the hovered node coordinate
+// Compute active path indices representing complete end-to-end chains from Data Source to Effect
 function getActivePathIndices(hovered: Point | null, pathsList: FlowPath[]): Set<number> {
   const activeIndices = new Set<number>();
   if (!hovered) {
@@ -95,72 +102,42 @@ function getActivePathIndices(hovered: Point | null, pathsList: FlowPath[]): Set
     return activeIndices;
   }
 
-  // Group path indices by their starting column for route lookup
-  const col0: number[] = []; // x = 72
-  const col1: number[] = []; // x = 260
-  const col2: number[] = []; // x = 445
-  const col3: number[] = []; // x = 635
-  const col4: number[] = []; // x = 825
-  
+  const col0: number[] = []; // x = 110
+  const col1: number[] = []; // x = 400
+  const col2: number[] = []; // x = 700
+
   pathsList.forEach((p, idx) => {
-    if (p.from.x === 72) col0.push(idx);
-    else if (p.from.x === 260) col1.push(idx);
-    else if (p.from.x === 445) col2.push(idx);
-    else if (p.from.x === 635) col3.push(idx);
-    else if (p.from.x === 825) col4.push(idx);
+    if (p.from.x === 110) col0.push(idx);
+    else if (p.from.x === 400) col1.push(idx);
+    else if (p.from.x === 700) col2.push(idx);
   });
 
   const eq = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
 
-  // Search all combinations of segments connecting from Column 0 through Column 5
   for (const i0 of col0) {
     const p0 = pathsList[i0];
     for (const i1 of col1) {
       const p1 = pathsList[i1];
       if (!eq(p0.to, p1.from)) continue;
-      
+
       for (const i2 of col2) {
         const p2 = pathsList[i2];
         if (!eq(p1.to, p2.from)) continue;
-        
-        for (const i3 of col3) {
-          const p3 = pathsList[i3];
-          if (!eq(p2.to, p3.from)) continue;
-          
-          for (const i4 of col4) {
-            const p4 = pathsList[i4];
-            if (!eq(p3.to, p4.from)) continue;
-            
-            // Reached a complete chain from first section to decision end.
-            // Check if this route contains the hovered node.
-            const routePoints = [
-              p0.from,
-              p0.to,
-              p1.to,
-              p2.to,
-              p3.to,
-              p4.to
-            ];
-            
-            if (routePoints.some(pt => eq(pt, hovered))) {
-              activeIndices.add(i0);
-              activeIndices.add(i1);
-              activeIndices.add(i2);
-              activeIndices.add(i3);
-              activeIndices.add(i4);
-            }
-          }
+
+        const routePoints = [p0.from, p0.to, p1.to, p2.to];
+
+        if (routePoints.some((pt) => eq(pt, hovered))) {
+          activeIndices.add(i0);
+          activeIndices.add(i1);
+          activeIndices.add(i2);
         }
       }
     }
   }
-  
+
   return activeIndices;
 }
 
-// Bake the glowing bubble into an offscreen canvas once per color/radius pair.
-// Canvas shadows cost a full blur pass per draw call, so paying it 30x a frame
-// is what makes this loop expensive enough to stall scrolling.
 function bubbleSprite(color: string, radius: number, dpr: number) {
   const size = (radius + 16) * 2;
   const sprite = document.createElement("canvas");
@@ -190,7 +167,6 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
   const activeRef = useRef<Set<number> | null>(null);
   const wakeRef = useRef<() => void>(() => {});
 
-  // Recompute the active set without tearing down and restarting the loop.
   useEffect(() => {
     activeRef.current = hoveredNode ? getActivePathIndices(hoveredNode, paths) : null;
     wakeRef.current();
@@ -212,14 +188,13 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
     let visible = false;
     const start = performance.now();
 
-    // Geometry and colors never change, so build these once instead of per frame.
     const gradients = paths.map((path) => {
       const gradient = context.createLinearGradient(path.from.x, path.from.y, path.to.x, path.to.y);
       gradient.addColorStop(0, path.fromColor);
       gradient.addColorStop(1, path.toColor);
       return gradient;
     });
-    const bubbles = paths.map((path) => bubbleSprite(path.toColor, Math.max(2.5, path.width * .62), dpr));
+    const bubbles = paths.map((path) => bubbleSprite(path.toColor, Math.max(2.5, path.width * 0.62), dpr));
 
     const draw = (now: number) => {
       if (!visible) {
@@ -238,10 +213,10 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
       context.setLineDash([3, 7]);
       context.strokeStyle = "rgba(255, 255, 255, .08)";
       context.lineWidth = 1;
-      [166, 350, 540, 730, 920].forEach((x) => {
+      [255, 550, 845].forEach((x) => {
         context.beginPath();
-        context.moveTo(x, 64);
-        context.lineTo(x, 610);
+        context.moveTo(x, 60);
+        context.lineTo(x, 620);
         context.stroke();
       });
       context.restore();
@@ -249,7 +224,6 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
       paths.forEach((path, index) => {
         const isActive = !activePathIndices || activePathIndices.has(index);
 
-        // Smoothly slide current opacity toward target state (lerp)
         const targetOpacity = isActive ? 1.0 : 0.05;
         if (Math.abs(targetOpacity - opacityRef.current[index]) < SETTLED) opacityRef.current[index] = targetOpacity;
         else {
@@ -259,16 +233,19 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
         const currentOpacity = opacityRef.current[index];
 
         const distance = path.to.x - path.from.x;
-        const bend = path.bend ?? .48;
+        const bend = path.bend ?? 0.48;
 
         context.save();
         context.globalAlpha = currentOpacity;
         context.beginPath();
         context.moveTo(path.from.x, path.from.y);
         context.bezierCurveTo(
-          path.from.x + distance * bend, path.from.y,
-          path.to.x - distance * bend, path.to.y,
-          path.to.x, path.to.y
+          path.from.x + distance * bend,
+          path.from.y,
+          path.to.x - distance * bend,
+          path.to.y,
+          path.to.x,
+          path.to.y
         );
         context.strokeStyle = gradients[index];
         context.lineWidth = path.width;
@@ -276,17 +253,14 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
         context.stroke();
         context.restore();
 
-        // Draw animated glowing bubble only if path is active enough
         const bubble = bubbles[index];
         if (currentOpacity > 0.15 && bubble) {
-          const progress = reduceMotion ? .58 : (((now - start) / 2900 + path.delay + index * .011) % 1);
+          const progress = reduceMotion ? 0.58 : ((now - start) / 2900 + path.delay + index * 0.011) % 1;
           const point = bezierPoint(path, progress);
           context.drawImage(bubble.canvas, point.x - bubble.size / 2, point.y - bubble.size / 2, bubble.size, bubble.size);
         }
       });
 
-      // Bubbles animate forever, but a reduced-motion render only needs to
-      // repaint while a hover transition is still in flight.
       frame = reduceMotion && settled ? 0 : requestAnimationFrame(draw);
     };
 
@@ -294,8 +268,6 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
       if (visible && !frame) frame = requestAnimationFrame(draw);
     };
 
-    // Keep the loop off the main thread entirely until the diagram is near the
-    // viewport, so scrolling the sections above it stays smooth.
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -305,7 +277,7 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
           frame = 0;
         }
       },
-      { rootMargin: "200px" },
+      { rootMargin: "200px" }
     );
     observer.observe(canvas);
 
@@ -320,19 +292,17 @@ function NetworkCanvas({ hoveredNode }: NetworkCanvasProps) {
 }
 
 const columnHeaders = [
-  { x: 34, label: "users", color: "#7258e8", Icon: UserRound },
-  { x: 218, label: "platform", color: "#3977eb", Icon: Laptop },
-  { x: 405, label: "agents", color: "#079c8a", Icon: Bot },
-  { x: 590, label: "taxonomy", color: "#12b981", Icon: FolderCheck },
-  { x: 765, label: "data source / mcp", color: "#258fcf", Icon: Database },
-  { x: 982, label: "decision", color: "#1aa775", Icon: ShieldCheck },
+  { x: 50, label: "data source", color: "#258fcf", Icon: Database },
+  { x: 350, label: "agent", color: "#12b981", Icon: Bot },
+  { x: 655, label: "action", color: "#8f79f4", Icon: Zap },
+  { x: 940, label: "effect", color: "#1aa775", Icon: ShieldCheck },
 ];
 
 function HeaderLabels() {
   return (
     <>
       {columnHeaders.map(({ x, label, color, Icon }) => (
-        <div key={label} className="absolute top-7 flex items-center gap-1.5 text-[11px] font-medium lowercase tracking-wide" style={{ left: x, color }}>
+        <div key={label} className="absolute top-6 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider" style={{ left: x, color }}>
           <Icon className="h-4 w-4" />
           {label}
         </div>
@@ -347,43 +317,45 @@ interface FlowNodeProps {
   title: string;
   detail: string;
   icon?: string;
-  tone?: "purple" | "blue" | "teal" | "green" | "red" | "amber";
+  tone?: "blue" | "teal" | "purple" | "green" | "red";
   faded?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
 
-function FlowNode({ 
-  x, 
-  y, 
-  title, 
-  detail, 
-  icon, 
-  tone = "purple", 
-  faded = false,
-  onMouseEnter,
-  onMouseLeave
-}: FlowNodeProps) {
+function FlowNode({ x, y, title, detail, icon, tone = "blue", faded = false, onMouseEnter, onMouseLeave }: FlowNodeProps) {
   const tones = {
-    purple: "border-[#8f79f4]/60 bg-[#7258e8]/25",
-    blue: "border-[#4aa8df]/60 bg-[#258fcf]/25",
-    teal: "border-[#28bba8]/60 bg-[#079c8a]/25",
-    green: "border-[#39d29c]/60 bg-[#12b981]/25",
-    red: "border-[#f07a74]/60 bg-[#e3554f]/25",
-    amber: "border-[#efaa45]/60 bg-[#d98a19]/25",
+    blue: "border-[#4aa8df]/60 bg-[#258fcf]/25 text-white",
+    teal: "border-[#28bba8]/60 bg-[#079c8a]/25 text-white",
+    purple: "border-[#8f79f4]/60 bg-[#7258e8]/25 text-white",
+    green: "border-[#39d29c]/60 bg-[#12b981]/25 text-white",
+    red: "border-[#f07a74]/60 bg-[#e3554f]/25 text-white",
   };
+
   return (
-    <div 
-      className={`absolute w-[132px] -translate-x-1/2 -translate-y-[28px] text-center transition-all duration-300 ${faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"}`} 
+    <div
+      className={`absolute flex w-[190px] -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-[16px] border border-white/15 bg-[#171526]/80 p-2 shadow-[0_10px_28px_rgba(0,0,0,.22)] backdrop-blur-md transition-all duration-300 ${
+        faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"
+      } hover:scale-105 cursor-pointer`}
       style={{ left: x, top: y }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <span className={`mx-auto grid h-12 w-12 place-items-center rounded-[15px] border text-white shadow-[0_10px_25px_rgba(0,0,0,.18)] backdrop-blur-md transition-all duration-300 ${tones[tone]} hover:scale-115 cursor-pointer`}>
-        {icon === "folder" ? <FolderCheck className="h-5 w-5" /> : icon ? <Image src={`/integration-icons/${icon}.svg`} alt="" width={20} height={20} className="brightness-0 invert" /> : <UserRound className="h-5 w-5" />}
+      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border ${tones[tone]}`}>
+        {icon === "zap" ? (
+          <Zap className="h-4.5 w-4.5 text-[#a58fff]" />
+        ) : icon === "database" ? (
+          <Database className="h-4.5 w-4.5 text-[#38bdf8]" />
+        ) : icon ? (
+          <Image src={`/integration-icons/${icon}.svg`} alt="" width={18} height={18} className="brightness-0 invert" />
+        ) : (
+          <Database className="h-4.5 w-4.5 text-white/80" />
+        )}
       </span>
-      <strong className="mt-2 block truncate text-[11px] font-semibold text-white/85">{title}</strong>
-      <span className="mt-1 block text-[9px] text-white/42">{detail}</span>
+      <div className="min-w-0 text-left">
+        <strong className="block truncate text-[11px] font-semibold text-white/90">{title}</strong>
+        <span className="block text-[9.5px] font-medium text-white/45">{detail}</span>
+      </div>
     </div>
   );
 }
@@ -393,36 +365,32 @@ interface DecisionNodeProps {
   y: number;
   label: string;
   count: string;
-  tone: "green" | "red" | "amber";
+  tone: "green" | "red";
   faded?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
 
-function DecisionNode({ 
-  x, 
-  y, 
-  label, 
-  count, 
-  tone, 
-  faded = false,
-  onMouseEnter,
-  onMouseLeave
-}: DecisionNodeProps) {
-  const style = tone === "green" ? "border-emerald-400/45 bg-emerald-400/10 text-emerald-200" : tone === "red" ? "border-red-400/45 bg-red-400/10 text-red-200" : "border-amber-400/45 bg-amber-400/10 text-amber-200";
-  const dot = tone === "green" ? "bg-emerald-600" : tone === "red" ? "bg-red-500" : "bg-amber-600";
+function DecisionNode({ x, y, label, count, tone, faded = false, onMouseEnter, onMouseLeave }: DecisionNodeProps) {
+  const style = tone === "green" ? "border-emerald-400/40 bg-emerald-950/40 text-emerald-200" : "border-red-400/40 bg-red-950/40 text-red-200";
+  const iconBg = tone === "green" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-400/50" : "bg-red-500/20 text-red-400 border border-red-400/50";
+
   return (
-    <div 
-      className={`absolute flex h-[72px] w-[156px] -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-[24px] border px-4 shadow-[0_12px_32px_rgba(0,0,0,.14)] backdrop-blur-md transition-all duration-300 ${style} ${faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"} hover:scale-105 cursor-pointer`} 
+    <div
+      className={`absolute flex w-[190px] -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-[16px] border border-white/15 bg-[#171526]/80 p-2 shadow-[0_10px_28px_rgba(0,0,0,.22)] backdrop-blur-md transition-all duration-300 ${style} ${
+        faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"
+      } hover:scale-105 cursor-pointer`}
       style={{ left: x, top: y }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-white ${dot}`}><ShieldCheck className="h-4 w-4" /></span>
-      <span className="text-left">
-        <strong className="block text-[11px] font-bold uppercase tracking-[.08em]">{label}</strong>
-        <span className="mt-1 block text-[9px] opacity-70">{count} events</span>
+      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${iconBg}`}>
+        <ShieldCheck className="h-4.5 w-4.5" />
       </span>
+      <div className="min-w-0 text-left">
+        <strong className="block truncate text-[11px] font-semibold text-white/90">{label}</strong>
+        <span className="block text-[9.5px] font-medium opacity-65">{count} events</span>
+      </div>
     </div>
   );
 }
@@ -430,14 +398,12 @@ function DecisionNode({
 export default function AgentNetworkFlow() {
   const [hoveredNode, setHoveredNode] = useState<Point | null>(null);
 
-  // Compute active path indices for the hovered node
   const activePathIndices = hoveredNode ? getActivePathIndices(hoveredNode, paths) : null;
 
   const isNodeActive = (x: number, y: number) => {
     if (!hoveredNode || !activePathIndices) return true;
     if (x === hoveredNode.x && y === hoveredNode.y) return true;
-    
-    // Check if (x,y) is an endpoint of any active path
+
     for (const idx of activePathIndices) {
       const p = paths[idx];
       if ((p.from.x === x && p.from.y === y) || (p.to.x === x && p.to.y === y)) {
@@ -450,13 +416,13 @@ export default function AgentNetworkFlow() {
   const renderFlowNode = (x: number, y: number, title: string, detail: string, icon?: string, tone?: FlowNodeProps["tone"]) => {
     const isFaded = !isNodeActive(x, y);
     return (
-      <FlowNode 
-        x={x} 
-        y={y} 
-        title={title} 
-        detail={detail} 
-        icon={icon} 
-        tone={tone} 
+      <FlowNode
+        x={x}
+        y={y}
+        title={title}
+        detail={detail}
+        icon={icon}
+        tone={tone}
         faded={isFaded}
         onMouseEnter={() => setHoveredNode({ x, y })}
         onMouseLeave={() => setHoveredNode(null)}
@@ -464,15 +430,15 @@ export default function AgentNetworkFlow() {
     );
   };
 
-  const renderDecisionNode = (x: number, y: number, label: string, count: string, tone: "green" | "red" | "amber") => {
+  const renderDecisionNode = (x: number, y: number, label: string, count: string, tone: "green" | "red") => {
     const isFaded = !isNodeActive(x, y);
     return (
-      <DecisionNode 
-        x={x} 
-        y={y} 
-        label={label} 
-        count={count} 
-        tone={tone} 
+      <DecisionNode
+        x={x}
+        y={y}
+        label={label}
+        count={count}
+        tone={tone}
         faded={isFaded}
         onMouseEnter={() => setHoveredNode({ x, y })}
         onMouseLeave={() => setHoveredNode(null)}
@@ -481,48 +447,64 @@ export default function AgentNetworkFlow() {
   };
 
   return (
-    <div className="relative mx-auto mt-14 w-full max-w-[1160px] sm:mt-16">
+    <div className="relative mx-auto mt-12 w-full max-w-[1160px] sm:mt-14">
       <div className="absolute inset-x-[8%] -bottom-10 h-44 rounded-[50%] bg-[#7455f6]/28 blur-[95px]" />
       <div className="relative mx-auto overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="relative h-[650px] w-[1160px] bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
+        <div className="relative h-[660px] w-[1160px] rounded-[24px] border border-white/10 bg-[#12101d]/90 p-4 shadow-2xl backdrop-blur-xl">
           <NetworkCanvas hoveredNode={hoveredNode} />
           <HeaderLabels />
-          
-          {/* Users column */}
-          {renderFlowNode(72, 166, "maya@acme.dev", "96 events")}
-          {renderFlowNode(72, 270, "sam@acme.dev", "45 events")}
-          {renderFlowNode(72, 395, "ci-bot@acme.dev", "36 events")}
-          {renderFlowNode(72, 510, "ivy@acme.dev", "28 events")}
-          
-          {/* Platform column (added Windows and Linux icons) */}
-          {renderFlowNode(260, 210, "macOS", "110 events", "apple", "purple")}
-          {renderFlowNode(260, 320, "Windows", "65 events", "windows", "purple")}
-          {renderFlowNode(260, 430, "Linux", "40 events", "linux", "purple")}
-          
-          {/* Agents column */}
-          {renderFlowNode(445, 190, "Claude Code", "112 events", "anthropic", "teal")}
-          {renderFlowNode(445, 310, "Cursor", "78 events", "cursor", "teal")}
-          {renderFlowNode(445, 440, "Gemini CLI", "45 events", "googlegemini", "teal")}
-          
-          {/* Taxonomy column */}
-          {renderFlowNode(635, 150, "Engineering", "86 events", "folder", "green")}
-          {renderFlowNode(635, 270, "Operations", "52 events", "folder", "green")}
-          {renderFlowNode(635, 390, "Sensitive", "31 events", "folder", "green")}
-          {renderFlowNode(635, 510, "Unclassified", "66 events", "folder", "green")}
-          
-          {/* Data Source column */}
-          {renderFlowNode(825, 160, "GitHub", "103 events", "github", "blue")}
-          {renderFlowNode(825, 285, "Slack", "58 events", "slack", "blue")}
-          {renderFlowNode(825, 410, ".env secrets", "14 events", "dotenv", "blue")}
-          {renderFlowNode(825, 520, "MCP tools", "60 events", "modelcontextprotocol", "blue")}
-          
-          {/* Decision column */}
-          {renderDecisionNode(1045, 230, "Allowed", "214", "green")}
-          {renderDecisionNode(1045, 355, "Warned", "10", "amber")}
-          {renderDecisionNode(1045, 470, "Blocked", "11", "red")}
+
+          {/* Stage 0: Data Source column (x = 110) */}
+          {renderFlowNode(110, 135, "GitHub issue #4821...", "6 events", "github", "blue")}
+          {renderFlowNode(110, 220, "Jira PROJ-1421 des...", "2 events", "jira", "blue")}
+          {renderFlowNode(110, 305, "MCP tool output (jira)", "2 events", "jira", "blue")}
+          {renderFlowNode(110, 390, "Slack #eng message", "2 events", "slack", "blue")}
+          {renderFlowNode(110, 475, "malicious npm posti...", "2 events", "database", "blue")}
+          {renderFlowNode(110, 560, "web page (docs.evil...", "2 events", "database", "blue")}
+
+          {/* Stage 1: Agent column (x = 400) */}
+          {renderFlowNode(400, 175, "Claude Code", "6 events", "anthropic", "teal")}
+          {renderFlowNode(400, 285, "Codex", "4 events", "openai", "teal")}
+          {renderFlowNode(400, 395, "Cursor", "4 events", "cursor", "teal")}
+          {renderFlowNode(400, 505, "Gemini CLI", "4 events", "googlegemini", "teal")}
+
+          {/* Stage 2: Action column (x = 700) */}
+          {renderFlowNode(700, 135, "Shell execution", "4 events", "zap", "purple")}
+          {renderFlowNode(700, 220, "Mutate config", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 305, "Launch MCP server", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 390, "Network connect", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 475, "Install package", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 560, "Write persistence", "2 events", "zap", "purple")}
+          <div className="absolute top-[604px] left-[700px] -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-3 py-0.5 text-[10px] font-medium text-white/50">
+            +1 more
+          </div>
+
+          {/* Stage 3: Effect column (x = 990) */}
+          {renderDecisionNode(990, 135, "Code execution (de...", "4", "red")}
+          {renderDecisionNode(990, 220, "Installed artifact (all...", "2", "green")}
+          {renderDecisionNode(990, 305, "Config change (deni...", "2", "red")}
+          {renderDecisionNode(990, 390, "Network egress (all...", "2", "green")}
+          {renderDecisionNode(990, 475, "MCP server (allowed)", "2", "green")}
+          {renderDecisionNode(990, 560, "Persistence (allowed)", "2", "green")}
+          <div className="absolute top-[604px] left-[990px] -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-3 py-0.5 text-[10px] font-medium text-white/50">
+            +1 more
+          </div>
+
+          {/* Bottom Footer Legend */}
+          <div className="absolute bottom-3 inset-x-6 flex items-center justify-between border-t border-white/10 pt-2.5 text-[10px] font-medium text-white/50">
+            <div className="flex items-center gap-4">
+              <span className="font-bold uppercase tracking-wider text-white/40">DECISION</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#12b981]" /> allow</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#258fcf]" /> allow and taint</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#d98a19]" /> ask</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#e3554f]" /> block</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-[#b91c1c]" /> kill</span>
+            </div>
+            <span>Hover a node to trace its paths · select one or more nodes to filter the events below.</span>
+          </div>
         </div>
       </div>
-      <p className="mt-4 text-center text-[10px] font-medium text-white/45 lg:hidden">Swipe to explore the complete policy network →</p>
+      <p className="mt-4 text-center text-[10px] font-medium text-white/45 lg:hidden">Swipe to explore the complete audit flow →</p>
     </div>
   );
 }
