@@ -739,7 +739,7 @@ function GuardedAgents() {
                   >
                     <span
                       className={`relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[9px] transition-transform duration-200 group-hover:scale-110 sm:h-8 ${
-                        isWideLogo ? "sm:w-[70px]" : "sm:w-8"
+                        isWideLogo ? "sm:w-[54px]" : "sm:w-8"
                       } ${
                         needsFrame
                           ? "border border-white/60 bg-white/30 shadow-sm"
@@ -750,7 +750,7 @@ function GuardedAgents() {
                         src={logoSrc}
                         alt=""
                         fill
-                        sizes={isWideLogo ? "(min-width: 640px) 70px, 32px" : "(min-width: 640px) 32px, 28px"}
+                        sizes={isWideLogo ? "(min-width: 640px) 54px, 32px" : "(min-width: 640px) 32px, 28px"}
                         className={`rounded-[8px] object-contain opacity-100 ${needsFrame ? "p-1" : ""}`}
                       />
                     </span>
