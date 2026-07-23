@@ -62,7 +62,7 @@ export default function DeploymentSection() {
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
           <span>No agent left uncovered</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <a href="#" className="flex items-center gap-1.5 text-[#6d49fd] hover:underline">
+          <a href="/demo" className="flex items-center gap-1.5 text-[#6d49fd] hover:underline">
             The rest is the demo <ArrowRight className="h-3 w-3" />
           </a>
         </Reveal>
