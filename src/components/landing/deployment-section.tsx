@@ -1,6 +1,6 @@
 import Reveal from "@/components/landing/reveal";
 import SectionLabel from "@/components/landing/section-label";
-import { AppWindow, Code2, Workflow } from "lucide-react";
+import { AppWindow, Code2, Workflow, ArrowRight } from "lucide-react";
 
 const surfaces = [
   {
@@ -35,7 +35,7 @@ export default function DeploymentSection() {
           <h2 className="mt-3.5 text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[#111322] sm:text-4xl lg:text-5xl">
             Policy reaches agents <span className="text-[#6d49fd]">where the work happens.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[700px] text-[15px] leading-7 text-[#686170]">
+          <p className="mx-auto mt-4 max-w-[650px] text-[15px] leading-7 text-[#686170]">
             Gödel enforces from inside each agent's own workflow — the same content and threat policies on every AI surface, applied at the moment an agent acts, not after. How it gets there is the part you'll want to see live.
           </p>
         </Reveal>
@@ -62,7 +62,9 @@ export default function DeploymentSection() {
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
           <span>No agent left uncovered</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <span className="text-[#6d49fd] transition-colors hover:text-[#5b3ce0] cursor-pointer">The rest is the demo &rarr;</span>
+          <a href="#" className="flex items-center gap-1.5 text-[#6d49fd] hover:underline">
+            The rest is the demo <ArrowRight className="h-3 w-3" />
+          </a>
         </Reveal>
       </div>
     </section>
