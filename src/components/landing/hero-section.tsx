@@ -303,11 +303,10 @@ function ProductPreview() {
                 onClick={togglePlay}
                 className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
               >
-                <Image
+                <img
                   src="https://dl.godel-labs.ai/website/godel-gate-video-outro.png"
                   alt="Gödel's Gate Outro"
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
                 {hasEnded && (
                   <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-black/40 hover:scale-105 transition-all duration-200 z-30">
