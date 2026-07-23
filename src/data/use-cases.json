@@ -195,7 +195,7 @@
     "heroHeading": "Desktop agents see your whole screen. Gödel decides what they open, read, and send.",
     "description": "Claude Cowork, ChatGPT Desktop, Perplexity, and computer-use agents operate your machine like an employee — reading files, driving apps, clicking through anything on screen. Gödel governs every file access, app action, and outbound payload at runtime — and detects attacks hidden in audio and images, not just text. Which user and agent is acting, what data it touches, what it's allowed to do: decided in under 5 ms, enforced locally. Nothing leaves the endpoint.",
     "shortDescription": "Govern file access, desktop app actions, and screen captures on the endpoint.",
-    "videoSrc": "",
+    "videoSrc": "https://dl.godel-labs.ai/website/chatgpt-desktop.mp4",
     "videoCaption": "Desktop agent walkthrough & runtime enforcement.",
     "supportedTools": [
       { "name": "Claude Cowork", "icon": "/logos/claude.svg" },
