@@ -90,6 +90,7 @@ function ProductPreview() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -102,6 +103,9 @@ function ProductPreview() {
     if (videoRef.current && videoRef.current.duration) {
       setDuration(videoRef.current.duration);
     }
+    if (audioRef.current) {
+      audioRef.current.play().catch((err) => console.error("Failed to play audio:", err));
+    }
   };
 
   const handlePause = () => {
@@ -109,6 +113,9 @@ function ProductPreview() {
     setShowControls(true);
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
     }
   };
 
@@ -123,6 +130,7 @@ function ProductPreview() {
     if (hasEnded) {
       setHasEnded(false);
       videoRef.current.currentTime = 0;
+      if (audioRef.current) audioRef.current.currentTime = 0;
       videoRef.current.play().catch((err) => {
         console.error("Failed to replay video:", err);
       });
@@ -209,6 +217,9 @@ function ProductPreview() {
     if (videoDuration > 0) {
       const newTime = (parseFloat(e.target.value) / 100) * videoDuration;
       videoRef.current.currentTime = newTime;
+      if (audioRef.current) {
+        audioRef.current.currentTime = newTime;
+      }
       setCurrentTime(newTime);
       if (duration === 0) {
         setDuration(videoDuration);
@@ -260,6 +271,11 @@ function ProductPreview() {
             onLoadedMetadata={handleLoadedMetadata}
             onClick={togglePlay}
           />
+          <audio
+            ref={audioRef}
+            src="https://dl.godel-labs.ai/website/britteny-voiceover-godel-gate.mp3"
+            preload="auto"
+          />
 
           {/* Initial Crisp Unblurred Video Thumbnail Overlay before play */}
           {!hasStarted && (
@@ -288,7 +304,7 @@ function ProductPreview() {
                 className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
               >
                 <Image
-                  src="/mockup/hero-outro.png"
+                  src="https://dl.godel-labs.ai/website/godel-gate-video-outro.png"
                   alt="Gödel's Gate Outro"
                   fill
                   className="object-cover"
