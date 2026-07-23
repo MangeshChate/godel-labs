@@ -95,7 +95,7 @@ function ProductPreview() {
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const audioPlayPromiseRef = useRef<Promise<void> | void>();
+  const audioPlayPromiseRef = useRef<Promise<void> | void>(undefined);
 
   const safePauseAudio = () => {
     if (!audioRef.current) return;
