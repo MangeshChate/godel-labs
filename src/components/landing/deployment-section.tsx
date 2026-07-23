@@ -6,20 +6,20 @@ const surfaces = [
   {
     icon: Code2,
     label: "Coding agents",
-    title: "Native hooks inside the agent loop",
-    body: "Inspect prompts, files, tool calls, MCP exchanges and actions across Claude Code, Codex, Cursor, Gemini CLI, and other coding agents.",
+    title: "Inside the loop, not around it",
+    body: "Every prompt, file, and action a coding agent touches is checked against policy before it executes — across Claude Code, Codex, Cursor, Gemini CLI, and other coding agents.",
   },
   {
     icon: AppWindow,
     label: "Browser agents",
-    title: "One extension across web AI",
-    body: "Apply the same content and handling policies across ChatGPT, agentic browsers, uploads, pasted content and browser-driven actions.",
+    title: "One policy across web AI",
+    body: "The same content and handling policies follow your teams wherever they meet AI on the web — ChatGPT, agentic browsers, uploads, pasted content, and browser-driven actions.",
   },
   {
     icon: Workflow,
     label: "Agent frameworks",
-    title: "Callbacks at every execution boundary",
-    body: "Instrument LangChain, LangGraph, CrewAI, OpenAI agents and custom frameworks across inputs, outputs, tools and handoffs.",
+    title: "Coverage for whatever you build",
+    body: "LangChain, LangGraph, CrewAI, OpenAI agents, or fully custom — policy travels with the agent across inputs, outputs, tools, and handoffs.",
   },
 ] as const;
 
@@ -35,8 +35,8 @@ export default function DeploymentSection() {
           <h2 className="mt-3.5 text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[#111322] sm:text-4xl lg:text-5xl">
             Policy reaches agents <span className="text-[#6d49fd]">where the work happens.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[650px] text-[15px] leading-7 text-[#686170]">
-            Wire agent hooks, browser extensions, and framework callbacks once. Apply the same content and threat policies across every supported AI surface.
+          <p className="mx-auto mt-4 max-w-[700px] text-[15px] leading-7 text-[#686170]">
+            Gödel enforces from inside each agent's own workflow — the same content and threat policies on every AI surface, applied at the moment an agent acts, not after. How it gets there is the part you'll want to see live.
           </p>
         </Reveal>
 
@@ -56,13 +56,13 @@ export default function DeploymentSection() {
 
         {/* Bottom Feature List */}
         <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-semibold text-[#6c6574]">
-          <span>No kernel module</span>
+          <span>No proxy in the traffic path</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <span>macOS</span>
+          <span>No code rewrites</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <span>Self-hosted or private cloud</span>
+          <span>No agent left uncovered</span>
           <span className="hidden h-1 w-1 rounded-full bg-[#c8c0d8] sm:inline-block" />
-          <span>SIEM and webhook connectors</span>
+          <span className="text-[#6d49fd] transition-colors hover:text-[#5b3ce0] cursor-pointer">The rest is the demo &rarr;</span>
         </Reveal>
       </div>
     </section>
