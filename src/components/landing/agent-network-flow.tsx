@@ -432,8 +432,8 @@ export default function AgentNetworkFlow() {
       <div className="absolute inset-x-[8%] -bottom-10 h-44 rounded-[50%] bg-[#7455f6]/28 blur-[95px]" />
       
       {/* Responsive Scaling Wrapper */}
-      <div className="relative w-full flex justify-center h-[200px] sm:h-[330px] md:h-[420px] lg:h-[560px] xl:h-[650px] overflow-hidden xl:overflow-visible">
-        <div className="absolute top-0 origin-top transform scale-[0.31] sm:scale-[0.51] md:scale-[0.64] lg:scale-[0.86] xl:scale-100 flex justify-center transition-transform duration-300">
+      <div className="relative w-full h-[200px] sm:h-[330px] md:h-[420px] lg:h-[560px] xl:h-[650px] overflow-hidden xl:overflow-visible">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 origin-top transform scale-[0.31] sm:scale-[0.51] md:scale-[0.64] lg:scale-[0.86] xl:scale-100 transition-transform duration-300">
           <div className="relative h-[650px] w-[1160px] shrink-0 bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
           <NetworkCanvas hoveredNode={hoveredNode} />
           <HeaderLabels />
