@@ -33,14 +33,24 @@ const paths: FlowPath[] = [
   // -------------------------------------------------------------
   // GitHub Issue (110, 140) -> Claude Code (400, 160)
   { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
-  // Jira Ticket (110, 240) -> Claude Code (400, 160)
+  // GitHub Issue (110, 140) -> OpenAI Codex (400, 280)
+  { from: { x: 110, y: 140 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.1 },
+  // LangChain Context (110, 240) -> Claude Code (400, 160)
   { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.15 },
+  // LangChain Context (110, 240) -> Cursor AI (400, 400)
+  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.2 },
   // Slack Channel (110, 340) -> OpenAI Codex (400, 280)
   { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.3 },
+  // Slack Channel (110, 340) -> Cursor AI (400, 400)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.35 },
   // npm Package (110, 440) -> Cursor AI (400, 400)
   { from: { x: 110, y: 440 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
+  // npm Package (110, 440) -> Gemini CLI (400, 520)
+  { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.5 },
   // Web Document (110, 540) -> Gemini CLI (400, 520)
   { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
+  // Web Document (110, 540) -> Claude Code (400, 160)
+  { from: { x: 110, y: 540 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.7 },
 
   // -------------------------------------------------------------
   // Stage 1 -> Stage 2: AGENT (x=400) -> ACTION (x=700)
@@ -49,10 +59,16 @@ const paths: FlowPath[] = [
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
   // Claude Code (400, 160) -> Config Mutation (700, 280)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.25 },
+  // OpenAI Codex (400, 280) -> Config Mutation (700, 280)
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.3 },
   // OpenAI Codex (400, 280) -> MCP Launch (700, 400)
   { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.35 },
+  // Cursor AI (400, 400) -> Shell Execution (700, 160)
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.4 },
   // Cursor AI (400, 400) -> Package Install (700, 520)
   { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.5 },
+  // Gemini CLI (400, 520) -> MCP Launch (700, 400)
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#e3554f", toColor: "#258fcf", width: 3, delay: 0.6 },
   // Gemini CLI (400, 520) -> Package Install (700, 520)
   { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.65 },
 
@@ -61,12 +77,20 @@ const paths: FlowPath[] = [
   // -------------------------------------------------------------
   // Shell Execution (700, 160) -> Code Blocked (990, 160)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
+  // Shell Execution (700, 160) -> Config Denied (990, 280)
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
   // Config Mutation (700, 280) -> Config Denied (990, 280)
   { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
+  // Config Mutation (700, 280) -> Code Blocked (990, 160)
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 2, delay: 0.4 },
   // MCP Launch (700, 400) -> MCP Allowed (990, 400)
   { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.45 },
+  // MCP Launch (700, 400) -> Artifact Allowed (990, 520)
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#12b981", width: 2, delay: 0.5 },
   // Package Install (700, 520) -> Artifact Allowed (990, 520)
   { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.6 },
+  // Package Install (700, 520) -> MCP Allowed (990, 400)
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.65 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
@@ -94,26 +118,38 @@ function getActivePathIndices(hovered: Point | null, pathsList: FlowPath[]): Set
     return activeIndices;
   }
 
-  // 1st pass: directly connected paths
-  pathsList.forEach((p, idx) => {
-    if ((p.from.x === hovered.x && p.from.y === hovered.y) || (p.to.x === hovered.x && p.to.y === hovered.y)) {
-      activeIndices.add(idx);
-    }
-  });
-
-  // 2nd pass: multi-hop connections across columns
-  const connectedNodes = new Set<string>();
-  activeIndices.forEach((idx) => {
-    const p = pathsList[idx];
-    connectedNodes.add(`${p.from.x},${p.from.y}`);
-    connectedNodes.add(`${p.to.x},${p.to.y}`);
-  });
+  const col0: number[] = []; // x = 110
+  const col1: number[] = []; // x = 400
+  const col2: number[] = []; // x = 700
 
   pathsList.forEach((p, idx) => {
-    if (connectedNodes.has(`${p.from.x},${p.from.y}`) || connectedNodes.has(`${p.to.x},${p.to.y}`)) {
-      activeIndices.add(idx);
-    }
+    if (p.from.x === 110) col0.push(idx);
+    else if (p.from.x === 400) col1.push(idx);
+    else if (p.from.x === 700) col2.push(idx);
   });
+
+  const eq = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
+
+  for (const i0 of col0) {
+    const p0 = pathsList[i0];
+    for (const i1 of col1) {
+      const p1 = pathsList[i1];
+      if (!eq(p0.to, p1.from)) continue;
+
+      for (const i2 of col2) {
+        const p2 = pathsList[i2];
+        if (!eq(p1.to, p2.from)) continue;
+
+        const routePoints = [p0.from, p0.to, p1.to, p2.to];
+
+        if (routePoints.some((pt) => eq(pt, hovered))) {
+          activeIndices.add(i0);
+          activeIndices.add(i1);
+          activeIndices.add(i2);
+        }
+      }
+    }
+  }
 
   return activeIndices;
 }
@@ -402,7 +438,7 @@ export default function AgentNetworkFlow() {
 
           {/* Stage 0: Data Source column (x = 110) - 5 nodes */}
           {renderFlowNode(110, 140, "GitHub Issue", "6 events", "github", "blue")}
-          {renderFlowNode(110, 240, "Jira Ticket", "2 events", "jira", "blue")}
+          {renderFlowNode(110, 240, "LangChain Context", "2 events", "langchain", "blue")}
           {renderFlowNode(110, 340, "Slack Channel", "2 events", "slack", "blue")}
           {renderFlowNode(110, 440, "npm Package", "2 events", "dotenv", "blue")}
           {renderFlowNode(110, 540, "Web Document", "2 events", "globe", "blue")}
