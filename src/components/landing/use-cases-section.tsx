@@ -54,23 +54,24 @@ export default function UseCasesSection() {
         </Reveal>
 
         {/* 4-Step Chain Flow */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] lg:items-start">
+        <div className="mt-12 sm:mt-16 grid gap-8 sm:gap-x-8 sm:gap-y-12 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] lg:items-start lg:gap-6">
           {stages.map((stage, index) => (
             <div key={stage.label} className="contents">
-              <Reveal delay={index * 0.06} className="border-t border-[#e2dcee] pt-6">
+              <Reveal delay={index * 0.06} className="border-t border-[#e2dcee] pt-6 sm:pt-8 lg:pt-6">
                 <div>
-                  <p className="text-xs font-bold tracking-[0.14em] text-[#6d49fd]">{stage.number}</p>
-                  
-                  <div className="mt-3.5 flex items-center gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#f0ecff] text-[#6d49fd]">
-                      <stage.icon className="h-4.5 w-4.5" />
-                    </span>
+                  <div className="flex items-center justify-between lg:block">
+                    <p className="text-xs font-bold tracking-[0.14em] text-[#6d49fd]">{stage.number}</p>
+                    <div className="flex items-center gap-3 lg:mt-3.5">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#f0ecff] text-[#6d49fd]">
+                        <stage.icon className="h-4.5 w-4.5" />
+                      </span>
+                    </div>
                   </div>
 
-                  <h3 className="mt-4 text-base font-semibold text-[#1c1825]">{stage.label}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-[#5e576b] sm:text-[13px]">{stage.detail}</p>
+                  <h3 className="mt-5 lg:mt-4 text-[17px] sm:text-[18px] lg:text-base font-semibold text-[#1c1825]">{stage.label}</h3>
+                  <p className="mt-2.5 lg:mt-2 text-[14px] leading-relaxed text-[#5e576b] sm:text-[15px] lg:text-[13px]">{stage.detail}</p>
                   
-                  <p className={`mt-3.5 text-xs italic leading-relaxed ${
+                  <p className={`mt-4 lg:mt-3.5 text-[13px] lg:text-xs italic leading-relaxed ${
                     stage.subtextHighlighted ? "font-medium text-[#6d49fd]" : "text-[#918a9e]"
                   }`}>
                     {stage.subtext}
@@ -87,14 +88,14 @@ export default function UseCasesSection() {
         </div>
 
         {/* Bottom Banner */}
-        <Reveal className="mt-14 rounded-r-xl border-l-4 border-[#6d49fd] bg-[#f5f2ff] px-6 py-5.5 sm:px-8 sm:py-6">
+        <Reveal className="mt-12 sm:mt-14 rounded-xl sm:rounded-r-xl border-l-4 border-[#6d49fd] bg-[#f5f2ff] px-5 py-6 sm:px-8 sm:py-6">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6d49fd]">
               Handling requirements that survive every hop
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-[#1c1825] sm:text-base">
-              <span className="font-semibold">Restricted · Internal only · No external output · No memory persistence</span>{" "}
-              <span className="text-[#6e6878]">— enforced from step 01 to step 04</span>
+            <p className="mt-3 sm:mt-2 text-[15px] leading-relaxed text-[#1c1825] sm:text-base">
+              <span className="font-semibold block sm:inline">Restricted · Internal only · No external output · No memory persistence</span>{" "}
+              <span className="text-[#6e6878] block sm:inline mt-1 sm:mt-0">— enforced from step 01 to step 04</span>
             </p>
           </div>
         </Reveal>
