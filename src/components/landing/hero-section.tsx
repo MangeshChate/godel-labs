@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Captions, Play, Pause, Maximize, Minimize, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Captions, LoaderCircle, Play, Pause, Maximize, Minimize, RefreshCw, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 
 const categories = [
@@ -91,12 +91,16 @@ function ProductPreview() {
   const [isMuted, setIsMuted] = useState(false);
   const [captionsEnabled, setCaptionsEnabled] = useState(false);
   const [activeCaption, setActiveCaption] = useState("");
+  const [isBuffering, setIsBuffering] = useState(false);
+  const [bufferedEnd, setBufferedEnd] = useState(0);
+  const [mediaError, setMediaError] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const captionTrackRef = useRef<HTMLTrackElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const retryTimeRef = useRef<number | null>(null);
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -126,15 +130,12 @@ function ProductPreview() {
     setIsPlaying(true);
     setHasStarted(true);
     setHasEnded(false);
+    setMediaError(null);
+    setIsBuffering((videoRef.current?.readyState ?? 0) < HTMLMediaElement.HAVE_FUTURE_DATA);
     resetControlsTimeout();
     // Capture duration dynamically if not set yet
     if (videoRef.current && videoRef.current.duration) {
       setDuration(videoRef.current.duration);
-    }
-    if (audioRef.current) {
-      audioRef.current.play().catch((err) => {
-        if (err.name !== "AbortError") console.error("Failed to play audio:", err);
-      });
     }
   };
 
@@ -144,6 +145,7 @@ function ProductPreview() {
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current);
     }
+    setIsBuffering(false);
     // Only pause the audio if the video hasn't ended.
     // If the video ended, let the audio finish playing during the outro.
     if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
@@ -152,21 +154,99 @@ function ProductPreview() {
   };
 
   const handleWaiting = () => {
+    setIsBuffering(true);
     if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
       audioRef.current.pause();
     }
   };
 
   const handlePlaying = () => {
-    if (audioRef.current && isPlaying) {
+    setIsBuffering(false);
+    setMediaError(null);
+    setIsPlaying(true);
+    if (audioRef.current && videoRef.current && !videoRef.current.paused) {
+      audioRef.current.currentTime = videoRef.current.currentTime;
       audioRef.current.play().catch((err) => {
         if (err.name !== "AbortError") console.error("Failed to play audio:", err);
       });
     }
   };
 
+  const handleCanPlay = () => {
+    if ((videoRef.current?.readyState ?? 0) >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      setIsBuffering(false);
+    }
+  };
+
+  const handleStalled = () => {
+    if (hasStarted && videoRef.current && !videoRef.current.paused) {
+      setIsBuffering(true);
+      audioRef.current?.pause();
+    }
+  };
+
+  const handleSeeking = () => {
+    if (hasStarted) {
+      setIsBuffering(true);
+      audioRef.current?.pause();
+    }
+  };
+
+  const handleSeeked = () => {
+    const video = videoRef.current;
+    const audio = audioRef.current;
+    if (!video) return;
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      setIsBuffering(false);
+    }
+    if (audio) {
+      audio.currentTime = video.currentTime;
+      if (!video.paused) {
+        audio.play().catch((err) => {
+          if (err.name !== "AbortError") console.error("Failed to resume audio:", err);
+        });
+      }
+    }
+  };
+
+  const handleProgress = () => {
+    const video = videoRef.current;
+    if (!video || video.buffered.length === 0) return;
+
+    setBufferedEnd(video.buffered.end(video.buffered.length - 1));
+  };
+
+  const handleMediaError = () => {
+    setIsBuffering(false);
+    setIsPlaying(false);
+    setShowControls(true);
+    audioRef.current?.pause();
+    setMediaError("The video stopped loading. Check your connection and try again.");
+  };
+
+  const retryPlayback = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    const audio = audioRef.current;
+    if (!video) return;
+
+    setMediaError(null);
+    setHasEnded(false);
+    setIsBuffering(true);
+    retryTimeRef.current = video.currentTime;
+    if (audio) {
+      audio.load();
+    }
+    video.load();
+    video.play().catch((err) => {
+      if (err.name !== "AbortError") handleMediaError();
+    });
+  };
+
   const handleEnded = () => {
     setIsPlaying(false);
+    setIsBuffering(false);
     setHasEnded(true);
     setShowControls(true);
   };
@@ -259,9 +339,19 @@ function ProductPreview() {
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+    const video = videoRef.current;
+    if (!video) return;
+
+    setDuration(video.duration);
+    if (retryTimeRef.current !== null) {
+      const retryAt = Math.min(retryTimeRef.current, video.duration);
+      video.currentTime = retryAt;
+      if (audioRef.current) {
+        audioRef.current.currentTime = retryAt;
+      }
+      retryTimeRef.current = null;
     }
+    handleProgress();
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -288,6 +378,7 @@ function ProductPreview() {
   };
 
   const percentage = duration ? (currentTime / duration) * 100 : 0;
+  const bufferedPercentage = duration ? Math.min((bufferedEnd / duration) * 100, 100) : 0;
 
   return (
     <motion.div
@@ -316,14 +407,20 @@ function ProductPreview() {
             poster="https://dl.godel-labs.ai/website/video-thumbnail.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
             playsInline
-            preload="metadata"
+            preload="auto"
             onPlay={handlePlay}
             onPause={handlePause}
             onEnded={handleEnded}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
+            onCanPlay={handleCanPlay}
             onWaiting={handleWaiting}
             onPlaying={handlePlaying}
+            onStalled={handleStalled}
+            onSeeking={handleSeeking}
+            onSeeked={handleSeeked}
+            onProgress={handleProgress}
+            onError={handleMediaError}
             onClick={togglePlay}
           >
             <track
@@ -339,7 +436,51 @@ function ProductPreview() {
             src="https://dl.godel-labs.ai/website/britteny-voiceover-godel-gate.mp3"
             preload="auto"
             muted={isMuted}
+            onError={handleMediaError}
           />
+
+          <AnimatePresence>
+            {isBuffering && hasStarted && !hasEnded && !mediaError && (
+              <motion.div
+                key="hero-video-buffering"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.18, duration: 0.16 } }}
+                exit={{ opacity: 0, transition: { duration: 0.1 } }}
+                className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center bg-black/10"
+                role="status"
+                aria-label="Loading video"
+              >
+                <div className="flex items-center gap-2.5 rounded-full border border-white/15 bg-[#0d0b14]/75 px-4 py-2.5 text-xs font-medium text-white shadow-[0_10px_32px_rgba(0,0,0,.28)] backdrop-blur-md">
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
+                  <span>Loading video</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {mediaError && (
+              <motion.div
+                key="hero-video-error"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 z-50 flex items-center justify-center bg-[#0d0b14]/65 px-6 backdrop-blur-sm"
+              >
+                <div className="max-w-sm text-center text-white">
+                  <p className="text-sm font-medium sm:text-base">{mediaError}</p>
+                  <button
+                    type="button"
+                    onClick={retryPlayback}
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#171320] shadow-lg transition hover:bg-white/90 active:scale-95"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" />
+                    Try again
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <AnimatePresence>
             {hasStarted && captionsEnabled && activeCaption && !hasEnded && (
@@ -453,6 +594,10 @@ function ProductPreview() {
               <div className="relative flex-1 group/slider flex items-center h-6 cursor-pointer">
                 {/* Thin background track */}
                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden relative group-hover/slider:h-1.5 transition-all duration-150">
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full bg-white/30"
+                    style={{ width: `${bufferedPercentage}%` }}
+                  />
                   {/* Accent filled track */}
                   <div
                     className="h-full bg-[#6d49fd] rounded-full absolute left-0 top-0 transition-all duration-75"
