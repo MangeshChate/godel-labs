@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Bot, Database, Globe, Package, ShieldCheck, Terminal, Zap } from "lucide-react";
+import { Bot, Database, Globe, Package, ShieldAlert, ShieldCheck, Terminal, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const SETTLED = 0.004;
@@ -20,51 +20,46 @@ type FlowPath = {
   bend?: number 
 };
 
-// Colors matching the diagram:
-// Data Source: #258fcf (Blue)
-// Agent: #12b981 (Teal Green)
-// Action: #8f79f4 (Purple)
-// Decision: Allowed (#1aa775), Blocked (#e3554f), Warned (#d98a19)
-
+// 4 Column Flow Paths: DATA SOURCE (x=110) -> AGENT (x=400) -> ACTION (x=700) -> EFFECT (x=990)
 const paths: FlowPath[] = [
   // -------------------------------------------------------------
   // Stage 0: DATA SOURCE (x=110) -> AGENT (x=400)
   // -------------------------------------------------------------
-  // GitHub issue -> Claude Code
-  { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 6, delay: 0 },
-  // Jira -> Claude Code
+  // GitHub Issue (y=140) -> Claude Code (y=160)
+  { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
+  // Jira Ticket (y=240) -> Claude Code (y=160)
   { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.15 },
-  // Slack -> Cursor
+  // Slack Channel (y=340) -> Cursor AI (y=400)
   { from: { x: 110, y: 340 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.3 },
-  // malicious npm -> Gemini CLI
+  // npm Package (y=440) -> Gemini CLI (y=520)
   { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
-  // web page -> Codex
+  // Web Document (y=540) -> OpenAI Codex (y=280)
   { from: { x: 110, y: 540 }, to: { x: 400, y: 280 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
 
   // -------------------------------------------------------------
   // Stage 1: AGENT (x=400) -> ACTION (x=700)
   // -------------------------------------------------------------
-  // Claude Code -> Shell execution
+  // Claude Code (y=160) -> Shell Execution (y=160)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  // Claude Code -> Mutate config
+  // Claude Code (y=160) -> Config Mutation (y=280)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
-  // Codex -> Launch MCP server
+  // OpenAI Codex (y=280) -> MCP Launch (y=400)
   { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.35 },
-  // Cursor -> Install package
+  // Cursor AI (y=400) -> Package Install (y=520)
   { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.5 },
-  // Gemini CLI -> Shell execution
+  // Gemini CLI (y=520) -> Shell Execution (y=160)
   { from: { x: 400, y: 520 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.65 },
 
   // -------------------------------------------------------------
   // Stage 2: ACTION (x=700) -> EFFECT (x=990)
   // -------------------------------------------------------------
-  // Shell execution -> Code execution (denied)
+  // Shell Execution (y=160) -> Code Blocked (y=160)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  // Mutate config -> Config change (denied)
+  // Config Mutation (y=280) -> Config Denied (y=280)
   { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.35 },
-  // Launch MCP server -> MCP server (allowed)
+  // MCP Launch (y=400) -> MCP Allowed (y=400)
   { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.45 },
-  // Install package -> Installed artifact (allowed)
+  // Package Install (y=520) -> Artifact Allowed (y=520)
   { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.6 },
 ];
 
@@ -334,13 +329,17 @@ function FlowNode({
 
   return (
     <div 
-      className={`absolute w-[136px] -translate-x-1/2 -translate-y-[28px] text-center transition-all duration-300 ${faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"}`} 
+      className={`absolute w-[140px] -translate-x-1/2 -translate-y-[24px] text-center transition-all duration-300 ${faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"}`} 
       style={{ left: x, top: y }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <span className={`mx-auto grid h-12 w-12 place-items-center rounded-[15px] border text-white shadow-[0_10px_25px_rgba(0,0,0,.18)] backdrop-blur-md transition-all duration-300 ${tones[tone]} hover:scale-115 cursor-pointer`}>
-        {icon === "zap" ? (
+        {icon === "shield-alert" ? (
+          <ShieldAlert className="h-5 w-5 text-[#f07a74]" />
+        ) : icon === "shield-check" ? (
+          <ShieldCheck className="h-5 w-5 text-[#39d29c]" />
+        ) : icon === "zap" ? (
           <Zap className="h-5 w-5 text-[#a58fff]" />
         ) : icon === "terminal" ? (
           <Terminal className="h-5 w-5 text-white/90" />
@@ -356,46 +355,6 @@ function FlowNode({
       </span>
       <strong className="mt-2 block truncate text-[11px] font-semibold text-white/85">{title}</strong>
       <span className="mt-0.5 block text-[9px] text-white/42">{detail}</span>
-    </div>
-  );
-}
-
-interface DecisionNodeProps {
-  x: number;
-  y: number;
-  label: string;
-  count: string;
-  tone: "green" | "red" | "amber";
-  faded?: boolean;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-}
-
-function DecisionNode({ 
-  x, 
-  y, 
-  label, 
-  count, 
-  tone, 
-  faded = false,
-  onMouseEnter,
-  onMouseLeave
-}: DecisionNodeProps) {
-  const style = tone === "green" ? "border-emerald-400/45 bg-emerald-400/10 text-emerald-200" : tone === "red" ? "border-red-400/45 bg-red-400/10 text-red-200" : "border-amber-400/45 bg-amber-400/10 text-amber-200";
-  const dot = tone === "green" ? "bg-emerald-600" : tone === "red" ? "bg-red-500" : "bg-amber-600";
-
-  return (
-    <div 
-      className={`absolute flex h-[68px] w-[156px] -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-[22px] border px-3.5 shadow-[0_12px_32px_rgba(0,0,0,.14)] backdrop-blur-md transition-all duration-300 ${style} ${faded ? "opacity-25 scale-95 blur-[0.5px]" : "opacity-100 scale-100 z-20"} hover:scale-105 cursor-pointer`} 
-      style={{ left: x, top: y }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-white ${dot}`}><ShieldCheck className="h-4 w-4" /></span>
-      <span className="text-left min-w-0">
-        <strong className="block truncate text-[10.5px] font-bold uppercase tracking-[.06em]">{label}</strong>
-        <span className="mt-0.5 block text-[9px] opacity-70">{count} events</span>
-      </span>
     </div>
   );
 }
@@ -435,22 +394,6 @@ export default function AgentNetworkFlow() {
     );
   };
 
-  const renderDecisionNode = (x: number, y: number, label: string, count: string, tone: "green" | "red" | "amber") => {
-    const isFaded = !isNodeActive(x, y);
-    return (
-      <DecisionNode
-        x={x}
-        y={y}
-        label={label}
-        count={count}
-        tone={tone}
-        faded={isFaded}
-        onMouseEnter={() => setHoveredNode({ x, y })}
-        onMouseLeave={() => setHoveredNode(null)}
-      />
-    );
-  };
-
   return (
     <div className="relative mx-auto mt-14 w-full max-w-[1160px] sm:mt-16">
       <div className="absolute inset-x-[8%] -bottom-10 h-44 rounded-[50%] bg-[#7455f6]/28 blur-[95px]" />
@@ -460,29 +403,29 @@ export default function AgentNetworkFlow() {
           <HeaderLabels />
 
           {/* Stage 0: Data Source column (x = 110) - 5 nodes */}
-          {renderFlowNode(110, 140, "GitHub issue #4821", "6 events", "github", "blue")}
-          {renderFlowNode(110, 240, "Jira PROJ-1421", "2 events", "jira", "blue")}
-          {renderFlowNode(110, 340, "Slack #eng message", "2 events", "slack", "blue")}
-          {renderFlowNode(110, 440, "malicious npm pkg", "2 events", "dotenv", "blue")}
-          {renderFlowNode(110, 540, "docs.evil.com page", "2 events", "globe", "blue")}
+          {renderFlowNode(110, 140, "GitHub Issue", "6 events", "github", "blue")}
+          {renderFlowNode(110, 240, "Jira Ticket", "2 events", "jira", "blue")}
+          {renderFlowNode(110, 340, "Slack Channel", "2 events", "slack", "blue")}
+          {renderFlowNode(110, 440, "npm Package", "2 events", "dotenv", "blue")}
+          {renderFlowNode(110, 540, "Web Document", "2 events", "globe", "blue")}
 
           {/* Stage 1: Agent column (x = 400) - 4 nodes */}
           {renderFlowNode(400, 160, "Claude Code", "6 events", "anthropic", "teal")}
-          {renderFlowNode(400, 280, "Codex", "4 events", "openai", "teal")}
-          {renderFlowNode(400, 400, "Cursor", "4 events", "cursor", "teal")}
+          {renderFlowNode(400, 280, "OpenAI Codex", "4 events", "openai", "teal")}
+          {renderFlowNode(400, 400, "Cursor AI", "4 events", "cursor", "teal")}
           {renderFlowNode(400, 520, "Gemini CLI", "4 events", "googlegemini", "teal")}
 
           {/* Stage 2: Action column (x = 700) - 4 nodes */}
-          {renderFlowNode(700, 160, "Shell execution", "4 events", "terminal", "purple")}
-          {renderFlowNode(700, 280, "Mutate config", "2 events", "zap", "purple")}
-          {renderFlowNode(700, 400, "Launch MCP server", "2 events", "modelcontextprotocol", "purple")}
-          {renderFlowNode(700, 520, "Install package", "2 events", "package", "purple")}
+          {renderFlowNode(700, 160, "Shell Execution", "4 events", "terminal", "purple")}
+          {renderFlowNode(700, 280, "Config Mutation", "2 events", "zap", "purple")}
+          {renderFlowNode(700, 400, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
+          {renderFlowNode(700, 520, "Package Install", "2 events", "package", "purple")}
 
-          {/* Stage 3: Effect column (x = 990) - 4 nodes */}
-          {renderDecisionNode(990, 160, "Code execution (denied)", "4", "red")}
-          {renderDecisionNode(990, 280, "Config change (denied)", "2", "red")}
-          {renderDecisionNode(990, 400, "MCP server (allowed)", "2", "green")}
-          {renderDecisionNode(990, 520, "Installed artifact (allowed)", "2", "green")}
+          {/* Stage 3: Effect column (x = 990) - 4 nodes (ALL matching exact FlowNode UI style) */}
+          {renderFlowNode(990, 160, "Code Blocked", "4 events", "shield-alert", "red")}
+          {renderFlowNode(990, 280, "Config Denied", "2 events", "shield-alert", "red")}
+          {renderFlowNode(990, 400, "MCP Allowed", "2 events", "shield-check", "green")}
+          {renderFlowNode(990, 520, "Artifact Allowed", "2 events", "shield-check", "green")}
         </div>
       </div>
       
