@@ -31,66 +31,62 @@ const paths: FlowPath[] = [
   // -------------------------------------------------------------
   // Stage 0 -> Stage 1: DATA SOURCE (x=110) -> AGENT (x=400)
   // -------------------------------------------------------------
-  // GitHub Issue (110, 140) -> Claude Code (400, 160)
   { from: { x: 110, y: 140 }, to: { x: 400, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.0 },
-  // GitHub Issue (110, 140) -> OpenAI Codex (400, 280)
   { from: { x: 110, y: 140 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.1 },
-  // LangChain Context (110, 240) -> Claude Code (400, 160)
+  { from: { x: 110, y: 140 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 2, delay: 0.15 },
+  
   { from: { x: 110, y: 240 }, to: { x: 400, y: 160 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.15 },
-  // LangChain Context (110, 240) -> Cursor AI (400, 400)
-  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.2 },
-  // Slack Channel (110, 340) -> OpenAI Codex (400, 280)
+  { from: { x: 110, y: 240 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 4, delay: 0.2 },
+  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
+  
   { from: { x: 110, y: 340 }, to: { x: 400, y: 280 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.3 },
-  // Slack Channel (110, 340) -> Cursor AI (400, 400)
   { from: { x: 110, y: 340 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.35 },
-  // npm Package (110, 440) -> Cursor AI (400, 400)
+  { from: { x: 110, y: 340 }, to: { x: 400, y: 520 }, fromColor: "#12b981", toColor: "#12b981", width: 2, delay: 0.4 },
+
+  { from: { x: 110, y: 440 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#258fcf", width: 2, delay: 0.4 },
   { from: { x: 110, y: 440 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
-  // npm Package (110, 440) -> Gemini CLI (400, 520)
   { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.5 },
-  // Web Document (110, 540) -> Gemini CLI (400, 520)
-  { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
-  // Web Document (110, 540) -> Claude Code (400, 160)
+  
   { from: { x: 110, y: 540 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.7 },
+  { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
 
   // -------------------------------------------------------------
   // Stage 1 -> Stage 2: AGENT (x=400) -> ACTION (x=700)
   // -------------------------------------------------------------
-  // Claude Code (400, 160) -> Shell Execution (700, 160)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.1 },
-  // Claude Code (400, 160) -> Config Mutation (700, 280)
   { from: { x: 400, y: 160 }, to: { x: 700, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.25 },
-  // OpenAI Codex (400, 280) -> Config Mutation (700, 280)
+  { from: { x: 400, y: 160 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 2, delay: 0.3 },
+
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.25 },
   { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.3 },
-  // OpenAI Codex (400, 280) -> MCP Launch (700, 400)
   { from: { x: 400, y: 280 }, to: { x: 700, y: 400 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.35 },
-  // Cursor AI (400, 400) -> Shell Execution (700, 160)
+  
   { from: { x: 400, y: 400 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.4 },
-  // Cursor AI (400, 400) -> Package Install (700, 520)
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.45 },
   { from: { x: 400, y: 400 }, to: { x: 700, y: 520 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.5 },
-  // Gemini CLI (400, 520) -> MCP Launch (700, 400)
+  
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 160 }, fromColor: "#d98a19", toColor: "#e3554f", width: 2, delay: 0.55 },
   { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#e3554f", toColor: "#258fcf", width: 3, delay: 0.6 },
-  // Gemini CLI (400, 520) -> Package Install (700, 520)
   { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.65 },
 
   // -------------------------------------------------------------
   // Stage 2 -> Stage 3: ACTION (x=700) -> EFFECT (x=990)
   // -------------------------------------------------------------
-  // Shell Execution (700, 160) -> Code Blocked (990, 160)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 160 }, fromColor: "#e3554f", toColor: "#e3554f", width: 5, delay: 0.2 },
-  // Shell Execution (700, 160) -> Config Denied (990, 280)
   { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
-  // Config Mutation (700, 280) -> Config Denied (990, 280)
-  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
-  // Config Mutation (700, 280) -> Code Blocked (990, 160)
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.3 },
+
   { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 2, delay: 0.4 },
-  // MCP Launch (700, 400) -> MCP Allowed (990, 400)
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 280 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.35 },
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 520 }, fromColor: "#12b981", toColor: "#12b981", width: 2, delay: 0.45 },
+  
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 2, delay: 0.4 },
   { from: { x: 700, y: 400 }, to: { x: 990, y: 400 }, fromColor: "#258fcf", toColor: "#12b981", width: 3, delay: 0.45 },
-  // MCP Launch (700, 400) -> Artifact Allowed (990, 520)
   { from: { x: 700, y: 400 }, to: { x: 990, y: 520 }, fromColor: "#258fcf", toColor: "#12b981", width: 2, delay: 0.5 },
-  // Package Install (700, 520) -> Artifact Allowed (990, 520)
-  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.6 },
-  // Package Install (700, 520) -> MCP Allowed (990, 400)
+  
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 2, delay: 0.55 },
   { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 2, delay: 0.65 },
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.6 },
 ];
 
 function bezierPoint(path: FlowPath, t: number) {
@@ -382,7 +378,7 @@ function FlowNode({
         ) : icon === "globe" ? (
           <Globe className="h-5 w-5 text-[#38bdf8]" />
         ) : icon ? (
-          <Image src={`/integration-icons/${icon}.svg`} alt="" width={20} height={20} className="brightness-0 invert" />
+          <Image src={`/integration-icons/${icon}.${icon === 'jira' ? 'png' : 'svg'}`} alt="" width={20} height={20} className="brightness-0 invert" />
         ) : (
           <Database className="h-5 w-5 text-white/80" />
         )}
@@ -438,7 +434,7 @@ export default function AgentNetworkFlow() {
 
           {/* Stage 0: Data Source column (x = 110) - 5 nodes */}
           {renderFlowNode(110, 140, "GitHub Issue", "6 events", "github", "blue")}
-          {renderFlowNode(110, 240, "LangChain Context", "2 events", "langchain", "blue")}
+          {renderFlowNode(110, 240, "Jira Ticket", "4 events", "jira", "blue")}
           {renderFlowNode(110, 340, "Slack Channel", "2 events", "slack", "blue")}
           {renderFlowNode(110, 440, "npm Package", "2 events", "dotenv", "blue")}
           {renderFlowNode(110, 540, "Web Document", "2 events", "globe", "blue")}
