@@ -432,32 +432,35 @@ export default function AgentNetworkFlow() {
       <div className="absolute inset-x-[8%] -bottom-10 h-44 rounded-[50%] bg-[#7455f6]/28 blur-[95px]" />
       
       {/* Scrollable Container on Mobile, Centered on Desktop */}
-      <div className="relative w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex xl:justify-center px-5 sm:px-8 xl:px-0">
-        <div className="relative h-[650px] w-[1160px] shrink-0 bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
-          <NetworkCanvas hoveredNode={hoveredNode} />
-          <HeaderLabels />
+      <div className="relative w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex xl:justify-center pl-0 pr-6 sm:px-8 xl:px-0">
+        {/* Dynamic wrapper reserves exact space for the scaled diagram, pushed slightly right on desktop */}
+        <div className="relative w-[928px] sm:w-[1044px] xl:w-[1160px] h-[520px] sm:h-[585px] xl:h-[650px] shrink-0 xl:translate-x-8">
+          <div className="absolute top-0 left-0 origin-top-left transform scale-[0.8] sm:scale-[0.9] xl:scale-100 h-[650px] w-[1160px] bg-[radial-gradient(circle_at_50%_48%,rgba(108,79,242,.11),transparent_46%)]">
+            <NetworkCanvas hoveredNode={hoveredNode} />
+            <HeaderLabels />
 
-          {/* Stage 0: Data Source column (x = 110) - 3 nodes */}
-          {renderFlowNode(110, 220, "GitHub Issue", "6 events", "github", "blue")}
-          {renderFlowNode(110, 340, "Jira Ticket", "4 events", "jira", "blue")}
-          {renderFlowNode(110, 460, "Slack Channel", "2 events", "slack", "blue")}
+            {/* Stage 0: Data Source column (x = 110) - 3 nodes */}
+            {renderFlowNode(110, 220, "GitHub Issue", "6 events", "github", "blue")}
+            {renderFlowNode(110, 340, "Jira Ticket", "4 events", "jira", "blue")}
+            {renderFlowNode(110, 460, "Slack Channel", "2 events", "slack", "blue")}
 
-          {/* Stage 1: Agent column (x = 400) - 4 nodes */}
-          {renderFlowNode(400, 160, "Claude Code", "6 events", "anthropic", "teal")}
-          {renderFlowNode(400, 280, "OpenAI Codex", "4 events", "openai", "teal")}
-          {renderFlowNode(400, 400, "Cursor AI", "4 events", "cursor", "teal")}
-          {renderFlowNode(400, 520, "Gemini CLI", "4 events", "googlegemini", "teal")}
+            {/* Stage 1: Agent column (x = 400) - 4 nodes */}
+            {renderFlowNode(400, 160, "Claude Code", "6 events", "anthropic", "teal")}
+            {renderFlowNode(400, 280, "OpenAI Codex", "4 events", "openai", "teal")}
+            {renderFlowNode(400, 400, "Cursor AI", "4 events", "cursor", "teal")}
+            {renderFlowNode(400, 520, "Gemini CLI", "4 events", "googlegemini", "teal")}
 
-          {/* Stage 2: Action column (x = 700) - 3 nodes */}
-          {renderFlowNode(700, 220, "Shell Execution", "4 events", "terminal", "purple")}
-          {renderFlowNode(700, 340, "Config Mutation", "2 events", "zap", "purple")}
-          {renderFlowNode(700, 460, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
+            {/* Stage 2: Action column (x = 700) - 3 nodes */}
+            {renderFlowNode(700, 220, "Shell Execution", "4 events", "terminal", "purple")}
+            {renderFlowNode(700, 340, "Config Mutation", "2 events", "zap", "purple")}
+            {renderFlowNode(700, 460, "MCP Launch", "2 events", "modelcontextprotocol", "purple")}
 
-          {/* Stage 3: Effect column (x = 990) - 4 nodes */}
-          {renderFlowNode(990, 160, "Code Blocked", "4 events", "shield-alert", "red")}
-          {renderFlowNode(990, 280, "Config Denied", "2 events", "shield-alert", "red")}
-          {renderFlowNode(990, 400, "MCP Allowed", "2 events", "shield-check", "green")}
-          {renderFlowNode(990, 520, "Artifact Allowed", "2 events", "shield-check", "green")}
+            {/* Stage 3: Effect column (x = 990) - 4 nodes */}
+            {renderFlowNode(990, 160, "Code Blocked", "4 events", "shield-alert", "red")}
+            {renderFlowNode(990, 280, "Config Denied", "2 events", "shield-alert", "red")}
+            {renderFlowNode(990, 400, "MCP Allowed", "2 events", "shield-check", "green")}
+            {renderFlowNode(990, 520, "Artifact Allowed", "2 events", "shield-check", "green")}
+          </div>
         </div>
       </div>
       
