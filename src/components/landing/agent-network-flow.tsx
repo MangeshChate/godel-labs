@@ -39,7 +39,9 @@ const paths: FlowPath[] = [
   { from: { x: 110, y: 540 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.6 },
   // Clutter Connections
   { from: { x: 110, y: 140 }, to: { x: 400, y: 280 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.1 },
+  { from: { x: 110, y: 240 }, to: { x: 400, y: 400 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
   { from: { x: 110, y: 340 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#258fcf", width: 3, delay: 0.35 },
+  { from: { x: 110, y: 440 }, to: { x: 400, y: 520 }, fromColor: "#d98a19", toColor: "#d98a19", width: 3, delay: 0.5 },
   { from: { x: 110, y: 540 }, to: { x: 400, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.7 },
 
   // -------------------------------------------------------------
@@ -53,7 +55,10 @@ const paths: FlowPath[] = [
   { from: { x: 400, y: 520 }, to: { x: 700, y: 520 }, fromColor: "#d98a19", toColor: "#e3554f", width: 3, delay: 0.7 },
   // Clutter Connections
   { from: { x: 400, y: 280 }, to: { x: 700, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.3 },
+  { from: { x: 400, y: 280 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 4, delay: 0.45 },
+  { from: { x: 400, y: 400 }, to: { x: 700, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.4 },
   { from: { x: 400, y: 400 }, to: { x: 700, y: 280 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.6 },
+  { from: { x: 400, y: 520 }, to: { x: 700, y: 400 }, fromColor: "#e3554f", toColor: "#258fcf", width: 3, delay: 0.6 },
 
   // -------------------------------------------------------------
   // Stage 2 -> Stage 3: ACTION (x=700) -> EFFECT (x=990)
@@ -65,7 +70,11 @@ const paths: FlowPath[] = [
   { from: { x: 700, y: 520 }, to: { x: 990, y: 520 }, fromColor: "#e3554f", toColor: "#12b981", width: 4, delay: 0.65 },
   // Clutter Connections
   { from: { x: 700, y: 160 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.25 },
+  { from: { x: 700, y: 160 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.4 },
   { from: { x: 700, y: 280 }, to: { x: 990, y: 160 }, fromColor: "#12b981", toColor: "#e3554f", width: 3, delay: 0.45 },
+  { from: { x: 700, y: 280 }, to: { x: 990, y: 520 }, fromColor: "#12b981", toColor: "#12b981", width: 3, delay: 0.55 },
+  { from: { x: 700, y: 400 }, to: { x: 990, y: 160 }, fromColor: "#258fcf", toColor: "#e3554f", width: 3, delay: 0.6 },
+  { from: { x: 700, y: 520 }, to: { x: 990, y: 280 }, fromColor: "#e3554f", toColor: "#e3554f", width: 3, delay: 0.7 },
   { from: { x: 700, y: 520 }, to: { x: 990, y: 400 }, fromColor: "#e3554f", toColor: "#12b981", width: 3, delay: 0.75 },
 ];
 
