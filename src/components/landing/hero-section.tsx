@@ -1144,6 +1144,25 @@ export default function HeroSection() {
   const reduceMotion = useReducedMotion();
   const enter = reduceMotion ? false : { opacity: 0, y: 18 };
 
+  const [copyIndex, setCopyIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCopyIndex((prev) => (prev === 0 ? 1 : 0));
+    }, 6000); // Toggle every 6 seconds
+    return () => clearInterval(timer);
+  }, []);
+
+  const titles = [
+    <>Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Secured.<ZigzagUnderline /></span></>,
+    <>Deploy AI agents without surrendering <span className="relative inline-block text-[#6d49fd]">control.<ZigzagUnderline /></span></>
+  ];
+
+  const subtitles = [
+    "Gödel's Gate governs what AI agents actually do at runtime — every action taken, every piece of data touched — and stops unsafe ones before they execute.",
+    "See who and what every agent acts for, enforce data and action policy across the full workflow, and stop unsafe behaviour before it reaches company systems."
+  ];
+
   return (
     <section className="relative overflow-hidden px-4 pb-12 pt-32 sm:px-6 sm:pb-16 sm:pt-40 lg:pb-20">
       <div className="hero-grid absolute inset-0 opacity-70" />
@@ -1154,13 +1173,25 @@ export default function HeroSection() {
           AI agent security · enforced at runtime
         </motion.div>
 
-        <motion.h1 initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }} className="mx-auto max-w-4xl text-balance text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em] text-[#111322]">
-          Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Secured.<ZigzagUnderline /></span>
-        </motion.h1>
-
-        <motion.p initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.18 }} className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
-          Gödel&apos;s Gate governs what AI agents actually do at runtime — every action taken, every piece of data touched — and stops unsafe ones before they execute.
-        </motion.p>
+        <div className="flex flex-col items-center justify-center sm:min-h-[220px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={copyIndex}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="w-full"
+            >
+              <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em] text-[#111322]">
+                {titles[copyIndex]}
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
+                {subtitles[copyIndex]}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.28 }} className="mt-9 flex justify-center">
           <HeroEmailForm />
