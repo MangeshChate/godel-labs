@@ -806,32 +806,30 @@ function ProductPreview() {
               }`}
           >
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <AnimatePresence>
-                {!isPlaying && (
-                  <motion.div
-                    key="play-btn"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-black/40 hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
-                  >
-                    <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
-                  </motion.div>
-                )}
-                {isPlaying && showControls && (
-                  <motion.div
-                    key="pause-btn"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-black/40 hover:scale-105 active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
-                  >
-                    <Pause className="h-10 w-10 sm:h-12 sm:w-12 fill-white" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {(!isPlaying || showControls) && (
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    togglePlay();
+                  }}
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                  className="absolute flex h-20 w-20 transform-gpu cursor-pointer items-center justify-center rounded-full border border-white/50 bg-black/25 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-md transition-[background-color,transform] duration-200 [-webkit-backface-visibility:hidden] [backface-visibility:hidden] hover:scale-105 hover:bg-black/40 active:scale-95 pointer-events-auto sm:h-24 sm:w-24"
+                >
+                  <Play
+                    aria-hidden="true"
+                    className={`absolute h-10 w-10 translate-x-0.5 fill-white sm:h-12 sm:w-12 ${
+                      isPlaying ? "invisible" : "visible"
+                    }`}
+                  />
+                  <Pause
+                    aria-hidden="true"
+                    className={`absolute h-10 w-10 fill-white sm:h-12 sm:w-12 ${
+                      isPlaying ? "visible" : "invisible"
+                    }`}
+                  />
+                </button>
+              )}
             </div>
           </div>
 
@@ -842,11 +840,26 @@ function ProductPreview() {
                 }`}
             >
               <button
-                onClick={togglePlay}
-                className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none"
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  togglePlay();
+                }}
+                className="relative h-4 w-4 shrink-0 transform-gpu text-white/90 transition-[color,transform] duration-150 [-webkit-backface-visibility:hidden] [backface-visibility:hidden] hover:scale-110 hover:text-white active:scale-95 focus:outline-none"
                 aria-label={isPlaying ? "Pause" : "Play"}
               >
-                {isPlaying ? <Pause className="h-4 w-4 fill-white" /> : <Play className="h-4 w-4 fill-white translate-x-0.5" />}
+                <Play
+                  aria-hidden="true"
+                  className={`absolute inset-0 h-4 w-4 translate-x-0.5 fill-white ${
+                    isPlaying ? "invisible" : "visible"
+                  }`}
+                />
+                <Pause
+                  aria-hidden="true"
+                  className={`absolute inset-0 h-4 w-4 fill-white ${
+                    isPlaying ? "visible" : "invisible"
+                  }`}
+                />
               </button>
 
               <div className="relative flex-1 group/slider flex items-center h-6 cursor-pointer">
