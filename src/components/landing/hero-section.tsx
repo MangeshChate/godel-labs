@@ -96,7 +96,6 @@ function ProductPreview() {
   const [mediaError, setMediaError] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const captionTrackRef = useRef<HTMLTrackElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -146,30 +145,16 @@ function ProductPreview() {
       clearTimeout(controlsTimeoutRef.current);
     }
     setIsBuffering(false);
-    // Only pause the audio if the video hasn't ended.
-    // If the video ended, let the audio finish playing during the outro.
-    if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
-      audioRef.current.pause();
-    }
   };
 
   const handleWaiting = () => {
     setIsBuffering(true);
-    if (audioRef.current && (!videoRef.current || !videoRef.current.ended)) {
-      audioRef.current.pause();
-    }
   };
 
   const handlePlaying = () => {
     setIsBuffering(false);
     setMediaError(null);
     setIsPlaying(true);
-    if (audioRef.current && videoRef.current && !videoRef.current.paused) {
-      audioRef.current.currentTime = videoRef.current.currentTime;
-      audioRef.current.play().catch((err) => {
-        if (err.name !== "AbortError") console.error("Failed to play audio:", err);
-      });
-    }
   };
 
   const handleCanPlay = () => {
@@ -181,32 +166,21 @@ function ProductPreview() {
   const handleStalled = () => {
     if (hasStarted && videoRef.current && !videoRef.current.paused) {
       setIsBuffering(true);
-      audioRef.current?.pause();
     }
   };
 
   const handleSeeking = () => {
     if (hasStarted) {
       setIsBuffering(true);
-      audioRef.current?.pause();
     }
   };
 
   const handleSeeked = () => {
     const video = videoRef.current;
-    const audio = audioRef.current;
     if (!video) return;
 
     if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
       setIsBuffering(false);
-    }
-    if (audio) {
-      audio.currentTime = video.currentTime;
-      if (!video.paused) {
-        audio.play().catch((err) => {
-          if (err.name !== "AbortError") console.error("Failed to resume audio:", err);
-        });
-      }
     }
   };
 
@@ -221,23 +195,18 @@ function ProductPreview() {
     setIsBuffering(false);
     setIsPlaying(false);
     setShowControls(true);
-    audioRef.current?.pause();
     setMediaError("The video stopped loading. Check your connection and try again.");
   };
 
   const retryPlayback = (e: React.MouseEvent) => {
     e.stopPropagation();
     const video = videoRef.current;
-    const audio = audioRef.current;
     if (!video) return;
 
     setMediaError(null);
     setHasEnded(false);
     setIsBuffering(true);
     retryTimeRef.current = video.currentTime;
-    if (audio) {
-      audio.load();
-    }
     video.load();
     video.play().catch((err) => {
       if (err.name !== "AbortError") handleMediaError();
@@ -256,7 +225,6 @@ function ProductPreview() {
     if (hasEnded) {
       setHasEnded(false);
       videoRef.current.currentTime = 0;
-      if (audioRef.current) audioRef.current.currentTime = 0;
       videoRef.current.play().catch((err) => {
         if (err.name !== "AbortError") console.error("Failed to replay video:", err);
       });
@@ -328,13 +296,6 @@ function ProductPreview() {
       if (duration === 0 && videoRef.current.duration) {
         setDuration(videoRef.current.duration);
       }
-      // Strictly sync audio to video
-      if (audioRef.current) {
-        const diff = Math.abs(videoRef.current.currentTime - audioRef.current.currentTime);
-        if (diff > 0.25) {
-          audioRef.current.currentTime = videoRef.current.currentTime;
-        }
-      }
     }
   };
 
@@ -346,9 +307,6 @@ function ProductPreview() {
     if (retryTimeRef.current !== null) {
       const retryAt = Math.min(retryTimeRef.current, video.duration);
       video.currentTime = retryAt;
-      if (audioRef.current) {
-        audioRef.current.currentTime = retryAt;
-      }
       retryTimeRef.current = null;
     }
     handleProgress();
@@ -360,9 +318,6 @@ function ProductPreview() {
     if (videoDuration > 0) {
       const newTime = (parseFloat(e.target.value) / 100) * videoDuration;
       videoRef.current.currentTime = newTime;
-      if (audioRef.current) {
-        audioRef.current.currentTime = newTime;
-      }
       setCurrentTime(newTime);
       if (duration === 0) {
         setDuration(videoDuration);
@@ -403,11 +358,12 @@ function ProductPreview() {
         >
           <video
             ref={videoRef}
-            src="https://dl.godel-labs.ai/website/hero-page-video-godel-gate.mp4"
+            src="/video/godel-gate-hero.mp4"
             poster="https://dl.godel-labs.ai/website/video-thumbnail.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
             playsInline
             preload="auto"
+            muted={isMuted}
             onPlay={handlePlay}
             onPause={handlePause}
             onEnded={handleEnded}
@@ -431,13 +387,6 @@ function ProductPreview() {
               label="English"
             />
           </video>
-          <audio
-            ref={audioRef}
-            src="https://dl.godel-labs.ai/website/britteny-voiceover-godel-gate.mp3"
-            preload="auto"
-            muted={isMuted}
-            onError={handleMediaError}
-          />
 
           <AnimatePresence>
             {isBuffering && hasStarted && !hasEnded && !mediaError && (
