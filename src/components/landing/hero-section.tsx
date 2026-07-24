@@ -1154,8 +1154,8 @@ export default function HeroSection() {
   }, []);
 
   const titles = [
-    <>Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Secured.<ZigzagUnderline /></span></>,
-    <>Deploy AI agents without surrendering <span className="relative inline-block text-[#6d49fd]">control.</span></>
+    <>Every agent.<br />Every action. <span className="text-[#6d49fd]">Secured.</span></>,
+    <>Deploy AI agents without surrendering <span className="text-[#6d49fd]">control.</span></>
   ];
 
   const subtitles = [
@@ -1173,7 +1173,7 @@ export default function HeroSection() {
           AI agent security · enforced at runtime
         </motion.div>
 
-        <div className="flex flex-col items-center justify-center sm:min-h-[220px]">
+        <div className="flex flex-col items-center justify-center sm:min-h-[160px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={copyIndex}
@@ -1183,14 +1183,10 @@ export default function HeroSection() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full"
             >
-              <h1 className={`mx-auto max-w-4xl text-balance text-[#111322] ${
-                copyIndex === 0 
-                  ? "text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em]" 
-                  : "text-3xl sm:text-4xl lg:text-5xl font-semibold leading-[1.08] tracking-normal max-w-[800px]"
-              }`}>
+              <h1 className="mx-auto max-w-[840px] text-balance text-3xl font-semibold leading-[1.08] tracking-tight text-[#111322] sm:text-5xl lg:text-[54px]">
                 {titles[copyIndex]}
               </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
+              <p className="mx-auto mt-6 max-w-[780px] text-balance text-[15px] leading-7 text-[#625d6e] sm:text-base sm:leading-7">
                 {subtitles[copyIndex]}
               </p>
             </motion.div>
