@@ -1155,7 +1155,7 @@ export default function HeroSection() {
 
   const titles = [
     <>Every agent.<br />Every action. <span className="text-[#6d49fd]">Secured.</span></>,
-    <>Deploy AI agents without surrendering <span className="text-[#6d49fd]">control.</span></>
+    <>Deploy AI agents without<br />surrendering <span className="text-[#6d49fd]">control.</span></>
   ];
 
   const subtitles = [
@@ -1183,7 +1183,7 @@ export default function HeroSection() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full"
             >
-              <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2rem,7vw,5rem)] font-semibold leading-[1.05] tracking-tight text-[#111322] sm:leading-[0.97]">
+              <h1 className="mx-auto max-w-4xl text-balance text-[clamp(1.85rem,6.5vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-[#111322] sm:leading-[0.97]">
                 {titles[copyIndex]}
               </h1>
               <p className="mx-auto mt-4 sm:mt-6 max-w-[780px] text-balance text-[13px] leading-6 text-[#625d6e] sm:text-[15px] sm:leading-7 lg:text-base">
