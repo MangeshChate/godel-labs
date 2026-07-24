@@ -1177,7 +1177,7 @@ export default function HeroSection() {
         </motion.div>
 
         <div className="flex flex-col items-center justify-center sm:min-h-[220px]">
-          <MorphingText texts={morphingTitles} className="text-[#111322] font-semibold text-[clamp(2.1rem,4.8vw,4.5rem)] tracking-[-0.065em] h-[160px] sm:h-[180px] lg:h-[200px]" />
+          <MorphingText texts={morphingTitles} className="text-[#111322] font-semibold text-[clamp(2.55rem,5.7vw,5.25rem)] tracking-[-0.065em] h-[160px] sm:h-[180px] lg:h-[200px]" />
           
           <AnimatePresence mode="wait">
             <motion.div
