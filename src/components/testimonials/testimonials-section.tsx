@@ -27,6 +27,11 @@ const testimonials = [
   },
 ];
 
+const roundedZigzagPath = `M 0 16 L ${Array.from(
+  { length: 41 },
+  (_, index) => `${index * 30} ${index % 2 === 0 ? 14 : 2}`,
+).join(" L ")} L 1200 16 Z`;
+
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -40,8 +45,24 @@ export default function TestimonialsSection() {
 
   return (
     <section id="testimonials" className="relative scroll-mt-0 bg-[#f4f3f8] pt-14 pb-6 sm:pt-18 sm:pb-8">
-      {/* One architectural seam keeps the transition crisp without noisy sawteeth. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-5 -translate-y-[99%] bg-[#f4f3f8] [clip-path:polygon(0_100%,0_72%,38%_72%,40%_0,60%_0,62%_72%,100%_72%,100%_100%)]" />
+      {/* Keep the zigzag silhouette, with rounded joins instead of sharp points. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-4 -translate-y-[99%] overflow-hidden">
+        <svg
+          className="block h-full w-full text-[#f4f3f8]"
+          viewBox="0 0 1200 16"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d={roundedZigzagPath}
+            fill="currentColor"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
 
       {/* Header Block aligned with container */}
       <div className="mx-auto max-w-[1180px] px-5 sm:px-6">
