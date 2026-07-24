@@ -1149,7 +1149,7 @@ export default function HeroSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCopyIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 6000); // Toggle every 6 seconds
+    }, 7000); // Toggle every 7 seconds
     return () => clearInterval(timer);
   }, []);
 
@@ -1183,7 +1183,7 @@ export default function HeroSection() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full"
             >
-              <h1 className="mx-auto max-w-[1040px] text-[clamp(1.85rem,5vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.04em] text-[#111322] sm:leading-[0.97]">
+              <h1 className="mx-auto max-w-[1040px] text-[clamp(1.85rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-[#111322] sm:leading-[0.97]">
                 {titles[copyIndex]}
               </h1>
               <p className="mx-auto mt-4 sm:mt-6 max-w-[780px] text-[13px] leading-6 text-[#625d6e] sm:text-[14px] sm:leading-7 lg:text-[15px]">
