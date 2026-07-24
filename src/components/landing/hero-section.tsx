@@ -1140,6 +1140,8 @@ function ZigzagUnderline() {
   );
 }
 
+import { MorphingText } from "@/components/ui/morphing-text";
+
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
   const enter = reduceMotion ? false : { opacity: 0, y: 18 };
@@ -1147,15 +1149,16 @@ export default function HeroSection() {
   const [copyIndex, setCopyIndex] = useState(0);
 
   useEffect(() => {
+    // Syncs roughly with the 6-second MorphingText cycle (5s cooldown + 1s morph)
     const timer = setInterval(() => {
       setCopyIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 6000); // Toggle every 6 seconds
+    }, 6000); 
     return () => clearInterval(timer);
   }, []);
 
-  const titles = [
-    <>Every agent.<br />Every action. <span className="relative inline-block text-[#6d49fd]">Secured.<ZigzagUnderline /></span></>,
-    <>Deploy AI agents without surrendering <span className="relative inline-block text-[#6d49fd]">control.<ZigzagUnderline /></span></>
+  const morphingTitles = [
+    `Every agent.<br />Every action. <span class="relative text-[#6d49fd]">Secured.<svg aria-hidden="true" class="absolute -bottom-2.5 left-0 h-2.5 w-full" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none"><path d="M0 8 2.5 2 5 8 7.5 2 10 8 12.5 2 15 8 17.5 2 20 8 22.5 2 25 8 27.5 2 30 8 32.5 2 35 8 37.5 2 40 8 42.5 2 45 8 47.5 2 50 8 52.5 2 55 8 57.5 2 60 8 62.5 2 65 8 67.5 2 70 8 72.5 2 75 8 77.5 2 80 8 82.5 2 85 8 87.5 2 90 8 92.5 2 95 8 97.5 2 100 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>`,
+    `Deploy AI agents<br />without surrendering <span class="relative text-[#6d49fd]">control.<svg aria-hidden="true" class="absolute -bottom-2.5 left-0 h-2.5 w-full" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none"><path d="M0 8 2.5 2 5 8 7.5 2 10 8 12.5 2 15 8 17.5 2 20 8 22.5 2 25 8 27.5 2 30 8 32.5 2 35 8 37.5 2 40 8 42.5 2 45 8 47.5 2 50 8 52.5 2 55 8 57.5 2 60 8 62.5 2 65 8 67.5 2 70 8 72.5 2 75 8 77.5 2 80 8 82.5 2 85 8 87.5 2 90 8 92.5 2 95 8 97.5 2 100 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>`
   ];
 
   const subtitles = [
@@ -1174,6 +1177,8 @@ export default function HeroSection() {
         </motion.div>
 
         <div className="flex flex-col items-center justify-center sm:min-h-[220px]">
+          <MorphingText texts={morphingTitles} className="text-[#111322] font-semibold text-[clamp(2.1rem,4.8vw,4.5rem)] tracking-[-0.065em] h-[160px] sm:h-[180px] lg:h-[200px]" />
+          
           <AnimatePresence mode="wait">
             <motion.div
               key={copyIndex}
@@ -1181,12 +1186,9 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full"
+              className="w-full h-[80px]"
             >
-              <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.55rem,5.7vw,5.25rem)] font-semibold leading-[0.97] tracking-[-0.065em] text-[#111322]">
-                {titles[copyIndex]}
-              </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
+              <p className="mx-auto max-w-2xl text-balance text-[15px] font-normal leading-7 text-[#5e5a6e] sm:text-base">
                 {subtitles[copyIndex]}
               </p>
             </motion.div>
