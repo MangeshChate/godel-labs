@@ -3,8 +3,38 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Captions, LoaderCircle, Play, Pause, Maximize, Minimize, RefreshCw, Volume2, VolumeX } from "lucide-react";
+import {
+  ArrowRight,
+  Captions,
+  Check,
+  LoaderCircle,
+  Play,
+  Pause,
+  Maximize,
+  Minimize,
+  RefreshCw,
+  Settings2,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import Image from "next/image";
+import type Hls from "hls.js";
+
+type VideoQuality = "auto" | "2k" | "1080p" | "720p";
+
+const HLS_MASTER_URL = "/video/hls/master.m3u8";
+const MP4_FALLBACK_URL = "/video/godel-gate-hero.mp4";
+const qualityOptions: Array<{
+  value: VideoQuality;
+  label: string;
+  height?: number;
+  nativeUrl: string;
+}> = [
+  { value: "auto", label: "Auto", nativeUrl: HLS_MASTER_URL },
+  { value: "2k", label: "2K", height: 1440, nativeUrl: "/video/hls/2k/index.m3u8" },
+  { value: "1080p", label: "1080p", height: 1080, nativeUrl: "/video/hls/1080p/index.m3u8" },
+  { value: "720p", label: "720p", height: 720, nativeUrl: "/video/hls/720p/index.m3u8" },
+];
 
 const categories = [
   {
@@ -94,12 +124,136 @@ function ProductPreview() {
   const [isBuffering, setIsBuffering] = useState(false);
   const [bufferedEnd, setBufferedEnd] = useState(0);
   const [mediaError, setMediaError] = useState<string | null>(null);
+  const [selectedQuality, setSelectedQuality] = useState<VideoQuality>("auto");
+  const [activeAutoQuality, setActiveAutoQuality] = useState("");
+  const [isQualityMenuOpen, setIsQualityMenuOpen] = useState(false);
+  const [isAdaptiveReady, setIsAdaptiveReady] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const captionTrackRef = useRef<HTMLTrackElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const qualityMenuRef = useRef<HTMLDivElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
+  const usesNativeHlsRef = useRef(false);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const retryTimeRef = useRef<number | null>(null);
+  const qualitySwitchRef = useRef<{ time: number; shouldResume: boolean } | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let cancelled = false;
+
+    const loadMp4Fallback = (time = 0, shouldResume = false) => {
+      if (cancelled) return;
+
+      hlsRef.current?.destroy();
+      hlsRef.current = null;
+      usesNativeHlsRef.current = false;
+      setIsAdaptiveReady(false);
+      setSelectedQuality("auto");
+      setActiveAutoQuality("1080p");
+      qualitySwitchRef.current = { time, shouldResume };
+      video.src = MP4_FALLBACK_URL;
+      video.load();
+    };
+
+    const setupPlayback = async () => {
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        usesNativeHlsRef.current = true;
+        setIsAdaptiveReady(true);
+        video.src = HLS_MASTER_URL;
+        video.load();
+        return;
+      }
+
+      try {
+        const hlsModule = await import("hls.js");
+        if (cancelled) return;
+
+        const HlsPlayer = hlsModule.default;
+        if (!HlsPlayer.isSupported()) {
+          loadMp4Fallback();
+          return;
+        }
+
+        const hls = new HlsPlayer({
+          startLevel: -1,
+          capLevelToPlayerSize: true,
+          maxBufferLength: 20,
+          maxMaxBufferLength: 40,
+          backBufferLength: 12,
+          enableWorker: true,
+        });
+        let networkRecoveryAttempts = 0;
+        let mediaRecoveryAttempts = 0;
+
+        hlsRef.current = hls;
+        hls.attachMedia(video);
+        hls.on(HlsPlayer.Events.MEDIA_ATTACHED, () => {
+          hls.loadSource(HLS_MASTER_URL);
+        });
+        hls.on(HlsPlayer.Events.MANIFEST_PARSED, () => {
+          setIsAdaptiveReady(true);
+        });
+        hls.on(HlsPlayer.Events.LEVEL_SWITCHED, (_, data) => {
+          const height = hls.levels[data.level]?.height;
+          if (height) setActiveAutoQuality(`${height}p`);
+        });
+        hls.on(HlsPlayer.Events.FRAG_LOADED, () => {
+          networkRecoveryAttempts = 0;
+          mediaRecoveryAttempts = 0;
+        });
+        hls.on(HlsPlayer.Events.ERROR, (_, data) => {
+          if (!data.fatal) return;
+
+          if (
+            data.type === hlsModule.ErrorTypes.NETWORK_ERROR &&
+            networkRecoveryAttempts < 2
+          ) {
+            networkRecoveryAttempts += 1;
+            hls.startLoad();
+            return;
+          }
+
+          if (
+            data.type === hlsModule.ErrorTypes.MEDIA_ERROR &&
+            mediaRecoveryAttempts < 2
+          ) {
+            mediaRecoveryAttempts += 1;
+            hls.recoverMediaError();
+            return;
+          }
+
+          loadMp4Fallback(video.currentTime, !video.paused);
+        });
+      } catch {
+        loadMp4Fallback();
+      }
+    };
+
+    setupPlayback();
+
+    return () => {
+      cancelled = true;
+      hlsRef.current?.destroy();
+      hlsRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isQualityMenuOpen) return;
+
+    const closeQualityMenu = (event: PointerEvent) => {
+      if (!qualityMenuRef.current?.contains(event.target as Node)) {
+        setIsQualityMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", closeQualityMenu);
+    return () => document.removeEventListener("pointerdown", closeQualityMenu);
+  }, [isQualityMenuOpen]);
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -109,6 +263,46 @@ function ProductPreview() {
   const toggleCaptions = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCaptionsEnabled((enabled) => !enabled);
+  };
+
+  const selectQuality = (quality: VideoQuality) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    setSelectedQuality(quality);
+    setIsQualityMenuOpen(false);
+    setMediaError(null);
+
+    const hls = hlsRef.current;
+    if (hls) {
+      if (quality === "auto") {
+        hls.currentLevel = -1;
+        hls.nextLevel = -1;
+        hls.loadLevel = -1;
+        return;
+      }
+
+      const option = qualityOptions.find((item) => item.value === quality);
+      const levelIndex = hls.levels.findIndex((level) => level.height === option?.height);
+      if (levelIndex >= 0) {
+        // Switch on the next aligned segment to avoid interrupting playback.
+        hls.nextLevel = levelIndex;
+      }
+      return;
+    }
+
+    if (!usesNativeHlsRef.current) return;
+
+    const option = qualityOptions.find((item) => item.value === quality);
+    if (!option) return;
+
+    qualitySwitchRef.current = {
+      time: video.currentTime,
+      shouldResume: !video.paused,
+    };
+    setIsBuffering(!video.paused);
+    video.src = option.nativeUrl;
+    video.load();
   };
 
   useEffect(() => {
@@ -192,6 +386,21 @@ function ProductPreview() {
   };
 
   const handleMediaError = () => {
+    const video = videoRef.current;
+    if (video && usesNativeHlsRef.current) {
+      const time = video.currentTime;
+      const shouldResume = hasStarted && !video.paused;
+
+      usesNativeHlsRef.current = false;
+      setSelectedQuality("auto");
+      setActiveAutoQuality("1080p");
+      setIsAdaptiveReady(false);
+      qualitySwitchRef.current = { time, shouldResume };
+      video.src = MP4_FALLBACK_URL;
+      video.load();
+      return;
+    }
+
     setIsBuffering(false);
     setIsPlaying(false);
     setShowControls(true);
@@ -207,7 +416,13 @@ function ProductPreview() {
     setHasEnded(false);
     setIsBuffering(true);
     retryTimeRef.current = video.currentTime;
-    video.load();
+
+    if (hlsRef.current) {
+      hlsRef.current.startLoad();
+    } else {
+      video.load();
+    }
+
     video.play().catch((err) => {
       if (err.name !== "AbortError") handleMediaError();
     });
@@ -304,6 +519,18 @@ function ProductPreview() {
     if (!video) return;
 
     setDuration(video.duration);
+
+    if (qualitySwitchRef.current) {
+      const { time, shouldResume } = qualitySwitchRef.current;
+      qualitySwitchRef.current = null;
+      video.currentTime = Math.min(time, video.duration);
+      if (shouldResume) {
+        video.play().catch((err) => {
+          if (err.name !== "AbortError") handleMediaError();
+        });
+      }
+    }
+
     if (retryTimeRef.current !== null) {
       const retryAt = Math.min(retryTimeRef.current, video.duration);
       video.currentTime = retryAt;
@@ -334,6 +561,8 @@ function ProductPreview() {
 
   const percentage = duration ? (currentTime / duration) * 100 : 0;
   const bufferedPercentage = duration ? Math.min((bufferedEnd / duration) * 100, 100) : 0;
+  const selectedQualityLabel =
+    qualityOptions.find((option) => option.value === selectedQuality)?.label ?? "Auto";
 
   return (
     <motion.div
@@ -358,7 +587,6 @@ function ProductPreview() {
         >
           <video
             ref={videoRef}
-            src="/video/godel-gate-hero.mp4"
             poster="https://dl.godel-labs.ai/website/video-thumbnail.png"
             className={`w-full h-full ${isFullscreen ? "object-contain" : "object-cover object-top"}`}
             playsInline
@@ -584,9 +812,59 @@ function ProductPreview() {
                 {isMuted ? <VolumeX className="h-4.5 w-4.5" /> : <Volume2 className="h-4.5 w-4.5" />}
               </button>
 
+              <div ref={qualityMenuRef} className="relative ml-1">
+                <button
+                  type="button"
+                  onClick={() => setIsQualityMenuOpen((open) => !open)}
+                  disabled={!isAdaptiveReady}
+                  className="flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 text-[10px] font-semibold text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40 sm:text-[11px]"
+                  aria-label={`Video quality: ${selectedQualityLabel}`}
+                  aria-expanded={isQualityMenuOpen}
+                >
+                  <Settings2 className="h-3.5 w-3.5" />
+                  <span>{selectedQualityLabel}</span>
+                </button>
+
+                <AnimatePresence>
+                  {isQualityMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 5, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                      transition={{ duration: 0.14 }}
+                      className="absolute bottom-9 right-0 z-50 w-36 overflow-hidden rounded-xl border border-white/15 bg-[#0d0b14]/95 p-1.5 text-white shadow-[0_16px_40px_rgba(0,0,0,.4)] backdrop-blur-xl"
+                    >
+                      {qualityOptions.map((option) => {
+                        const isSelected = option.value === selectedQuality;
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            onClick={() => selectQuality(option.value)}
+                            className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                              isSelected
+                                ? "bg-white/15 text-white"
+                                : "text-white/70 hover:bg-white/10 hover:text-white"
+                            }`}
+                          >
+                            <span className="flex items-baseline gap-1.5">
+                              <span className="font-semibold">{option.label}</span>
+                              {option.value === "auto" && activeAutoQuality && (
+                                <span className="text-[9px] text-white/45">{activeAutoQuality}</span>
+                              )}
+                            </span>
+                            {isSelected && <Check className="h-3.5 w-3.5" />}
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               <button
                 onClick={toggleCaptions}
-                className={`ml-2 cursor-pointer rounded-md p-1 transition-all duration-150 focus:outline-none hover:scale-110 active:scale-95 ${
+                className={`ml-1 cursor-pointer rounded-md p-1 transition-all duration-150 focus:outline-none hover:scale-110 active:scale-95 ${
                   captionsEnabled ? "bg-white/20 text-white" : "text-white/55 hover:text-white"
                 }`}
                 aria-label={captionsEnabled ? "Turn captions off" : "Turn captions on"}
