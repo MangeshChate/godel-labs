@@ -40,17 +40,8 @@ export default function TestimonialsSection() {
 
   return (
     <section id="testimonials" className="relative scroll-mt-0 bg-[#f4f3f8] pt-14 pb-6 sm:pt-18 sm:pb-8">
-      {/* Solid Zigzag Cut-out Top Teeth (Matching Section BG Color, No Border) */}
-      <div className="absolute inset-x-0 top-0 h-3 w-full overflow-hidden z-20 pointer-events-none -translate-y-[99%]">
-        <svg
-          className="block w-full h-full text-[#f4f3f8]"
-          viewBox="0 0 1200 12"
-          preserveAspectRatio="none"
-          fill="currentColor"
-        >
-          <path d="M0,12 L10,0 L20,12 L30,0 L40,12 L50,0 L60,12 L70,0 L80,12 L90,0 L100,12 L110,0 L120,12 L130,0 L140,12 L150,0 L160,12 L170,0 L180,12 L190,0 L200,12 L210,0 L220,12 L230,0 L240,12 L250,0 L260,12 L270,0 L280,12 L290,0 L300,12 L310,0 L320,12 L330,0 L340,12 L350,0 L360,12 L370,0 L380,12 L390,0 L400,12 L410,0 L420,12 L430,0 L440,12 L450,0 L460,12 L470,0 L480,12 L490,0 L500,12 L510,0 L520,12 L530,0 L540,12 L550,0 L560,12 L570,0 L580,12 L590,0 L600,12 L610,0 L620,12 L630,0 L640,12 L650,0 L660,12 L670,0 L680,12 L690,0 L700,12 L710,0 L720,12 L730,0 L740,12 L750,0 L760,12 L770,0 L780,12 L790,0 L800,12 L810,0 L820,12 L830,0 L840,12 L850,0 L860,12 L870,0 L880,12 L890,0 L900,12 L910,0 L920,12 L930,0 L940,12 L950,0 L960,12 L970,0 L980,12 L990,0 L1000,12 L1010,0 L1020,12 L1030,0 L1040,12 L1050,0 L1060,12 L1070,0 L1080,12 L1090,0 L1100,12 L1110,0 L1120,12 L1130,0 L1140,12 L1150,0 L1160,12 L1170,0 L1180,12 L1190,0 L1200,12 V12 H0 Z" />
-        </svg>
-      </div>
+      {/* One architectural seam keeps the transition crisp without noisy sawteeth. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-5 -translate-y-[99%] bg-[#f4f3f8] [clip-path:polygon(0_100%,0_72%,38%_72%,40%_0,60%_0,62%_72%,100%_72%,100%_100%)]" />
 
       {/* Header Block aligned with container */}
       <div className="mx-auto max-w-[1180px] px-5 sm:px-6">

@@ -78,7 +78,7 @@ function EgressGraphic() {
 
 function InjectionGraphic() {
   return (
-    <div className="relative h-[120px] overflow-hidden rounded-[20px] border border-white/10 bg-[#191625]" aria-hidden="true">
+    <div className="relative h-full overflow-hidden rounded-[18px] border border-white/10 bg-[#191625]" aria-hidden="true">
       <div className="absolute inset-x-5 top-5 flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -99,7 +99,7 @@ function InjectionGraphic() {
 
 function GovernanceGraphic() {
   return (
-    <div className="relative h-[120px] overflow-hidden rounded-[20px] border border-white/10 bg-[#191625]" aria-hidden="true">
+    <div className="relative h-full overflow-hidden rounded-[18px] border border-white/10 bg-[#191625]" aria-hidden="true">
       <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#8f76ff]/20" />
       <div className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#8f76ff]/30" />
       <div className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[18px] bg-[#6d49fd] text-white shadow-[0_14px_30px_rgba(109,73,253,.3)]">
@@ -185,8 +185,8 @@ export default function SecurityLeadersSection() {
                 <article
                   className="group relative h-full min-h-[310px] overflow-hidden rounded-[24px] border border-white/10 bg-[#141220] p-5 shadow-[0_20px_50px_rgba(0,0,0,.18)] transition-[border-color,background-color] duration-300 hover:border-[#8f76ff]/35 hover:bg-[#161323]"
                 >
-                  <div className={`grid h-full gap-4 ${isWide ? "md:grid-cols-[minmax(0,1.08fr)_minmax(210px,.72fr)] md:items-stretch" : "grid-rows-[120px_1fr]"}`}>
-                    <div className={isWide ? "order-2" : ""}>
+                  <div className={`grid h-full gap-4 ${isWide ? "md:grid-cols-[minmax(0,1.08fr)_minmax(210px,.72fr)] md:items-stretch" : "grid-rows-[140px_1fr]"}`}>
+                    <div className={isWide ? "order-2" : "px-2 pt-2"}>
                       <RiskGraphic index={index} />
                     </div>
 
