@@ -183,9 +183,9 @@ export default function SecurityLeadersSection() {
             return (
               <Reveal key={risk.title} delay={index * 0.07} className={cardLayouts[index]}>
                 <article
-                  className="group relative h-full min-h-[310px] overflow-hidden rounded-[24px] border border-white/10 bg-[#141220] p-5 shadow-[0_20px_50px_rgba(0,0,0,.18)] transition-[border-color,background-color] duration-300 hover:border-[#8f76ff]/35 hover:bg-[#161323]"
+                  className="group relative h-full min-h-0 overflow-hidden rounded-[22px] border border-white/10 bg-[#141220] p-5 shadow-[0_20px_50px_rgba(0,0,0,.18)] transition-[border-color,background-color] duration-300 hover:border-[#8f76ff]/35 hover:bg-[#161323] sm:rounded-[24px] lg:min-h-[310px]"
                 >
-                  <div className={`grid h-full gap-4 ${isWide ? "md:grid-cols-[minmax(0,1.08fr)_minmax(210px,.72fr)] md:items-stretch" : "grid-rows-[140px_1fr]"}`}>
+                  <div className={`grid h-full gap-4 ${isWide ? "grid-rows-[auto_150px] md:grid-cols-[minmax(0,1.08fr)_minmax(210px,.72fr)] md:grid-rows-1 md:items-stretch" : "grid-rows-[140px_auto] lg:grid-rows-[140px_1fr]"}`}>
                     <div className={isWide ? "order-2" : "px-2 pt-2"}>
                       <RiskGraphic index={index} />
                     </div>
