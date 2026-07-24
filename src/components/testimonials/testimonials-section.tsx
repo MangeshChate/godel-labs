@@ -27,10 +27,10 @@ const testimonials = [
   },
 ];
 
-const roundedZigzagPath = `M 0 16 L ${Array.from(
-  { length: 41 },
-  (_, index) => `${index * 30} ${index % 2 === 0 ? 14 : 2}`,
-).join(" L ")} L 1200 16 Z`;
+const roundedZigzagPath = `M 0 10 L ${Array.from(
+  { length: 101 },
+  (_, index) => `${index * 12} ${index % 2 === 0 ? 9 : 3}`,
+).join(" L ")} L 1200 10 Z`;
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,10 +46,10 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="relative scroll-mt-0 bg-[#f4f3f8] pt-14 pb-6 sm:pt-18 sm:pb-8">
       {/* Keep the zigzag silhouette, with rounded joins instead of sharp points. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-4 -translate-y-[99%] overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[10px] -translate-y-[99%] overflow-hidden">
         <svg
           className="block h-full w-full text-[#f4f3f8]"
-          viewBox="0 0 1200 16"
+          viewBox="0 0 1200 10"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
@@ -57,7 +57,7 @@ export default function TestimonialsSection() {
             d={roundedZigzagPath}
             fill="currentColor"
             stroke="currentColor"
-            strokeWidth="4"
+            strokeWidth="1.5"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
