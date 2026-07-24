@@ -7,6 +7,7 @@ import HeroSection from "@/components/landing/hero-section";
 import ProductSection from "@/components/landing/product-section";
 import SecurityGapSection from "@/components/landing/security-gap-section";
 import UseCasesSection from "@/components/landing/use-cases-section";
+import SecurityLeadersSection from "@/components/landing/security-leaders-section";
 import TestimonialsSection from "@/components/testimonials/testimonials-section";
 import type { WordPressPost } from "@/lib/wordpress";
 
@@ -21,6 +22,7 @@ export default function LandingPage({ posts = [] }: { posts?: WordPressPost[] })
       <DataAuthoritySection />
       <SecurityGapSection />
       <DeploymentSection />
+      <SecurityLeadersSection />
       <TestimonialsSection />
       <BlogSection posts={posts} />
       <FaqSection />
