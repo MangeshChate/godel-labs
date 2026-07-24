@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 const RING_RADIUS = 20;
@@ -70,7 +74,7 @@ export default function BackToTop() {
             viewBox="0 0 48 48"
             aria-hidden="true"
           >
-            <circle
+            <motion.circle
               cx="24"
               cy="24"
               r={RING_RADIUS}
@@ -78,7 +82,7 @@ export default function BackToTop() {
               stroke="rgba(109,73,253,.14)"
               strokeWidth="2"
             />
-            <circle
+            <motion.circle
               cx="24"
               cy="24"
               r={RING_RADIUS}
@@ -87,8 +91,13 @@ export default function BackToTop() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeDasharray={RING_CIRCUMFERENCE}
-              strokeDashoffset={progressOffset}
-              className="transition-[stroke-dashoffset] duration-100"
+              animate={{ strokeDashoffset: progressOffset }}
+              transition={{
+                type: "spring",
+                stiffness: 130,
+                damping: 24,
+                mass: 0.45,
+              }}
             />
           </svg>
           <ArrowUp className="relative h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5" strokeWidth={2.2} />
