@@ -1177,10 +1177,10 @@ export default function HeroSection() {
           <AnimatePresence mode="wait">
             <motion.div
               key={copyIndex}
-              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, filter: "blur(4px)" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="w-full"
             >
               <h1 className="mx-auto max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[#111322] sm:text-6xl lg:text-[64px]">
