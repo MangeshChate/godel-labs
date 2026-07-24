@@ -28,11 +28,18 @@ const OUTRO_VISIBLE_SECONDS = 6;
 const qualityOptions: Array<{
   value: VideoQuality;
   label: string;
+  description?: string;
   height?: number;
   nativeUrl: string;
 }> = [
-  { value: "auto", label: "Auto", nativeUrl: HLS_MASTER_URL },
-  { value: "2k", label: "2K", height: 1440, nativeUrl: "/video/hls/2k/index.m3u8" },
+  { value: "auto", label: "Auto", description: "High quality", nativeUrl: HLS_MASTER_URL },
+  {
+    value: "2k",
+    label: "1440p",
+    description: "Original",
+    height: 1440,
+    nativeUrl: "/video/hls/2k/index.m3u8",
+  },
   { value: "1080p", label: "1080p", height: 1080, nativeUrl: "/video/hls/1080p/index.m3u8" },
   { value: "720p", label: "720p", height: 720, nativeUrl: "/video/hls/720p/index.m3u8" },
 ];
@@ -836,7 +843,7 @@ function ProductPreview() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 4, scale: 0.98 }}
                       transition={{ duration: 0.14 }}
-                      className="absolute bottom-9 right-0 z-50 w-36 overflow-hidden rounded-xl border border-white/15 bg-[#0d0b14]/95 p-1.5 text-white shadow-[0_16px_40px_rgba(0,0,0,.4)] backdrop-blur-xl"
+                      className="absolute bottom-9 right-0 z-50 w-40 overflow-hidden rounded-xl border border-white/15 bg-[#0d0b14]/95 p-1.5 text-white shadow-[0_16px_40px_rgba(0,0,0,.4)] backdrop-blur-xl"
                     >
                       {qualityOptions.map((option) => {
                         const isSelected = option.value === selectedQuality;
@@ -845,16 +852,21 @@ function ProductPreview() {
                             key={option.value}
                             type="button"
                             onClick={() => selectQuality(option.value)}
-                            className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                            className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-2 text-left text-xs transition ${
                               isSelected
                                 ? "bg-white/15 text-white"
                                 : "text-white/70 hover:bg-white/10 hover:text-white"
                             }`}
                           >
-                            <span className="flex items-baseline gap-1.5">
+                            <span className="flex flex-col gap-0.5">
                               <span className="font-semibold">{option.label}</span>
-                              {option.value === "auto" && activeAutoQuality && (
-                                <span className="text-[9px] text-white/45">{activeAutoQuality}</span>
+                              {option.description && (
+                                <span className="text-[9px] font-medium text-white/45">
+                                  {option.description}
+                                  {option.value === "auto" && activeAutoQuality
+                                    ? ` - ${activeAutoQuality}`
+                                    : ""}
+                                </span>
                               )}
                             </span>
                             {isSelected && <Check className="h-3.5 w-3.5" />}
