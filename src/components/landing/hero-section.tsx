@@ -24,6 +24,8 @@ type VideoQuality = "auto" | "2k" | "1080p" | "720p";
 
 const HLS_MASTER_URL = "/video/hls/master.m3u8";
 const MP4_FALLBACK_URL = "/video/godel-gate-hero.mp4";
+const AUDIO_END_SECONDS = 70.217;
+const PLAYBACK_END_SECONDS = AUDIO_END_SECONDS + 1;
 const OUTRO_VISIBLE_SECONDS = 6;
 const qualityOptions: Array<{
   value: VideoQuality;
@@ -146,6 +148,24 @@ function ProductPreview() {
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const retryTimeRef = useRef<number | null>(null);
   const qualitySwitchRef = useRef<{ time: number; shouldResume: boolean } | null>(null);
+  const lastPlaybackTimeRef = useRef(0);
+
+  const getBufferedEndAtCurrentTime = (video: HTMLVideoElement) => {
+    const currentTime = video.currentTime;
+
+    for (let index = 0; index < video.buffered.length; index += 1) {
+      const start = video.buffered.start(index);
+      const end = video.buffered.end(index);
+      if (currentTime >= start - 0.05 && currentTime <= end + 0.05) {
+        return end;
+      }
+    }
+
+    return null;
+  };
+
+  const getPlaybackDuration = (video: HTMLVideoElement) =>
+    Math.min(video.duration || PLAYBACK_END_SECONDS, PLAYBACK_END_SECONDS);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -212,6 +232,12 @@ function ProductPreview() {
         hls.on(HlsPlayer.Events.FRAG_LOADED, () => {
           networkRecoveryAttempts = 0;
           mediaRecoveryAttempts = 0;
+        });
+        hls.on(HlsPlayer.Events.FRAG_BUFFERED, () => {
+          const bufferedThrough = getBufferedEndAtCurrentTime(video);
+          if (!video.paused && bufferedThrough !== null && bufferedThrough > video.currentTime + 0.2) {
+            setIsBuffering(false);
+          }
         });
         hls.on(HlsPlayer.Events.ERROR, (_, data) => {
           if (!data.fatal) return;
@@ -328,15 +354,18 @@ function ProductPreview() {
   }, []);
 
   const handlePlay = () => {
+    const video = videoRef.current;
+
     setIsPlaying(true);
     setHasStarted(true);
     setHasEnded(false);
     setMediaError(null);
-    setIsBuffering((videoRef.current?.readyState ?? 0) < HTMLMediaElement.HAVE_FUTURE_DATA);
+    setIsBuffering((video?.readyState ?? 0) < HTMLMediaElement.HAVE_FUTURE_DATA);
+    lastPlaybackTimeRef.current = video?.currentTime ?? 0;
     resetControlsTimeout();
     // Capture duration dynamically if not set yet
-    if (videoRef.current && videoRef.current.duration) {
-      setDuration(videoRef.current.duration);
+    if (video?.duration) {
+      setDuration(getPlaybackDuration(video));
     }
   };
 
@@ -366,13 +395,18 @@ function ProductPreview() {
   };
 
   const handleStalled = () => {
-    if (hasStarted && videoRef.current && !videoRef.current.paused) {
+    const video = videoRef.current;
+    if (!hasStarted || !video || video.paused) return;
+
+    const bufferedThrough = getBufferedEndAtCurrentTime(video);
+    if (bufferedThrough === null || bufferedThrough <= video.currentTime + 0.2) {
       setIsBuffering(true);
     }
   };
 
   const handleSeeking = () => {
-    if (hasStarted) {
+    const video = videoRef.current;
+    if (hasStarted && video && !video.paused) {
       setIsBuffering(true);
     }
   };
@@ -381,7 +415,8 @@ function ProductPreview() {
     const video = videoRef.current;
     if (!video) return;
 
-    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+    lastPlaybackTimeRef.current = video.currentTime;
+    if (!video.paused || video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
       setIsBuffering(false);
     }
   };
@@ -390,7 +425,13 @@ function ProductPreview() {
     const video = videoRef.current;
     if (!video || video.buffered.length === 0) return;
 
-    setBufferedEnd(video.buffered.end(video.buffered.length - 1));
+    const furthestBufferedEnd = video.buffered.end(video.buffered.length - 1);
+    const bufferedThrough = getBufferedEndAtCurrentTime(video);
+
+    setBufferedEnd(furthestBufferedEnd);
+    if (!video.paused && bufferedThrough !== null && bufferedThrough > video.currentTime + 0.2) {
+      setIsBuffering(false);
+    }
   };
 
   const handleMediaError = () => {
@@ -436,12 +477,22 @@ function ProductPreview() {
     });
   };
 
-  const handleEnded = () => {
+  const completePlayback = () => {
+    const video = videoRef.current;
+    const finalDuration = video ? getPlaybackDuration(video) : PLAYBACK_END_SECONDS;
+
+    if (video && !video.paused) {
+      video.pause();
+    }
     setIsPlaying(false);
     setIsBuffering(false);
     setHasEnded(true);
     setShowControls(true);
+    setDuration(finalDuration);
+    setCurrentTime(finalDuration);
   };
+
+  const handleEnded = () => completePlayback();
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -513,12 +564,29 @@ function ProductPreview() {
   }, []);
 
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-      // Capture duration dynamically if not set yet
-      if (duration === 0 && videoRef.current.duration) {
-        setDuration(videoRef.current.duration);
-      }
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextTime = video.currentTime;
+    const playbackDuration = getPlaybackDuration(video);
+
+    if (!hasEnded && nextTime >= playbackDuration) {
+      lastPlaybackTimeRef.current = playbackDuration;
+      completePlayback();
+      return;
+    }
+
+    if (!video.paused && !video.seeking && nextTime > lastPlaybackTimeRef.current + 0.01) {
+      setIsBuffering(false);
+      setMediaError(null);
+      setIsPlaying(true);
+    }
+    lastPlaybackTimeRef.current = nextTime;
+    setCurrentTime(nextTime);
+
+    // Capture duration dynamically if not set yet
+    if (duration === 0 && video.duration) {
+      setDuration(playbackDuration);
     }
   };
 
@@ -526,12 +594,14 @@ function ProductPreview() {
     const video = videoRef.current;
     if (!video) return;
 
-    setDuration(video.duration);
+    const playbackDuration = getPlaybackDuration(video);
+    setDuration(playbackDuration);
+    lastPlaybackTimeRef.current = video.currentTime;
 
     if (qualitySwitchRef.current) {
       const { time, shouldResume } = qualitySwitchRef.current;
       qualitySwitchRef.current = null;
-      video.currentTime = Math.min(time, video.duration);
+      video.currentTime = Math.min(time, playbackDuration);
       if (shouldResume) {
         video.play().catch((err) => {
           if (err.name !== "AbortError") handleMediaError();
@@ -540,7 +610,7 @@ function ProductPreview() {
     }
 
     if (retryTimeRef.current !== null) {
-      const retryAt = Math.min(retryTimeRef.current, video.duration);
+      const retryAt = Math.min(retryTimeRef.current, playbackDuration);
       video.currentTime = retryAt;
       retryTimeRef.current = null;
     }
