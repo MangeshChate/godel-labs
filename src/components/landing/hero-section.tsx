@@ -1177,10 +1177,10 @@ export default function HeroSection() {
           <AnimatePresence mode="popLayout">
             <motion.div
               key={copyIndex}
-              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(4px)" }}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, filter: "blur(4px)" }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, filter: "blur(4px)" }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
               className="w-full"
             >
               <h1 className="mx-auto max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[#111322] sm:text-6xl lg:text-[64px]">
