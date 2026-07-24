@@ -1183,7 +1183,7 @@ export default function HeroSection() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full"
             >
-              <h1 className="mx-auto max-w-[900px] text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-[#111322] sm:text-6xl lg:text-[64px]">
+              <h1 className="mx-auto max-w-[900px] text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[#111322] sm:text-6xl lg:text-[64px]">
                 {titles[copyIndex]}
               </h1>
               <p className="mx-auto mt-6 max-w-[780px] text-balance text-[15px] leading-7 text-[#625d6e] sm:text-base sm:leading-7">
