@@ -24,6 +24,7 @@ type VideoQuality = "auto" | "2k" | "1080p" | "720p";
 
 const HLS_MASTER_URL = "/video/hls/master.m3u8";
 const MP4_FALLBACK_URL = "/video/godel-gate-hero.mp4";
+const OUTRO_VISIBLE_SECONDS = 6;
 const qualityOptions: Array<{
   value: VideoQuality;
   label: string;
@@ -693,9 +694,12 @@ function ProductPreview() {
             </div>
           )}
 
-          {/* Outro Image Screen with Fade Effect in Last 3 Seconds */}
+          {/* Keep the outro visible through the final narration and safety tail. */}
           <AnimatePresence>
-            {((hasStarted && duration > 3 && duration - currentTime <= 3) || hasEnded) && (
+            {((hasStarted &&
+              duration > OUTRO_VISIBLE_SECONDS &&
+              duration - currentTime <= OUTRO_VISIBLE_SECONDS) ||
+              hasEnded) && (
               <motion.div
                 key="hero-outro-overlay"
                 initial={{ opacity: 0 }}
