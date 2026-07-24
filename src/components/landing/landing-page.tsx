@@ -1,4 +1,5 @@
 import BlogSection from "@/components/blog/blog-section";
+import BackToTop from "@/components/landing/back-to-top";
 import DataAuthoritySection from "@/components/landing/data-authority-section";
 import DeploymentSection from "@/components/landing/deployment-section";
 import FaqSection from "@/components/landing/faq-section";
@@ -27,6 +28,7 @@ export default function LandingPage({ posts = [] }: { posts?: WordPressPost[] })
       <BlogSection posts={posts} />
       <FaqSection />
       <FinalCtaSection />
+      <BackToTop />
     </>
   );
 }
