@@ -9,9 +9,17 @@ const columns = [
   {
     title: "Product",
     links: [
-      ["Use cases", "/use-cases"],
-      ["Product", "/#product"],
-      ["Gödel's Sieve", "https://sieve.godel-labs.ai"],
+      ["Gödel Sieve", "https://sieve.godel-labs.ai"],
+      ["Gödel Gate", "/#godel-gate-video"],
+    ],
+  },
+  {
+    title: "Use Cases",
+    links: [
+      ["Secure Coding Agents", "/use-cases/secure-coding-agents"],
+      ["Secure Browser Agents", "/use-cases/secure-browser-agents"],
+      ["Secure Desktop Agents", "/use-cases/secure-desktop-agents"],
+      ["Secure Framework Agents", "/use-cases/secure-framework-agents"],
     ],
   },
   {
@@ -21,7 +29,7 @@ const columns = [
       ["Blog", "/blog"],
       ["GitHub", "https://github.com/godellabs-ai"],
       ["Slack", "https://join.slack.com/t/godellabscommunity/shared_invite/zt-3qhv7u46o-1A1hwp1xnGQQkL8DtLyjHw"],
-      ["Community", "https://discord.gg/HGXeCxJ532"],
+      ["Discord", "https://discord.gg/HGXeCxJ532"],
     ],
   },
   {
@@ -61,7 +69,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             {columns.map((column) => (
               <div key={column.title}>
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/32">{column.title}</h3>

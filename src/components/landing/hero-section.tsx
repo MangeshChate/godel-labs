@@ -644,10 +644,11 @@ function ProductPreview() {
 
   return (
     <motion.div
+      id="godel-gate-video"
       initial={reduceMotion ? false : { opacity: 0, y: 46, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1.05, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="relative z-10 mx-auto mt-12 w-full max-w-[1090px] sm:mt-14"
+      className="relative z-10 mx-auto mt-12 w-full max-w-[1090px] scroll-mt-24 sm:mt-14"
     >
       <motion.div
         animate={reduceMotion || isPlaying ? { y: 0 } : { y: [0, -6, 0] }}
@@ -1129,14 +1130,6 @@ function HeroEmailForm() {
         <ArrowRight className="h-4 w-4 rotate-45 transition-transform duration-300 ease-out group-hover:rotate-0" />
       </button>
     </form>
-  );
-}
-
-function ZigzagUnderline() {
-  return (
-    <svg aria-hidden="true" className="absolute -bottom-2.5 left-0 h-2.5 w-full" viewBox="0 0 100 10" preserveAspectRatio="none" fill="none">
-      <path d="M0 8 2.5 2 5 8 7.5 2 10 8 12.5 2 15 8 17.5 2 20 8 22.5 2 25 8 27.5 2 30 8 32.5 2 35 8 37.5 2 40 8 42.5 2 45 8 47.5 2 50 8 52.5 2 55 8 57.5 2 60 8 62.5 2 65 8 67.5 2 70 8 72.5 2 75 8 77.5 2 80 8 82.5 2 85 8 87.5 2 90 8 92.5 2 95 8 97.5 2 100 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }
 
