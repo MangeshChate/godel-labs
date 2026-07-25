@@ -7,19 +7,19 @@ import Link from "next/link";
 
 const columns = [
   {
-    title: "Product",
-    links: [
-      ["Gödel Sieve", "https://sieve.godel-labs.ai"],
-      ["Gödel Gate", "/#godel-gate-video"],
-    ],
-  },
-  {
     title: "Use Cases",
     links: [
       ["Secure Coding Agents", "/use-cases/secure-coding-agents"],
       ["Secure Browser Agents", "/use-cases/secure-browser-agents"],
       ["Secure Desktop Agents", "/use-cases/secure-desktop-agents"],
       ["Secure Framework Agents", "/use-cases/secure-framework-agents"],
+    ],
+  },
+  {
+    title: "Product",
+    links: [
+      ["Gödel Sieve", "https://sieve.godel-labs.ai"],
+      ["Gödel Gate", "/#godel-gate-video"],
     ],
   },
   {
@@ -69,7 +69,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-8 gap-y-9 sm:grid-cols-4 sm:gap-x-6 xl:gap-x-8">
+          <div className="grid grid-cols-2 items-start gap-x-8 gap-y-9 sm:grid-cols-[minmax(170px,1.45fr)_repeat(3,minmax(105px,1fr))] sm:gap-x-5 xl:gap-x-8">
             {columns.map((column) => (
               <div key={column.title}>
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/32">{column.title}</h3>
