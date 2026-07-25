@@ -5,12 +5,15 @@ const root = process.cwd();
 const dist = path.join(root, "dist");
 const assets = path.join(dist, "assets");
 const server = path.join(dist, "server");
+const hostingMetadata = path.join(dist, ".openai");
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(assets, { recursive: true });
 await mkdir(server, { recursive: true });
+await mkdir(hostingMetadata, { recursive: true });
 
 await cp(path.join(root, "public"), assets, { recursive: true });
+await cp(path.join(root, ".openai", "hosting.json"), path.join(hostingMetadata, "hosting.json"));
 await mkdir(path.join(assets, "_next"), { recursive: true });
 await cp(path.join(root, ".next", "static"), path.join(assets, "_next", "static"), { recursive: true });
 
