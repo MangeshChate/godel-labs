@@ -989,7 +989,7 @@ function ProductPreview() {
               <div
                 role="status"
                 aria-live="polite"
-                className="absolute right-0 top-full mt-2 rounded-full border border-white/15 bg-black/75 px-2.5 py-1 text-[10px] font-medium text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md"
+                className="absolute right-0 top-full mt-2 whitespace-nowrap rounded-full border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-medium text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md"
               >
                 {copyState === "copied" ? "Copied URL" : "Copy failed"}
               </div>
@@ -1000,7 +1000,7 @@ function ProductPreview() {
                 event.stopPropagation();
                 handleCopyVideoLink();
               }}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md transition hover:bg-black/55 active:scale-95 sm:h-9 sm:w-9"
+              className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/40 text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md transition hover:bg-black/55 active:scale-95 sm:h-9 sm:w-9"
               aria-label="Copy direct MP4 link"
               title="Copy direct MP4 link"
             >
