@@ -838,7 +838,8 @@ function ProductPreview() {
           {hasStarted && (
             <div
               onClick={(e) => e.stopPropagation()}
-              className={`absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-black/80 via-black/45 to-transparent flex items-center gap-3 transition-opacity duration-300 z-20 ${showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+              className={`absolute bottom-0 left-0 right-0 flex flex-wrap items-center gap-2 bg-gradient-to-t from-black/80 via-black/45 to-transparent p-3 transition-opacity duration-300 z-20 sm:flex-nowrap sm:gap-3 sm:p-5 ${
+                showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
               }`}
             >
               <button
@@ -847,24 +848,24 @@ function ProductPreview() {
                   event.stopPropagation();
                   togglePlay();
                 }}
-                className="relative h-4 w-4 shrink-0 transform-gpu text-white/90 transition-[color,transform] duration-150 [-webkit-backface-visibility:hidden] [backface-visibility:hidden] hover:scale-110 hover:text-white active:scale-95 focus:outline-none"
+                className="relative h-4 w-4 shrink-0 transform-gpu text-white/90 transition-[color,transform] duration-150 [-webkit-backface-visibility:hidden] [backface-visibility:hidden] hover:scale-110 hover:text-white active:scale-95 focus:outline-none sm:h-4.5 sm:w-4.5"
                 aria-label={isPlaying ? "Pause" : "Play"}
               >
                 <Play
                   aria-hidden="true"
-                  className={`absolute inset-0 h-4 w-4 translate-x-0.5 fill-white ${
+                  className={`absolute inset-0 h-4 w-4 translate-x-0.5 fill-white sm:h-4.5 sm:w-4.5 ${
                     isPlaying ? "invisible" : "visible"
                   }`}
                 />
                 <Pause
                   aria-hidden="true"
-                  className={`absolute inset-0 h-4 w-4 fill-white ${
+                  className={`absolute inset-0 h-4 w-4 fill-white sm:h-4.5 sm:w-4.5 ${
                     isPlaying ? "visible" : "invisible"
                   }`}
                 />
               </button>
 
-              <div className="relative flex-1 group/slider flex items-center h-6 cursor-pointer">
+              <div className="relative min-w-0 flex-1 group/slider flex items-center h-6 cursor-pointer order-1 sm:order-none sm:min-w-[180px]">
                 {/* Thin background track */}
                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden relative group-hover/slider:h-1.5 transition-all duration-150">
                   <div
@@ -896,29 +897,29 @@ function ProductPreview() {
                 />
               </div>
 
-              <div className="text-[11px] font-semibold text-white/90 tracking-wider select-none tabular-nums">
+              <div className="hidden text-[11px] font-semibold text-white/90 tracking-wider select-none tabular-nums sm:block">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </div>
 
               <button
                 onClick={toggleMute}
-                className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none ml-2 cursor-pointer"
+                className="cursor-pointer text-white/90 transition-all duration-150 focus:outline-none hover:text-white hover:scale-110 active:scale-95 sm:ml-2"
                 aria-label={isMuted ? "Unmute" : "Mute"}
               >
-                {isMuted ? <VolumeX className="h-4.5 w-4.5" /> : <Volume2 className="h-4.5 w-4.5" />}
+                {isMuted ? <VolumeX className="h-4 w-4 sm:h-4.5 sm:w-4.5" /> : <Volume2 className="h-4 w-4 sm:h-4.5 sm:w-4.5" />}
               </button>
 
-              <div ref={qualityMenuRef} className="relative ml-1">
+              <div ref={qualityMenuRef} className="relative ml-0 sm:ml-1">
                 <button
                   type="button"
                   onClick={() => setIsQualityMenuOpen((open) => !open)}
                   disabled={!isAdaptiveReady}
-                  className="flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 text-[10px] font-semibold text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40 sm:text-[11px]"
+                  className="flex cursor-pointer items-center gap-1 rounded-md px-1 py-1 text-[10px] font-semibold text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-default disabled:opacity-40 sm:px-1.5 sm:text-[11px]"
                   aria-label={`Video quality: ${selectedQualityLabel}`}
                   aria-expanded={isQualityMenuOpen}
                 >
                   <Settings2 className="h-3.5 w-3.5" />
-                  <span>{selectedQualityLabel}</span>
+                  <span className="hidden sm:inline">{selectedQualityLabel}</span>
                 </button>
 
                 <AnimatePresence>
@@ -965,21 +966,21 @@ function ProductPreview() {
 
               <button
                 onClick={toggleCaptions}
-                className={`ml-1 cursor-pointer rounded-md p-1 transition-all duration-150 focus:outline-none hover:scale-110 active:scale-95 ${
+                className={`ml-0 cursor-pointer rounded-md p-1 transition-all duration-150 focus:outline-none hover:scale-110 active:scale-95 sm:ml-1 ${
                   captionsEnabled ? "bg-white/20 text-white" : "text-white/55 hover:text-white"
                 }`}
                 aria-label={captionsEnabled ? "Turn captions off" : "Turn captions on"}
                 aria-pressed={captionsEnabled}
               >
-                <Captions className="h-4.5 w-4.5" />
+                <Captions className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
               </button>
 
               <button
                 onClick={toggleFullscreen}
-                className="text-white/90 hover:text-white hover:scale-110 active:scale-95 transition-all duration-150 focus:outline-none ml-2 cursor-pointer"
+                className="ml-1 cursor-pointer text-white/90 transition-all duration-150 focus:outline-none hover:text-white hover:scale-110 active:scale-95 sm:ml-2"
                 aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
               >
-                {isFullscreen ? <Minimize className="h-4.5 w-4.5" /> : <Maximize className="h-4.5 w-4.5" />}
+                {isFullscreen ? <Minimize className="h-4 w-4 sm:h-4.5 sm:w-4.5" /> : <Maximize className="h-4 w-4 sm:h-4.5 sm:w-4.5" />}
               </button>
             </div>
           )}
