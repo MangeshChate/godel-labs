@@ -16,6 +16,7 @@ import {
   Settings2,
   Volume2,
   VolumeX,
+  Link2,
 } from "lucide-react";
 import Image from "next/image";
 import type Hls from "hls.js";
@@ -23,7 +24,7 @@ import type Hls from "hls.js";
 type VideoQuality = "auto" | "2k" | "1080p" | "720p";
 
 const HLS_MASTER_URL = "/video/hls/master.m3u8";
-const MP4_FALLBACK_URL = "/video/godel-gate-hero.mp4";
+const MP4_FALLBACK_URL = "/video/godel-gate-hero-combined.mp4";
 const AUDIO_END_SECONDS = 70.217;
 const PLAYBACK_END_SECONDS = AUDIO_END_SECONDS + 1;
 const OUTRO_VISIBLE_SECONDS = 6;
@@ -138,11 +139,13 @@ function ProductPreview() {
   const [activeAutoQuality, setActiveAutoQuality] = useState("");
   const [isQualityMenuOpen, setIsQualityMenuOpen] = useState(false);
   const [isAdaptiveReady, setIsAdaptiveReady] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const captionTrackRef = useRef<HTMLTrackElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const qualityMenuRef = useRef<HTMLDivElement>(null);
+  const copyResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hlsRef = useRef<Hls | null>(null);
   const usesNativeHlsRef = useRef(false);
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -637,6 +640,33 @@ function ProductPreview() {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const handleCopyVideoLink = async () => {
+    const videoUrl = `${window.location.origin}${MP4_FALLBACK_URL}`;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(videoUrl);
+      } else {
+        const tempInput = document.createElement("input");
+        tempInput.value = videoUrl;
+        tempInput.style.position = "fixed";
+        tempInput.style.left = "-9999px";
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+      }
+
+      setCopyState("copied");
+      if (copyResetTimeoutRef.current) clearTimeout(copyResetTimeoutRef.current);
+      copyResetTimeoutRef.current = setTimeout(() => setCopyState("idle"), 1800);
+    } catch {
+      setCopyState("failed");
+      if (copyResetTimeoutRef.current) clearTimeout(copyResetTimeoutRef.current);
+      copyResetTimeoutRef.current = setTimeout(() => setCopyState("idle"), 1800);
+    }
+  };
+
   const percentage = duration ? (currentTime / duration) * 100 : 0;
   const bufferedPercentage = duration ? Math.min((bufferedEnd / duration) * 100, 100) : 0;
   const selectedQualityLabel =
@@ -772,35 +802,6 @@ function ProductPreview() {
             </div>
           )}
 
-          {/* Keep the outro visible through the final narration and safety tail. */}
-          <AnimatePresence>
-            {((hasStarted &&
-              duration > OUTRO_VISIBLE_SECONDS &&
-              duration - currentTime <= OUTRO_VISIBLE_SECONDS) ||
-              hasEnded) && (
-              <motion.div
-                key="hero-outro-overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                onClick={togglePlay}
-                className="absolute inset-0 z-20 flex items-center justify-center bg-black cursor-pointer"
-              >
-                <img
-                  src="https://dl.godel-labs.ai/website/godel-gate-video-outro.png"
-                  alt="Gödel's Gate Outro"
-                  className="w-full h-full object-cover"
-                />
-                {hasEnded && (
-                  <div className="absolute flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-black/25 backdrop-blur-md border border-white/50 text-white shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-black/40 hover:scale-105 transition-all duration-200 z-30">
-                    <Play className="h-10 w-10 sm:h-12 sm:w-12 fill-white translate-x-0.5" />
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           <div
             onClick={togglePlay}
             className={`absolute inset-0 z-10 flex items-center justify-center bg-transparent transition-all duration-300 ${isPlaying && !showControls ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
@@ -838,7 +839,7 @@ function ProductPreview() {
             <div
               onClick={(e) => e.stopPropagation()}
               className={`absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-black/80 via-black/45 to-transparent flex items-center gap-3 transition-opacity duration-300 z-20 ${showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                }`}
+              }`}
             >
               <button
                 type="button"
@@ -982,6 +983,30 @@ function ProductPreview() {
               </button>
             </div>
           )}
+
+          <div className="absolute right-3 top-3 z-30 sm:right-4 sm:top-4">
+            {copyState !== "idle" && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="absolute right-0 top-full mt-2 rounded-full border border-white/15 bg-black/75 px-2.5 py-1 text-[10px] font-medium text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md"
+              >
+                {copyState === "copied" ? "Copied URL" : "Copy failed"}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleCopyVideoLink();
+              }}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white shadow-[0_10px_28px_rgba(0,0,0,.24)] backdrop-blur-md transition hover:bg-black/55 active:scale-95 sm:h-9 sm:w-9"
+              aria-label="Copy direct MP4 link"
+              title="Copy direct MP4 link"
+            >
+              {copyState === "copied" ? <Check className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
+            </button>
+          </div>
         </div>
       </motion.div>
     </motion.div>
