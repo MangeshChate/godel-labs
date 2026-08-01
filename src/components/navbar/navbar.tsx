@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Download, Menu, X, Building2, Mail, BookOpen, Newspaper, ExternalLink, Code, Scroll, Globe, Cpu, ShieldCheck, Eye, Shield, ClipboardCheck, Lock, FileCheck, ShieldAlert } from "lucide-react";
+import { ChevronDown, Download, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -264,9 +264,7 @@ export default function Navbar() {
                       onClick={() => setMobileUseCasesOpen(!mobileUseCasesOpen)}
                       className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
-                      <span className="flex items-center gap-2.5">
-                        <ShieldCheck className="h-4.5 w-4.5 text-[#6d49fd]" /> Use Cases
-                      </span>
+                      <span>Use Cases</span>
                       <ChevronDown
                         className={`h-4 w-4 transition-transform duration-200 ${
                           mobileUseCasesOpen ? "rotate-180 text-[#6d49fd]" : "text-[#8a8298]"
@@ -328,9 +326,7 @@ export default function Navbar() {
                       onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
                       className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
-                      <span className="flex items-center gap-2.5">
-                        <BookOpen className="h-4.5 w-4.5 text-[#6d49fd]" /> Resources
-                      </span>
+                      <span>Resources</span>
                       <ChevronDown
                         className={`h-4 w-4 transition-transform duration-200 ${
                           mobileResourcesOpen ? "rotate-180 text-[#6d49fd]" : "text-[#8a8298]"
@@ -369,9 +365,9 @@ export default function Navbar() {
                               target="_blank"
                               rel="noreferrer"
                               onClick={() => setOpen(false)}
-                              className="flex items-center gap-1 rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
+                              className="rounded-md px-2.5 py-1.5 text-sm font-medium text-[#2d2838] transition hover:bg-[#f4f0fc] hover:text-[#6d49fd]"
                             >
-                              Docs <ExternalLink className="h-3 w-3 text-[#9b93a8]" />
+                              Docs
                             </Link>
                           </div>
                         </motion.div>
@@ -395,9 +391,7 @@ export default function Navbar() {
                       onClick={() => setMobileCompanyOpen(!mobileCompanyOpen)}
                       className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-[#1c1825] transition hover:bg-[#f4f0fc]"
                     >
-                      <span className="flex items-center gap-2.5">
-                        <Building2 className="h-4.5 w-4.5 text-[#6d49fd]" /> Company
-                      </span>
+                      <span>Company</span>
                       <ChevronDown
                         className={`h-4 w-4 transition-transform duration-200 ${
                           mobileCompanyOpen ? "rotate-180 text-[#6d49fd]" : "text-[#8a8298]"
@@ -442,9 +436,9 @@ export default function Navbar() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => setOpen(false)}
-                  className="mt-6 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#6d49fd] text-base font-semibold text-white shadow-[0_8px_20px_rgba(109,73,253,0.3)] transition-transform duration-150 active:scale-[0.97]"
+                  className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#6d49fd] text-base font-semibold text-white shadow-[0_8px_20px_rgba(109,73,253,0.3)] transition-transform duration-150 active:scale-[0.97]"
                 >
-                  Install Gödel <Download className="h-4.5 w-4.5" />
+                  Install Gödel
                 </Link>
               </div>
             </motion.div>
