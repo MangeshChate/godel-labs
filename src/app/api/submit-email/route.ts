@@ -31,7 +31,9 @@ const DOMAIN_TYPOS: Record<string, string> = {
 };
 const rateLimits = new Map<string, number[]>();
 const recentEmails = new Map<string, number>();
+const mailDomainCache = new Map<string, { acceptsMail: boolean; checkedAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const MAIL_DOMAIN_CACHE_MS = 6 * 60 * 60 * 1000;
 
 function jsonError(error: string, status: number) {
   return NextResponse.json({ error }, { status });
@@ -59,6 +61,9 @@ function isRateLimited(key: string) {
 }
 
 async function hasMailRecords(domain: string) {
+  const cached = mailDomainCache.get(domain);
+  if (cached && Date.now() - cached.checkedAt < MAIL_DOMAIN_CACHE_MS) return cached.acceptsMail;
+
   const query = async (type: "MX" | "A") => {
     const response = await fetch(
       `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=${type}`,
@@ -69,12 +74,14 @@ async function hasMailRecords(domain: string) {
   };
 
   try {
-    const mx = await query("MX");
-    if (mx.Status === 3) return false;
-    if (mx.Status === 0 && mx.Answer?.some((record) => record.type === 15 && !record.data.endsWith(" ."))) return true;
-
-    const address = await query("A");
-    return address.Status === 0 && Boolean(address.Answer?.some((record) => record.type === 1));
+    const [mx, address] = await Promise.all([query("MX"), query("A")]);
+    const hasNullMx = mx.Answer?.some((record) => record.type === 15 && record.data.endsWith(" ."));
+    const acceptsMail = !hasNullMx && (
+      Boolean(mx.Answer?.some((record) => record.type === 15))
+      || (address.Status === 0 && Boolean(address.Answer?.some((record) => record.type === 1)))
+    );
+    mailDomainCache.set(domain, { acceptsMail, checkedAt: Date.now() });
+    return acceptsMail;
   } catch (error) {
     console.warn("Email-domain verification skipped:", error);
     return true;

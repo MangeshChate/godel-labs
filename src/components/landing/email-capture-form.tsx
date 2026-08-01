@@ -20,6 +20,7 @@ export default function EmailCaptureForm({
   const formRef = useRef<HTMLFormElement>(null);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const challengeResponseRef = useRef("");
   const pendingSubmissionRef = useRef(false);
   const mountedAtRef = useRef(0);
   const emailRef = useRef("");
@@ -57,6 +58,7 @@ export default function EmailCaptureForm({
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "We couldn't send your request. Please try again.");
     } finally {
+      challengeResponseRef.current = "";
       pendingSubmissionRef.current = false;
       if (widgetIdRef.current && window.turnstile) window.turnstile.reset(widgetIdRef.current);
     }
@@ -69,19 +71,20 @@ export default function EmailCaptureForm({
       if (cancelled || !turnstileRef.current || !window.turnstile || widgetIdRef.current) return;
       widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
         sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000BB",
-        size: "invisible",
-        execution: "execute",
-        appearance: "execute",
+        appearance: "interaction-only",
         action: "email_capture",
         callback: (token) => {
+          challengeResponseRef.current = token;
           if (pendingSubmissionRef.current) void submitEmail(token);
         },
         "error-callback": () => {
+          challengeResponseRef.current = "";
           pendingSubmissionRef.current = false;
           setStatus("error");
           setMessage("The security check failed. Please try again.");
         },
         "expired-callback": () => {
+          challengeResponseRef.current = "";
           pendingSubmissionRef.current = false;
           setStatus("idle");
         },
@@ -130,9 +133,12 @@ export default function EmailCaptureForm({
 
     emailRef.current = trimmedEmail;
     pendingSubmissionRef.current = true;
-    setStatus("verifying");
     setMessage("");
-    window.turnstile.execute(widgetIdRef.current);
+    if (challengeResponseRef.current) {
+      void submitEmail(challengeResponseRef.current);
+    } else {
+      setStatus("verifying");
+    }
   };
 
   const isPurple = theme === "purple";

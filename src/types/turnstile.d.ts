@@ -4,7 +4,7 @@ type TurnstileOptions = {
   "error-callback"?: () => void;
   "expired-callback"?: () => void;
   theme?: "light" | "dark" | "auto";
-  size?: "normal" | "compact" | "invisible";
+  size?: "normal" | "compact" | "flexible";
   execution?: "render" | "execute";
   appearance?: "always" | "execute" | "interaction-only";
   action?: string;
