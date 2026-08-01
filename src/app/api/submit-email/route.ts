@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     const source = body.source === "cta" ? "Homepage final CTA" : "Homepage hero";
     const wasSent = await sendNotificationEmail({
-      fullName: `demo request from this email ${email}`,
+      fullName: `Demo Request (${email})`,
       email,
       company: "",
       source,

@@ -134,7 +134,7 @@ function generateEmailHTML(data: DemoFormData): string {
     
     <div class="field">
         <div class="field-label">Message</div>
-        <div class="field-value">demo request from this email ${data.email}</div>
+        <div class="field-value">New demo request submitted by ${data.email}</div>
     </div>
     
     <div class="field">
@@ -294,7 +294,7 @@ export async function sendNotificationEmail(data: DemoFormData): Promise<boolean
 
     try {
         const subject = data.isQuickEmail
-            ? `demo request from this email ${data.email}`
+            ? `New Demo Request from ${data.email}`
             : `New Demo Request from ${data.fullName} ${data.company ? `(${data.company})` : ''}`;
 
         const result = await resend.emails.send({
