@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowRight, Check, LoaderCircle } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type EmailCaptureFormProps = {
   source: "hero" | "cta";
@@ -146,10 +147,24 @@ export default function EmailCaptureForm({
 
   if (status === "success") {
     return (
-      <div role="status" className={`flex min-h-[52px] w-full items-center gap-3 rounded-full border px-5 py-3 text-sm font-semibold ${isPurple ? "border-white/40 bg-white/15 text-white" : "border-emerald-200 bg-emerald-50/90 text-emerald-800"}`}>
-        <Check className="h-5 w-5 shrink-0" aria-hidden="true" />
-        <span>{message}</span>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        role="status"
+        className={`flex min-h-[48px] w-full items-center gap-2.5 px-3 py-2 text-sm font-medium ${
+          isPurple ? "text-white" : "text-[#111322]"
+        }`}
+      >
+        <div
+          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+            isPurple ? "bg-white/20 text-white" : "bg-[#6d49fd]/12 text-[#6d49fd]"
+          }`}
+        >
+          <Check className="h-3.5 w-3.5 stroke-[2.5]" aria-hidden="true" />
+        </div>
+        <span className="leading-snug">{message}</span>
+      </motion.div>
     );
   }
 
@@ -194,9 +209,24 @@ export default function EmailCaptureForm({
           {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1 ${isPurple ? "" : "rotate-45 group-hover/btn:rotate-0"}`} aria-hidden="true" />}
         </button>
       </form>
-      <p id={`${formId}-message`} role={status === "error" ? "alert" : "status"} className={`mt-2 min-h-4 px-4 text-xs ${status === "error" ? (isPurple ? "text-white" : "text-rose-600") : "sr-only"}`}>
-        {message}
-      </p>
+      <AnimatePresence>
+        {status === "error" && (
+          <motion.p
+            id={`${formId}-message`}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            role="alert"
+            className={`mt-2.5 flex items-center gap-2 px-3 text-xs font-medium ${
+              isPurple ? "text-rose-300" : "text-rose-600"
+            }`}
+          >
+            <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
+            {message}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
