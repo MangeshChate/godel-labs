@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { ArrowRight, Check, LoaderCircle } from "lucide-react";
+import { AlertCircle, ArrowRight, Check, LoaderCircle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type EmailCaptureFormProps = {
@@ -152,13 +152,13 @@ export default function EmailCaptureForm({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         role="status"
-        className={`flex min-h-[48px] w-full items-center gap-2.5 px-3 py-2 text-sm font-medium ${
+        className={`flex min-h-[52px] w-full items-center gap-3 px-3.5 py-2.5 text-sm font-medium ${
           isPurple ? "text-white" : "text-[#111322]"
         }`}
       >
         <div
           className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
-            isPurple ? "bg-white/20 text-white" : "bg-[#6d49fd]/12 text-[#6d49fd]"
+            isPurple ? "bg-emerald-400/20 text-emerald-300" : "bg-emerald-500/15 text-emerald-600"
           }`}
         >
           <Check className="h-3.5 w-3.5 stroke-[2.5]" aria-hidden="true" />
@@ -211,20 +211,20 @@ export default function EmailCaptureForm({
       </form>
       <AnimatePresence>
         {status === "error" && (
-          <motion.p
+          <motion.div
             id={`${formId}-message`}
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2 }}
             role="alert"
-            className={`mt-2.5 flex items-center gap-2 px-3 text-xs font-medium ${
+            className={`mt-2.5 flex items-center gap-1.5 px-4 text-xs font-medium ${
               isPurple ? "text-rose-300" : "text-rose-600"
             }`}
           >
-            <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
-            {message}
-          </motion.p>
+            <AlertCircle className="h-3.5 w-3.5 shrink-0 stroke-[2]" aria-hidden="true" />
+            <span className="leading-normal">{message}</span>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

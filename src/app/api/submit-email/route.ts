@@ -148,10 +148,11 @@ export async function POST(request: NextRequest) {
 
     const source = body.source === "cta" ? "Homepage final CTA" : "Homepage hero";
     const wasSent = await sendNotificationEmail({
-      fullName: "Website email enquiry",
+      fullName: `demo request from this email ${email}`,
       email,
-      company: "Not provided",
+      company: "",
       source,
+      isQuickEmail: true,
     });
     if (!wasSent) {
       return jsonError("We couldn't send your request right now. Please try again shortly.", 502);

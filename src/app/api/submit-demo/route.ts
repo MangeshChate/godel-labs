@@ -18,6 +18,7 @@ export interface DemoFormData {
     building?: string;
     source?: string;
     turnstileToken?: string;
+    isQuickEmail?: boolean;
 }
 
 
@@ -50,6 +51,105 @@ export async function validateTurnstile(token: string): Promise<TurnstileValidat
 }
 
 function generateEmailHTML(data: DemoFormData): string {
+    if (data.isQuickEmail) {
+        return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Request</title>
+    <style>
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .header {
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: -0.025em;
+        }
+        .field {
+            margin-bottom: 16px;
+            padding: 14px;
+            background-color: #ffffff;
+            border: 2px solid #000;
+        }
+        .field-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #000;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .field-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        .field-value a {
+            color: #7C3AED;
+            text-decoration: none;
+        }
+        .footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 2px solid #000;
+            font-size: 13px;
+            color: #000;
+        }
+        .footer p {
+            margin: 0 0 10px 0;
+        }
+        .timestamp {
+            font-size: 11px;
+            color: #666;
+            font-family: ui-monospace, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Demo Request</h1>
+    </div>
+    
+    <div class="field">
+        <div class="field-label">Email</div>
+        <div class="field-value"><a href="mailto:${data.email}">${data.email}</a></div>
+    </div>
+    
+    <div class="field">
+        <div class="field-label">Message</div>
+        <div class="field-value">demo request from this email ${data.email}</div>
+    </div>
+    
+    <div class="field">
+        <div class="field-label">Date & Time</div>
+        <div class="field-value">${new Date().toLocaleString('en-US', {
+            dateStyle: 'full',
+            timeStyle: 'short',
+            timeZone: 'UTC'
+        })} (UTC)</div>
+    </div>
+</body>
+</html>
+        `.trim();
+    }
+
     return `
 <!DOCTYPE html>
 <html>
@@ -193,11 +293,15 @@ export async function sendNotificationEmail(data: DemoFormData): Promise<boolean
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     try {
+        const subject = data.isQuickEmail
+            ? `demo request from this email ${data.email}`
+            : `New Demo Request from ${data.fullName} ${data.company ? `(${data.company})` : ''}`;
+
         const result = await resend.emails.send({
             from: salesEmail,
             to: salesEmail,
             replyTo: data.email,
-            subject: `New Demo Request from ${data.fullName} ${data.company ? `(${data.company})` : ''}`,
+            subject,
             html: generateEmailHTML(data),
         });
 
