@@ -258,3 +258,33 @@ summary::-webkit-details-marker {
     font-size: 110%;
   }
 }
+
+/* ── Chrome / Safari Autofill Overlay & Border Radius Fix ───────────────────────── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  border-radius: inherit !important;
+  transition: background-color 99999s ease-in-out 0s !important;
+}
+
+.autofill-light:-webkit-autofill,
+.autofill-light:-webkit-autofill:hover,
+.autofill-light:-webkit-autofill:focus,
+.autofill-light:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #111322 !important;
+  border-radius: 9999px !important;
+}
+
+.autofill-purple:-webkit-autofill,
+.autofill-purple:-webkit-autofill:hover,
+.autofill-purple:-webkit-autofill:focus,
+.autofill-purple:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #321d70 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 9999px !important;
+}
+

@@ -196,7 +196,7 @@ export default function EmailCaptureForm({
           placeholder="Enter your work email"
           aria-describedby={`${formId}-message`}
           aria-invalid={status === "error"}
-          className={`w-full min-w-0 flex-1 bg-transparent px-4 py-2.5 text-xs outline-none sm:px-5 sm:text-sm ${isPurple ? "text-white placeholder:text-white/70" : "text-[#111322] placeholder:text-[#918a9e]"}`}
+          className={`w-full min-w-0 flex-1 rounded-full bg-transparent px-4 py-2.5 text-xs outline-none sm:px-5 sm:text-sm ${isPurple ? "text-white placeholder:text-white/70 autofill-purple" : "text-[#111322] placeholder:text-[#918a9e] autofill-light"}`}
         />
         <input name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" className="pointer-events-none absolute left-[-9999px] h-px w-px opacity-0" />
         <div ref={turnstileRef} className="absolute h-0 w-0 overflow-hidden" aria-hidden="true" />
