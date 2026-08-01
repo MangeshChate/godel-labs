@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import {
-  ArrowRight,
   Captions,
   Check,
   LoaderCircle,
@@ -20,6 +18,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import type Hls from "hls.js";
+import EmailCaptureForm from "@/components/landing/email-capture-form";
 
 type VideoQuality = "auto" | "2k" | "1080p" | "720p";
 
@@ -1125,39 +1124,10 @@ function GuardedAgents() {
 }
 
 function HeroEmailForm() {
-  const [email, setEmail] = useState("");
-  const router = useRouter();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      router.push(`/demo?email=${encodeURIComponent(email.trim())}`);
-    } else {
-      router.push("/demo");
-    }
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="group/form relative flex w-full max-w-[460px] items-center rounded-full border border-[#ddd7eb] bg-white/90 p-1.5 shadow-[0_10px_30px_rgba(109,73,253,0.08)] backdrop-blur-md transition-all duration-300 focus-within:border-[#6d49fd] focus-within:shadow-[0_12px_36px_rgba(109,73,253,0.18)] hover:border-[#b9a9ed]"
-    >
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your work email"
-        className="w-full flex-1 bg-transparent px-5 py-2.5 text-sm text-[#111322] placeholder:text-[#918a9e] outline-none"
-      />
-      <button
-        type="submit"
-        className="group relative inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#6d49fd] px-6 py-3 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(109,73,253,0.25)] transition-all duration-200 hover:bg-[#5e32ff] hover:shadow-[0_8px_25px_rgba(109,73,253,0.35)] active:scale-[0.98] cursor-pointer"
-      >
-        <span>Book a demo</span>
-        <ArrowRight className="h-4 w-4 rotate-45 transition-transform duration-300 ease-out group-hover:rotate-0" />
-      </button>
-    </form>
+    <div className="w-full max-w-[460px]">
+      <EmailCaptureForm source="hero" buttonLabel="Book a demo" />
+    </div>
   );
 }
 

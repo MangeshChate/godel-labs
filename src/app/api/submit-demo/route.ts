@@ -10,18 +10,18 @@ interface TurnstileValidationResponse {
     cdata?: string;
 }
 
-interface DemoFormData {
+export interface DemoFormData {
     fullName: string;
     email: string;
     company: string;
     phone?: string;
     building?: string;
     source?: string;
-    turnstileToken: string;
+    turnstileToken?: string;
 }
 
 
-async function validateTurnstile(token: string): Promise<TurnstileValidationResponse> {
+export async function validateTurnstile(token: string): Promise<TurnstileValidationResponse> {
     const secretKey = process.env.TURNSTILE_SECRET_KEY;
 
     if (!secretKey) {
@@ -182,28 +182,35 @@ function generateEmailHTML(data: DemoFormData): string {
     `.trim();
 }
 
-async function sendNotificationEmail(data: DemoFormData): Promise<void> {
+export async function sendNotificationEmail(data: DemoFormData): Promise<boolean> {
     const salesEmail = process.env.SALES_EMAIL || 'sales@godel-labs.ai';
 
     if (!process.env.RESEND_API_KEY) {
         console.warn('RESEND_API_KEY not configured, skipping email notification');
-        return;
+        return false;
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     try {
-        await resend.emails.send({
+        const result = await resend.emails.send({
             from: salesEmail,
             to: salesEmail,
+            replyTo: data.email,
             subject: `New Demo Request from ${data.fullName} ${data.company ? `(${data.company})` : ''}`,
             html: generateEmailHTML(data),
         });
 
+        if (result.error) {
+            console.error('Email provider rejected notification:', result.error);
+            return false;
+        }
+
         console.log('Notification email sent successfully');
+        return true;
     } catch (error) {
         console.error('Failed to send notification email:', error);
-        // Don't throw - we don't want email failure to block form submission
+        return false;
     }
 }
 

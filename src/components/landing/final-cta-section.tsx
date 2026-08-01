@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Reveal from "@/components/landing/reveal";
-import { ArrowRight } from "lucide-react";
+import EmailCaptureForm from "@/components/landing/email-capture-form";
 
 type FinalCtaSectionProps = {
   heading?: string;
@@ -16,19 +14,6 @@ export default function FinalCtaSection({
   description = "Deploy in five minutes. Your agents keep shipping — unsafe actions don't.",
   buttonLabel = "Get Started",
 }: FinalCtaSectionProps = {}) {
-  const [email, setEmail] = useState("");
-  const router = useRouter();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = email.trim();
-    if (trimmed) {
-      router.push(`/demo?email=${encodeURIComponent(trimmed)}`);
-    } else {
-      router.push("/demo");
-    }
-  };
-
   return (
     <section className="relative overflow-hidden bg-[#6d49fd] py-12 text-white sm:py-16">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.15),transparent_60%)]" />
@@ -46,26 +31,7 @@ export default function FinalCtaSection({
           </Reveal>
 
           <Reveal delay={0.08} className="w-full max-w-[440px] md:w-5/12">
-            <form
-              onSubmit={handleSubmit}
-              className="group flex items-center rounded-full border border-white/35 bg-white/15 p-1.5 shadow-xl backdrop-blur-xl transition-all focus-within:border-white focus-within:bg-white/25 hover:border-white/50"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your work email..."
-                className="w-full bg-transparent px-4 text-xs text-white placeholder-white/70 outline-none sm:text-sm"
-              />
-              <button
-                type="submit"
-                className="group/btn inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-xs font-bold text-[#6d49fd] shadow-md transition-all duration-300 hover:bg-[#111322] hover:text-white"
-              >
-                <span>{buttonLabel}</span>
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
-              </button>
-            </form>
+            <EmailCaptureForm source="cta" buttonLabel={buttonLabel} theme="purple" />
           </Reveal>
         </div>
       </div>
