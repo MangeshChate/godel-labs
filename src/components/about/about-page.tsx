@@ -49,9 +49,6 @@ export default function AboutPage() {
             <h1 className="max-w-[1040px] text-balance text-[42px] font-semibold leading-[1.01] tracking-[-0.05em] sm:text-6xl lg:text-[68px]">
               We have built the hard layers before. <span className="text-[#6d49fd]">Now we are building the one AI will need.</span>
             </h1>
-            <p className="mt-12 max-w-2xl border-t border-[#dcd6e6] pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-[#3b3544] sm:text-sm">
-              Founders who have built from the kernel to the category.
-            </p>
           </Reveal>
         </div>
 
